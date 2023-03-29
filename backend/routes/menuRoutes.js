@@ -27,7 +27,7 @@ router.put('/updatePrice/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
     const menuItem = req.body;
-    const result = await menuService.updatePrice(id, menuItem);
+    const result = await menuService.updatePrice(id, menuItem.price);
     res.status(200).json(result);
   } catch (err) {
     next(err);
@@ -38,7 +38,7 @@ router.put('/updateAvailability/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
     const menuItem = req.body;
-    const result = await menuService.updateAvailability(id, menuItem);
+    const result = await menuService.updateAvailability(id, menuItem.availability);
     res.status(200).json(result);
   } catch (err) {
     next(err);
@@ -49,7 +49,7 @@ router.put('/updateRating/:id', async (req, res, next) => {
   try {
     const id = req.params.id;
     const menuItem = req.body;
-    const result = await menuService.updateRating(id, menuItem);
+    const result = await menuService.updateRating(id, menuItem.rating);
     res.status(200).json(result);
   } catch (err) {
     next(err);

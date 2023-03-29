@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use('/menu', menuRoutes);
-// app.use('/orders', orderRoutes);
+app.use('/orders', orderRoutes);
 // app.use('/users', userRoutes);
 
 app.use((err, req, res, next) => {

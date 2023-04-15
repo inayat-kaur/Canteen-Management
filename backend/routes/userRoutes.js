@@ -1,21 +1,11 @@
 const express = require('express');
 const userService = require('../services/userService');
+const { authenticateToken } = require('../services/authService');
 
 const router = express.Router();
 
-// addUser
-router.post('/addUser', async (req, res, next) => {
-    try {
-        const user = req.body;
-        const result = await userService.addUser(user);
-        res.status(201).json(result);
-    } catch (err) {
-        next(err);
-    }
-});
-
 // updatePhone
-router.put('/updatePhone/:id', async (req, res, next) => {
+router.put('/updatePhone/:id', authenticateToken, async (req, res, next) => {
     try {
         const id = req.params.id;
         const user = req.body;
@@ -27,7 +17,7 @@ router.put('/updatePhone/:id', async (req, res, next) => {
 });
 
 // updateName
-router.put('/updateName/:id', async (req, res, next) => {
+router.put('/updateName/:id', authenticateToken, async (req, res, next) => {
     try {
         const id = req.params.id;
         const user = req.body;
@@ -39,7 +29,7 @@ router.put('/updateName/:id', async (req, res, next) => {
 });
 
 // getProfile
-router.get('/getProfile/:id', async (req, res, next) => {
+router.get('/getProfile/:id', authenticateToken, async (req, res, next) => {
     try {
         const id = req.params.id;
         const result = await userService.getProfile(id);

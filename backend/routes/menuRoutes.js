@@ -1,9 +1,9 @@
 const express = require('express');
 const menuService = require('../services/menuService');
-
+const { authenticateToken } = require('../services/authService');
 const router = express.Router();
 
-router.post('/addItem', async (req, res, next) => {
+router.post('/addItem', authenticateToken, async (req, res, next) => {
   try {
     const menuItem = req.body;
     const result = await menuService.addItem(menuItem);
@@ -13,7 +13,7 @@ router.post('/addItem', async (req, res, next) => {
   }
 });
 
-router.delete('/deleteItem/:id', async (req, res, next) => {
+router.delete('/deleteItem/:id', authenticateToken, async (req, res, next) => {
   try {
     const id = req.params.id;
     const result = await menuService.deleteItem(id);
@@ -23,7 +23,7 @@ router.delete('/deleteItem/:id', async (req, res, next) => {
   }
 });
 
-router.put('/updatePrice/:id', async (req, res, next) => {
+router.put('/updatePrice/:id', authenticateToken, async (req, res, next) => {
   try {
     const id = req.params.id;
     const menuItem = req.body;
@@ -34,7 +34,7 @@ router.put('/updatePrice/:id', async (req, res, next) => {
   }
 });
 
-router.put('/updateAvailability/:id', async (req, res, next) => {
+router.put('/updateAvailability/:id', authenticateToken, async (req, res, next) => {
   try {
     const id = req.params.id;
     const menuItem = req.body;
@@ -45,7 +45,7 @@ router.put('/updateAvailability/:id', async (req, res, next) => {
   }
 });
 
-router.put('/updateRating/:id', async (req, res, next) => {
+router.put('/updateRating/:id', authenticateToken, async (req, res, next) => {
   try {
     const id = req.params.id;
     const menuItem = req.body;
@@ -56,7 +56,7 @@ router.put('/updateRating/:id', async (req, res, next) => {
   }
 });
 
-router.get('/getMenu', async (req, res, next) => {
+router.get('/getMenu', authenticateToken, async (req, res, next) => {
   try {
     const menu = await menuService.getMenu();
     res.status(200).json(menu);

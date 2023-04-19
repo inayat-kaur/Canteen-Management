@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:frontend/utils/helper.dart';
+import 'package:frontend/views/utils/helper.dart';
 import '../const/colors.dart';
-import '../screens/SignUpScreen.dart';
-import '../widgets/customTextInput.dart';
-import 'forgetPassword.dart';
+import 'sign_up_screen.dart';
+import '../utils/customTextInput.dart';
+import 'forget_password.dart';
+
 class LoginScreen extends StatelessWidget {
   // const LoginScreen({super.key});
   static const routeName = "/loginScreen";
@@ -22,25 +21,31 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Spacer(flex: 7,),
+              Spacer(
+                flex: 7,
+              ),
               Text(
                 "Login",
                 style: Helper.getTheme(context).titleLarge,
               ),
-              Spacer(flex: 1,),
+              Spacer(
+                flex: 1,
+              ),
               Text("Add your details to login"),
-              Spacer(flex: 1,),
+              Spacer(
+                flex: 1,
+              ),
               CustomTextInput(
                 hintText: "Your Email",
               ),
               // Spacer(flex: 1,),
-              SizedBox(
-                height:10
-              ),
+              SizedBox(height: 10),
               CustomTextInput(
                 hintText: "Password",
               ),
-              Spacer(flex: 1,),
+              Spacer(
+                flex: 1,
+              ),
               SizedBox(
                 height: 50,
                 width: double.infinity,
@@ -49,17 +54,23 @@ class LoginScreen extends StatelessWidget {
                   child: Text("Login"),
                 ),
               ),
-              Spacer(flex: 1,),
+              Spacer(
+                flex: 1,
+              ),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushReplacementNamed(ForgetPassword.routeName);
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => ForgetPassword()));
                 },
                 child: Text("Forget your password?"),
               ),
-              Spacer(flex: 4,),
+              Spacer(
+                flex: 4,
+              ),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushReplacementNamed(SignUpScreen.routeName);
+                  Navigator.of(context)
+                      .pushReplacementNamed(SignUpScreen.routeName);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -82,5 +93,3 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-
-

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:frontend/screens/loginScreen.dart';
-import 'package:frontend/widgets/customTextInput.dart';
+import 'package:frontend/views/general/login_screen.dart';
+import 'package:frontend/views/utils/customTextInput.dart';
 import '../const/colors.dart';
 import '../utils/helper.dart';
 
@@ -67,7 +65,8 @@ class SignUpScreen extends StatelessWidget {
                 Spacer(),
                 GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+                      Navigator.of(context)
+                          .pushReplacementNamed(LoginScreen.routeName);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

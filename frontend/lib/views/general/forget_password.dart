@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:frontend/widgets/customTextInput.dart';
+import 'package:frontend/views/utils/customTextInput.dart';
 
 import '../utils/helper.dart';
 
@@ -42,7 +42,7 @@ class ForgetPassword extends StatelessWidget {
                       child: Text("Send"),
                     ),
                   ),
-                  Spacer(flex:16)
+                  Spacer(flex: 16)
                 ],
               )),
         ),

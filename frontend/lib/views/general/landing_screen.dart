@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:frontend/const/colors.dart';
-import 'package:frontend/utils/helper.dart';
-import '../utils/helper.dart';
+import 'package:frontend/views/const/colors.dart';
+import 'package:frontend/views/utils/helper.dart';
 import 'package:clip_shadow/clip_shadow.dart';
-import './loginScreen.dart';
+import 'login_screen.dart';
 
 class LandingScreen extends StatelessWidget {
   // const LoginScreen({super.key});

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/const/colors.dart';
+import 'package:frontend/views/general/sign_up_screen.dart';
 import 'package:frontend/views/utils/helper.dart';
 import 'package:clip_shadow/clip_shadow.dart';
 import 'login_screen.dart';
@@ -95,6 +96,8 @@ class LandingScreen extends StatelessWidget {
                           ),
                           onPressed: () {
                             //navigate to create user page
+                            Navigator.of(context)
+                                .pushReplacementNamed(SignUpScreen.routeName);
                           },
                           child: Text("Create An Account"))),
                 ],

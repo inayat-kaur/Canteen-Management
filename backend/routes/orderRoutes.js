@@ -1,9 +1,10 @@
 const express = require('express');
 const orderService = require('../services/orderService');
+const { authenticateToken } = require('../services/authService');
 
 const router = express.Router();
 
-router.post('/addOrder', async (req, res, next) => {
+router.post('/addOrder', authenticateToken, async (req, res, next) => {
   try {
     const order = req.body;
     const result = await orderService.addOrder(order);
@@ -13,7 +14,7 @@ router.post('/addOrder', async (req, res, next) => {
   }
 });
 
-router.delete('/deleteOrder/:id/:item', async (req, res, next) => {
+router.delete('/deleteOrder/:id/:item', authenticateToken, async (req, res, next) => {
     try {
         const id = req.params.id;
         const item = req.params.item;
@@ -24,7 +25,7 @@ router.delete('/deleteOrder/:id/:item', async (req, res, next) => {
     }
 });
 
-router.put('/updateOrderStatus/:id/:item', async (req, res, next) => {
+router.put('/updateOrderStatus/:id/:item', authenticateToken, async (req, res, next) => {
     try {
         const id = req.params.id;
         const item = req.params.item;
@@ -36,7 +37,7 @@ router.put('/updateOrderStatus/:id/:item', async (req, res, next) => {
     }
 });
 
-router.put('/updatePaymentStatus/:id/:item', async (req, res, next) => {
+router.put('/updatePaymentStatus/:id/:item', authenticateToken, async (req, res, next) => {
     try {
         const id = req.params.id;
         const item = req.params.item;
@@ -48,7 +49,7 @@ router.put('/updatePaymentStatus/:id/:item', async (req, res, next) => {
     }
 });
 
-router.get('/getOrders', async (req, res, next) => {
+router.get('/getOrders', authenticateToken, async (req, res, next) => {
     try {
         const result = await orderService.getOrders();
         res.status(200).json(result);
@@ -58,7 +59,7 @@ router.get('/getOrders', async (req, res, next) => {
 });
 
 // getOrdersByUser
-router.get('/getOrdersByUser/:username', async (req, res, next) => {
+router.get('/getOrdersByUser/:username', authenticateToken, async (req, res, next) => {
     try {
         const username = req.params.username;
         const result = await orderService.getOrdersByUser(username);
@@ -69,7 +70,7 @@ router.get('/getOrdersByUser/:username', async (req, res, next) => {
 });
 
 // getOrdersByStatus
-router.get('/getOrdersByStatus/:status', async (req, res, next) => {
+router.get('/getOrdersByStatus/:status', authenticateToken, async (req, res, next) => {
     try {
         const status = req.params.status;
         const result = await orderService.getOrdersByStatus(status);
@@ -80,7 +81,7 @@ router.get('/getOrdersByStatus/:status', async (req, res, next) => {
 });
 
 // getOrdersByPaymentStatus
-router.get('/getOrdersByPaymentStatus/:status', async (req, res, next) => {
+router.get('/getOrdersByPaymentStatus/:status', authenticateToken, async (req, res, next) => {
     try {
         const status = req.params.status;
         const result = await orderService.getOrdersByPaymentStatus(status);

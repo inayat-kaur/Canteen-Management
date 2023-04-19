@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
+  clip_shadow:
+    dependency: "direct dev"
+    description:
+      name: clip_shadow
+      sha256: "66ff7c13cae58e7714c493408311a7da472c7065e6c97797c1637e024498fa0f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.1"
   clock:
     dependency: transitive
     description:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:frontend/screens/cartScreen.dart';
 import 'package:frontend/utils/helper.dart';
 import '../const/colors.dart';
 import '../screens/SignUpScreen.dart';
@@ -45,7 +46,8 @@ class LoginScreen extends StatelessWidget {
                 height: 50,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {Navigator.of(context)
+                                .pushReplacementNamed(CartScreen.routeName);},
                   child: Text("Login"),
                 ),
               ),

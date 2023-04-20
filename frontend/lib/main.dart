@@ -1,6 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/SignUpScreen.dart';
+import 'package:frontend/screens/cartScreen.dart';
 import 'package:frontend/screens/landingScreen.dart';
 import './screens/splashScreen.dart';
 import './screens/landingScreen.dart';
@@ -41,10 +42,10 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       routes: {
         LandingScreen.routeName: (context) => LandingScreen(),
-        LoginScreen.routeName: (context) => LoginScreen(),        LoginScreen.routeName: (context) => LoginScreen(),
+        LoginScreen.routeName: (context) => LoginScreen(),        
         SignUpScreen.routeName: (context) => SignUpScreen(),
         ForgetPassword.routeName: (context) => ForgetPassword(),
-
+        CartScreen.routeName: (context) => CartScreen(),
       },
     );
   }

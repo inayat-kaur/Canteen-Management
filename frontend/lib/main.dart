@@ -1,14 +1,9 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/SignUpScreen.dart';
-import 'package:frontend/screens/cartScreen.dart';
-import 'package:frontend/screens/landingScreen.dart';
-import './screens/splashScreen.dart';
-import './screens/landingScreen.dart';
-import './screens/loginScreen.dart';
-import './screens/SignUpScreen.dart';
-import './screens/forgetPassword.dart';
-import 'package:frontend/const/colors.dart';
+import 'package:frontend/views/general/sign_up_screen.dart';
+import 'package:frontend/views/general/landing_screen.dart';
+import 'views/general/splash_screen.dart';
+import 'views/general/login_screen.dart';
+import 'package:frontend/views/const/colors.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,7 +28,7 @@ class MyApp extends StatelessWidget {
           elevation: MaterialStateProperty.all(0),
         )),
         textTheme: TextTheme(
-          titleLarge: TextStyle(color: AppColor.primary,fontSize: 25),
+          titleLarge: TextStyle(color: AppColor.primary, fontSize: 25),
           bodyMedium: TextStyle(
             color: AppColor.secondary,
           ),
@@ -42,10 +37,8 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(),
       routes: {
         LandingScreen.routeName: (context) => LandingScreen(),
-        LoginScreen.routeName: (context) => LoginScreen(),        
+        LoginScreen.routeName: (context) => LoginScreen(),
         SignUpScreen.routeName: (context) => SignUpScreen(),
-        ForgetPassword.routeName: (context) => ForgetPassword(),
-        CartScreen.routeName: (context) => CartScreen(),
       },
     );
   }

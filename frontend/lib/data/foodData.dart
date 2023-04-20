@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/helper.dart';
+import '../views/utils/helper.dart';
 
 class Product {
   final int id, price;

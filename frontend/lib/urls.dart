@@ -1,4 +1,4 @@
-String baseUrl = 'http://localhost:8000/';
+String baseUrl = 'http://localhost:3000/';
 
 Uri addMenuItem = Uri.parse('${baseUrl}menu/addItem/');
 Uri deleteMenuItem(String id) => Uri.parse('${baseUrl}menu/deleteItem/$id');

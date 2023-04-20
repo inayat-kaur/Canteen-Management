@@ -179,11 +179,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   controller: _confirmPasswordController,
                 ),
+                Spacer(),
                 SizedBox(
                   height: 50,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      print("Sign Up Button Pressed");
                       //check if password is valid
                       if (_passwordController.text !=
                           _confirmPasswordController.text) {
@@ -201,7 +203,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           phone: _phoneController.text,
                           password: _passwordController.text,
                         );
-                        client.post(signUp, body: user.toJson());
+                        Response response =
+                            await client.post(signUp, body: user.toJson());
+                        if (response.statusCode == 201) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Sign Up Successful"),
+                            ),
+                          );
+                          Navigator.of(context)
+                              .pushReplacementNamed(LoginScreen.routeName);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Sign Up Failed"),
+                            ),
+                          );
+                        }
                       }
                     },
                     child: Text("Sign Up"),

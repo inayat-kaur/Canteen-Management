@@ -21,27 +21,27 @@ async function signUp(user){
     if(result.affectedRows){
         message = `${user.username} added to users`;
     }
-
+    console.log(message);
     return {message};
 }
 
-async function login(user){
-    if(!user || !user.username){
+async function login(username,password){
+    if(!username){
         throw new Error('Missing or invalid user');
     }
-    if(help.validateEmail(user.username) == false){
+    if(help.validateEmail(username) == false){
         throw new Error('Invalid email');
     }
-    const result = await db.query('SELECT password FROM user WHERE username = ?', [user.username]);
+    const result = await db.query('SELECT password FROM user WHERE username = ?', [username]);
     if(result.length == 0){
         throw new Error('User not found');
     }
-    const validPassword = await bcrypt.compare(user.password, result[0].password);
+    const validPassword = await bcrypt.compare(password, result[0].password);
     if(!validPassword){
         throw new Error('Invalid password');
     }
 
-    const accessToken = jwt.sign({username: user.username}, process.env.ACCESS_TOKEN_SECRET);
+    const accessToken = jwt.sign({username: username}, process.env.ACCESS_TOKEN_SECRET);
     return accessToken;
 }
 

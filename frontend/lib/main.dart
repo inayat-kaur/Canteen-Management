@@ -1,7 +1,9 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:frontend/views/general/sign_up_screen.dart';
 import 'package:frontend/views/general/landing_screen.dart';
 import 'views/general/splash_screen.dart';
+import 'views/general/orderHistoryCanteen.dart';
 import 'views/general/login_screen.dart';
 import 'package:frontend/views/const/colors.dart';
 
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Canteen Management App',
       theme: ThemeData(
         fontFamily: "Metropolis",
         primarySwatch: Colors.red,
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
           ),
           elevation: MaterialStateProperty.all(0),
         )),
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           titleLarge: TextStyle(color: AppColor.primary, fontSize: 25),
           bodyMedium: TextStyle(
             color: AppColor.secondary,
@@ -39,6 +41,8 @@ class MyApp extends StatelessWidget {
         LandingScreen.routeName: (context) => LandingScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
         SignUpScreen.routeName: (context) => SignUpScreen(),
+        orderHistoryCanteen.routeName:  (context) => orderHistoryCanteen(),
+      
       },
       debugShowCheckedModeBanner: false,
     );

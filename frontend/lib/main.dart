@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (context) => LoginScreen(),
         SignUpScreen.routeName: (context) => SignUpScreen(),
       },
+      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -20,9 +20,9 @@ Uri getOrdersByUser(String id) => Uri.parse('${baseUrl}orders/deleteOrder/$id');
 Uri getOrdersByStatus(String status) =>
     Uri.parse('${baseUrl}orders/getOrdersByStatus/$status');
 
-Uri updateUserPhone(String id) => Uri.parse('${baseUrl}users/updatePhone/$id');
-Uri updateUserName(String id) => Uri.parse('${baseUrl}users/updateName/$id');
-Uri getUserProfile(String id) => Uri.parse('${baseUrl}users/getProfile/$id');
+Uri updateUserPhone = Uri.parse('${baseUrl}users/updatePhone/');
+Uri updateUserName = Uri.parse('${baseUrl}users/updateName/');
+Uri getUserProfile = Uri.parse('${baseUrl}users/getProfile/');
 
 Uri signUp = Uri.parse('${baseUrl}auth/signUp/');
 Uri login = Uri.parse('${baseUrl}auth/login/');

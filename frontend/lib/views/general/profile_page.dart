@@ -28,7 +28,7 @@ class _ProfileState extends State<Profile> {
     if (id == null) id = '';
     String? token = await prefs.getString('token');
     final response = await client.get(
-      getUserProfile(id),
+      getUserProfile,
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -58,89 +58,63 @@ class _ProfileState extends State<Profile> {
             height: Helper.getScreenHeight(context),
             child: SafeArea(
                 child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 40,
-                vertical: 30,
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    "Profile",
-                    style: Helper.getTheme(context).titleLarge,
-                  ),
-                  Spacer(),
-                  Row(
-                    children: [
-                      Icon(Icons.email, color: AppColor.placeholder),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 40,
+                      vertical: 30,
+                    ),
+                    child: Column(children: [
                       Text(
-                        user.username,
-                        style: TextStyle(color: AppColor.placeholder),
-                      )
-                    ],
-                  ),
-                  Spacer(),
-                  Row(
-                    children: [
-                      Icon(Icons.person, color: AppColor.placeholder),
-                      Text(
-                        user.name,
-                        style: TextStyle(color: AppColor.placeholder),
-                      )
-                    ],
-                  ),
-                  Spacer(),
-                  Row(
-                    children: [
-                      Icon(Icons.phone, color: AppColor.placeholder),
-                      Text(
-                        user.phone,
-                        style: TextStyle(color: AppColor.placeholder),
-                      )
-                    ],
-                  ),
-                  Spacer(),
-                  Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(
-                            Icons.lock,
-                            color: AppColor.placeholder,
+                        "Profile",
+                        style: Helper.getTheme(context).titleLarge,
+                      ),
+                      Expanded(
+                        child: ListView(padding: EdgeInsets.all(20), children: [
+                          SizedBox(height: 20),
+                          ListTile(
+                            leading: Icon(Icons.email),
+                            title: Text(user.username),
                           ),
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => ForgetPassword()));
-                          },
-                          color: AppColor.placeholder),
-                      Text(
-                        "Change Password",
-                        style: TextStyle(color: AppColor.placeholder),
-                      )
-                    ],
-                  ),
-                  Spacer(),
-                  Row(
-                    children: [
-                      IconButton(
-                          icon: Icon(
-                            Icons.logout,
-                            color: AppColor.placeholder,
+                          SizedBox(height: 20),
+                          ListTile(
+                            leading: Icon(Icons.person),
+                            title: Text(user.name),
+                            trailing: IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () {},
+                            ),
                           ),
-                          onPressed: () async {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setString('token', '');
-                            Navigator.of(context)
-                                .pushReplacementNamed(LandingScreen.routeName);
-                          },
-                          color: AppColor.placeholder),
-                      Text(
-                        "Logout",
-                        style: TextStyle(color: AppColor.placeholder),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ))));
+                          SizedBox(height: 20),
+                          ListTile(
+                            leading: Icon(Icons.phone),
+                            title: Text(user.phone),
+                            trailing: IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () {},
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          ListTile(
+                            leading: Icon(Icons.lock),
+                            title: Text("Change Password"),
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (_) => ForgetPassword()));
+                            },
+                          ),
+                          SizedBox(height: 20),
+                          ListTile(
+                            leading: Icon(Icons.logout),
+                            title: Text("Logout"),
+                            onTap: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.setString('token', '');
+                              Navigator.of(context).pushReplacementNamed(
+                                  LandingScreen.routeName);
+                            },
+                          )
+                        ]),
+                      ),
+                    ])))));
   }
 }

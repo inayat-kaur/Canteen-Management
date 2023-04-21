@@ -11,7 +11,7 @@ router.put('/updatePhone/:id', authenticateToken, async (req, res, next) => {
         const user = req.body;
         const result = await userService.updatePhone(id, user.phone);
         res.status(200).json(result);
-    } catch (err) {
+    } catch (err) { 
         next(err);
     }
 });

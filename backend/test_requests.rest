@@ -19,4 +19,4 @@
 # }
 
 # GET http://localhost:3000/users/getProfile/niti@gmail.com
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pdGlAZ21haWwuY29tIiwiaWF0IjoxNjgxNTUyMTMyfQ.FRbmDVxMl7TzBeg6fYWfm9hsL3tT8wzgWXyL90ilQ5c
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pdGlAZ21haWwuY29tIiwiaWF0IjoxNjgyMDc2NTU3fQ.AxLe4IoC97YVH6dileIipA5qnTUf93NTzCFHOOb-3eo

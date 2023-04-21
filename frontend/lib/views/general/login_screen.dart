@@ -80,14 +80,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () async {
-                    Response response = await client.post(login, body: {
-                      "username": _usernameController.text,
-                      "password": _passwordController.text
-                    });
+                    String username = _usernameController.text;
+                    String password = _passwordController.text;
+                    Response response = await client.post(login,
+                        body: {"username": username, "password": password});
                     if (response.statusCode == 201) {
+                      String token =
+                          response.body.substring(1, response.body.length - 1);
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
-                      prefs.setString("token", response.body);
+                      prefs.setString('token', token);
+                      prefs.setString('username', username);
                       Navigator.of(context)
                           .push(MaterialPageRoute(builder: (_) => Profile()));
                     } else {

@@ -13,7 +13,7 @@ class User {
     required this.password,
   });
 
-  User.fromJson(Map<String, dynamic> json) {
+  void fromJson(Map<String, dynamic> json) {
     username = json['username'];
     role = json['role'];
     name = json['name'];

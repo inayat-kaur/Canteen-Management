@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       prefs.setString('token', token);
                       prefs.setString('username', username);
                       Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) => Profile()));
+                          .push(MaterialPageRoute(builder: (_) => orderHistoryCanteen()));
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

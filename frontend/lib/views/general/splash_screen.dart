@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/loginScreen.dart';
 import 'package:frontend/views/general/landing_screen.dart';
 import 'package:frontend/views/general/orderHistoryCanteen.dart';
 import '../utils/helper.dart';
@@ -14,9 +15,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    _timer = Timer(Duration(milliseconds: 4000), () {
+    _timer = Timer(const Duration(milliseconds: 4000), () {
       // Ye change Krlena!!!
-      Navigator.of(context).pushReplacementNamed(orderHistoryCanteen.routeName);
+      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
       //navigate to login screen
     });
     super.initState();

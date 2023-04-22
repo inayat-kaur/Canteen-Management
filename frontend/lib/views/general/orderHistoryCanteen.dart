@@ -1,7 +1,10 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:frontend/views/utils/helper.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+import '../../models/User.dart';
 import '../../urls.dart';
 import '../const/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +20,8 @@ class orderHistoryCanteen extends StatefulWidget {
 
 class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
   List<Order> orders = [];
+  User user = User(username: '', role: 0, name: '', phone: '', password: '');
+  get http => null;
   @override
   void initState() {
     super.initState();
@@ -24,10 +29,29 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
   }
 
   Future<void> _getOrders() async {
-    var response =
-        await http.get(Uri.parse('http://172.26.13.173:3000/getorders'));
-    var jsonData = json.decode(response.body) as List<dynamic>;
-    orders = jsonData.map((e) => Order.fromJson(e)).toList();
+    Client client = Client();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? id = await prefs.getString('username');
+    if (id == null) id = '';
+    String? token = await prefs.getString('token');
+
+    final response = await client.get(
+      getOrders,
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonData = json.decode(response.body);
+      orders = [];
+
+      setState(() {
+        orders = jsonData.map((e) => Order.fromJson(e)).toList();
+      });
+    } else {
+      throw Exception('Error fetching profile');
+    }
   }
 
   @override
@@ -41,7 +65,14 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
         itemBuilder: (BuildContext context, int index) {
           final order = orders[index];
           return ListTile(
-            title: Text('${order.username}: ${order.quantity} x ${order.item}'),
+            title: Text(order.username),
+            subtitle: Text('${order.quantity} X ${order.item}'),
+            trailing: TextButton(
+              child: Text('Reorder'),
+              onPressed: () {
+                // Implement reorder functionality here
+              },
+            ),
           );
         },
       ),

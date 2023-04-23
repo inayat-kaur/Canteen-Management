@@ -18,5 +18,5 @@
 #     "password": "Niti1234567890"
 # }
 
-# GET http://localhost:3000/users/getProfile/niti@gmail.com
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pdGlAZ21haWwuY29tIiwiaWF0IjoxNjgyMDc2NTU3fQ.AxLe4IoC97YVH6dileIipA5qnTUf93NTzCFHOOb-3eo
+GET http://localhost:3000/users/getProfile/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5pdGlAZ21haWwuY29tIiwiaWF0IjoxNjgyMDkzNjQzfQ.jAY_wxudEM3NmhFnIjqwTxObSc8I3Qx-KJor66ZXMJQ

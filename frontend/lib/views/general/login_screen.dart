@@ -7,6 +7,7 @@ import '../const/colors.dart';
 import 'sign_up_screen.dart';
 import 'forget_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'cartScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = "/loginScreen";

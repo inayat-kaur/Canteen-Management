@@ -44,6 +44,27 @@ async function login(username,password){
     return accessToken;
 }
 
+async function resetPassword(username, password){
+    if(!username){
+        throw new Error('Missing or invalid user');
+    }
+    if(help.validateEmail(username) == false){
+        throw new Error('Invalid email');
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const queryStmt = `UPDATE user SET password = ? WHERE username = ?`;
+    const values = [hashedPassword, username];
+    const result = await db.query(queryStmt, values);
+
+    let message = 'Error in updating password';
+
+    if(result.affectedRows){
+        message = `${username} password updated`;
+    }
+    return {message};
+}
+
 function authenticateToken(req, res, next){
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -62,5 +83,6 @@ function authenticateToken(req, res, next){
 module.exports = {
     signUp,
     login,
+    resetPassword,
     authenticateToken
 };

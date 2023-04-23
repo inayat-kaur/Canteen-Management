@@ -18,14 +18,14 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   User user = User(username: '', role: 0, name: '', phone: '', password: '');
-
-  get http => null;
+  bool editPhone = false;
+  bool editName = false;
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
 
   Future<void> getProfile() async {
     Client client = Client();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? id = await prefs.getString('username');
-    if (id == null) id = '';
     String? token = await prefs.getString('token');
     final response = await client.get(
       getUserProfile,
@@ -42,6 +42,47 @@ class _ProfileState extends State<Profile> {
     } else {
       throw Exception('Error fetching profile');
     }
+    client.close();
+  }
+
+  Future<void> updateName() async {
+    String newName = _nameController.text.trim();
+    Client client = Client();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('token');
+    final response = await client.put(updateUserName, headers: {
+      'Authorization': 'Bearer $token',
+    }, body: {
+      'name': newName,
+    });
+    if (response.statusCode == 200) {
+      setState(() {
+        user.name = newName;
+      });
+    } else {
+      throw Exception('Error updating profile');
+    }
+    client.close();
+  }
+
+  Future<void> updatePhone() async {
+    String newPhone = _phoneController.text.trim();
+    Client client = Client();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = await prefs.getString('token');
+    final response = await client.put(updateUserPhone, headers: {
+      'Authorization': 'Bearer $token',
+    }, body: {
+      'phone': newPhone,
+    });
+    if (response.statusCode == 200) {
+      setState(() {
+        user.phone = newPhone;
+      });
+    } else {
+      throw Exception('Error updating profile');
+    }
+    client.close();
   }
 
   @override
@@ -77,20 +118,76 @@ class _ProfileState extends State<Profile> {
                           SizedBox(height: 20),
                           ListTile(
                             leading: Icon(Icons.person),
-                            title: Text(user.name),
-                            trailing: IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: () {},
-                            ),
+                            title: editName
+                                ? TextField(
+                                    decoration: InputDecoration(
+                                      hintText: "Your Name",
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      fillColor: AppColor.placeholderBg,
+                                      hintStyle: TextStyle(
+                                        color: AppColor.placeholder,
+                                      ),
+                                    ),
+                                    controller: _nameController,
+                                  )
+                                : Text(user.name),
+                            trailing: editName
+                                ? IconButton(
+                                    icon: Icon(Icons.save),
+                                    onPressed: () {
+                                      updateName();
+                                      setState(() {
+                                        editName = false;
+                                      });
+                                    },
+                                  )
+                                : IconButton(
+                                    icon: Icon(Icons.edit),
+                                    onPressed: () {
+                                      setState(() {
+                                        editName = true;
+                                      });
+                                    },
+                                  ),
                           ),
                           SizedBox(height: 20),
                           ListTile(
                             leading: Icon(Icons.phone),
-                            title: Text(user.phone),
-                            trailing: IconButton(
-                              icon: Icon(Icons.edit),
-                              onPressed: () {},
-                            ),
+                            title: editPhone
+                                ? TextField(
+                                    decoration: InputDecoration(
+                                      hintText: "Your Phone",
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      fillColor: AppColor.placeholderBg,
+                                      hintStyle: TextStyle(
+                                        color: AppColor.placeholder,
+                                      ),
+                                    ),
+                                    controller: _phoneController,
+                                  )
+                                : Text(user.phone),
+                            trailing: editPhone
+                                ? IconButton(
+                                    icon: Icon(Icons.save),
+                                    onPressed: () {
+                                      updatePhone();
+                                      setState(() {
+                                        editPhone = false;
+                                      });
+                                    },
+                                  )
+                                : IconButton(
+                                    icon: Icon(Icons.edit),
+                                    onPressed: () {
+                                      setState(() {
+                                        editPhone = true;
+                                      });
+                                    },
+                                  ),
                           ),
                           SizedBox(height: 20),
                           ListTile(

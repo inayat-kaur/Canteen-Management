@@ -92,9 +92,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       prefs.setString('token', token);
-                      prefs.setString('username', username);
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => orderHistoryCanteen()));
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (_) => Profile()));
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

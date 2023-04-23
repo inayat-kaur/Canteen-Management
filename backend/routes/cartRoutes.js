@@ -1,5 +1,5 @@
 const express = require('express');
-const menuService = require('../services/cartService');
+const cartService = require('../services/cartService');
 const { authenticateToken } = require('../services/authService');
 const router = express.Router();
 

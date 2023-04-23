@@ -27,6 +27,9 @@ Uri getUserProfile = Uri.parse('${baseUrl}users/getProfile/');
 
 Uri signUp = Uri.parse('${baseUrl}auth/signUp/');
 Uri login = Uri.parse('${baseUrl}auth/login/');
+Uri mailOTP = Uri.parse('${baseUrl}auth/mailOTP/');
+Uri resetPassword1 = Uri.parse('${baseUrl}auth/resetPassword1');
+Uri resetPassword2 = Uri.parse('${baseUrl}auth/resetPassword2');
 
 Uri addCartItem = Uri.parse('${baseUrl}cart/addItem');
 Uri deleteCartItem(String id) => Uri.parse('${baseUrl}cart/deleteItem/$id');

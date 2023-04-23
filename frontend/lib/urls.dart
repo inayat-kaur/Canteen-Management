@@ -1,3 +1,4 @@
+// For running in Phone Use ipconfig and paste ipv4 wifi ip address instead of localhost
 String baseUrl = 'http://localhost:3000/';
 
 Uri addMenuItem = Uri.parse('${baseUrl}menu/addItem/');

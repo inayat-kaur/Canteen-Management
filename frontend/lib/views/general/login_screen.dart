@@ -7,6 +7,7 @@ import '../const/colors.dart';
 import 'sign_up_screen.dart';
 import 'forget_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:frontend/views/general/orderHistoryCanteen.dart';
 import 'cartScreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -92,8 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           await SharedPreferences.getInstance();
                       prefs.setString('token', token);
                       prefs.setString('username', username);
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (_) => Profile()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => orderHistoryCanteen()));
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

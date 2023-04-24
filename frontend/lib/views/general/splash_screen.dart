@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:frontend/screens/loginScreen.dart';
+import 'package:frontend/views/customer/menu_page.dart';
 import 'package:frontend/views/general/landing_screen.dart';
-import 'package:frontend/views/general/orderHistoryCanteen.dart';
+import 'package:frontend/views/customer/order_history_user.dart';
 import 'package:frontend/views/general/profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/helper.dart';
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String? token = await prefs.getString('token');
     if (token != null && token != "") {
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => Profile()));
+          .pushReplacement(MaterialPageRoute(builder: (_) => menuPage()));
     } else
       Navigator.of(context).pushReplacementNamed(LandingScreen.routeName);
   }

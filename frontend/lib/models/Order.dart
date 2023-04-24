@@ -3,6 +3,7 @@ class Order {
   String orderType = "I"; // I: Instantaneous, P: Pre-Order
   String item = "";
   int quantity = 0;
+  int price = 0;
   String orderStatus =
       "N"; // N: Not accepted, U: Under preparation, R: Ready, C: Collected
   String paymentStatus = "N"; // Y: Yes (Paid), N: No (Not Paid)
@@ -13,6 +14,7 @@ class Order {
     required this.orderType,
     required this.item,
     required this.quantity,
+    required this.price,
     required this.orderStatus,
     required this.paymentStatus,
     required this.time,

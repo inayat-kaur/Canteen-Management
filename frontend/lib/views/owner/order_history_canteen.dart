@@ -6,19 +6,19 @@ import 'package:frontend/views/utils/helper.dart';
 import 'package:http/http.dart';
 import '../../models/User.dart';
 import '../../urls.dart';
-import '../const/colors.dart';
+import '../utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../../models/Order.dart';
 
-class orderHistoryCanteen extends StatefulWidget {
-  const orderHistoryCanteen({super.key});
+class OrderHistoryCanteen extends StatefulWidget {
+  const OrderHistoryCanteen({super.key});
   static const routeName = "/orderHistoryCanteen";
   @override
-  State<orderHistoryCanteen> createState() => _orderHistoryCanteenState();
+  State<OrderHistoryCanteen> createState() => _OrderHistoryCanteenState();
 }
 
-class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
+class _OrderHistoryCanteenState extends State<OrderHistoryCanteen> {
   List<Order> orders = [];
   User user = User(username: '', role: 0, name: '', phone: '', password: '');
   get http => null;

@@ -3,7 +3,7 @@ import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../urls.dart';
-import '../const/colors.dart';
+import '../utils/colors.dart';
 import '../utils/helper.dart';
 
 class ForgetPassword extends StatefulWidget {

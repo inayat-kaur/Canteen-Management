@@ -5,7 +5,7 @@ import 'package:frontend/views/general/landing_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart';
 import '../../models/User.dart';
-import '../const/colors.dart';
+import '../utils/colors.dart';
 import '../utils/helper.dart';
 import 'dart:convert';
 

@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:frontend/views/utils/helper.dart';
 import 'package:http/http.dart';
 import '../../urls.dart';
-import '../const/colors.dart';
+import '../utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class orderHistoryCanteen extends StatefulWidget {
-  const orderHistoryCanteen({super.key});
+class OrderHistoryUser extends StatefulWidget {
+  const OrderHistoryUser({super.key});
   static const routeName = "/orderHistoryUser";
   @override
-  State<orderHistoryCanteen> createState() => _orderHistoryCanteenState();
+  State<OrderHistoryUser> createState() => _OrderHistoryUserState();
 }
 
-class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
+class _OrderHistoryUserState extends State<OrderHistoryUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,10 +22,7 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
       ),
       body: ListView.builder(
         itemCount: 5,
-        itemBuilder: (BuildContext context, int index) {
-             
-          
-        },
+        itemBuilder: (BuildContext context, int index) {},
       ),
     );
   }

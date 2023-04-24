@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:frontend/views/general/sign_up_screen.dart';
 import 'package:frontend/views/general/landing_screen.dart';
 import 'views/general/splash_screen.dart';
-import 'views/general/orderHistoryCanteen.dart';
+import 'views/owner/order_history_canteen.dart';
 import 'views/general/login_screen.dart';
-import 'package:frontend/views/const/colors.dart';
+import 'package:frontend/views/utils/colors.dart';
 
 void main() {
   runApp(MyApp());
@@ -41,8 +41,7 @@ class MyApp extends StatelessWidget {
         LandingScreen.routeName: (context) => LandingScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
         SignUpScreen.routeName: (context) => SignUpScreen(),
-        orderHistoryCanteen.routeName:  (context) => orderHistoryCanteen(),
-      
+        OrderHistoryCanteen.routeName: (context) => OrderHistoryCanteen(),
       },
       debugShowCheckedModeBanner: false,
     );

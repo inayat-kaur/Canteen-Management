@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/views/const/colors.dart';
+import 'package:frontend/views/utils/colors.dart';
 import 'package:frontend/views/general/sign_up_screen.dart';
 import 'package:frontend/views/utils/helper.dart';
 import 'package:clip_shadow/clip_shadow.dart';

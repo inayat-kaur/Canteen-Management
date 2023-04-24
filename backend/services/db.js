@@ -1,10 +1,14 @@
 const mysql = require('mysql2/promise');
-const config = require('../config');
 
 async function query(sql, params) {
-  const connection = await mysql.createConnection(config.db);
+  db = {
+    host : process.env.DATABASE_HOST,
+    user : process.env.DATABASE_USER,
+    password : process.env.DATABASE_PASSWORD,
+    database : process.env.DATABASE_NAME
+  };
+  const connection = await mysql.createConnection(db);
   const [results, ] = await connection.execute(sql, params);
-
   return results;
 }
 

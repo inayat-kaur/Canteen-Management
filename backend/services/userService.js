@@ -1,23 +1,5 @@
 const db = require('./db');
 
-async function addUser(user){
-    if(!user || !user.username){
-        throw new Error('Missing or invalid user');
-    }
-
-    const queryStmt = `INSERT INTO user (username, role, name, phone) VALUES (?, ?, ?, ?)`;
-    const values = [user.username, user.role, user.name, user.phone];
-    const result = await db.query(queryStmt, values);
-
-    let message = 'Error in inserting a user';
-
-    if(result.affectedRows){
-        message = `${user.username} added to users`;
-    }
-
-    return {message};
-}
-
 async function updatePhone(username, phone){
     const result = await db.query('UPDATE user SET phone = ? WHERE username = ?', [phone, username]);
     let message = 'Error in updating phone';
@@ -41,7 +23,7 @@ async function updateName(username, name){
 }
 
 async function getProfile(username){
-    const result = await db.query('SELECT * FROM user WHERE username = ?', [username]);
+    const result = await db.query('SELECT username, role, name, phone FROM user WHERE username = ?', [username]);
     let message = 'Error in getting profile';
 
     if(result.length){
@@ -52,7 +34,6 @@ async function getProfile(username){
 }
 
 module.exports = {
-    addUser,
     updatePhone,
     updateName,
     getProfile

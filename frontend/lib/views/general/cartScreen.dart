@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/const/colors.dart';
-// import 'package:frontend/data/foodData.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:frontend/controllers/cart_controller.dart';
+import 'package:http/http.dart' as http;
+import '../../urls.dart';
+import 'dart:convert';
+import '../../main.dart';
 import '../../models/Cart.dart';
+import '../../models/menu.dart';
+
 
 class CartScreen extends StatefulWidget {
   CartScreen({Key? key}) : super(key: key);
@@ -13,6 +19,32 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   @override
+  Cart cart = Cart(username: '',item: '',quantity: 0);
+  get http => null;
+   Future<void> getUsername() async {
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+     String? token = await prefs.getString('token');
+         Future<List<Menu>> fetchMenu(String token) async {
+    final response = await http.get(
+      getMenu,
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> menuJson = json.decode(response.body);
+      List<Menu> menu = [];
+      menuJson.forEach((item) {
+        menu.add(Menu.fromJson(item));
+      });
+      return menu;
+    } else {
+      throw Exception('Failed to fetch menu');
+    }
+  }
+   }
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -80,7 +112,7 @@ class _CartScreenState extends State<CartScreen> {
   }
 }
 
-class FavouriteCard extends StatelessWidget {
+class FavouriteCard extends StatefulWidget {
   const FavouriteCard({
     Key? key,
     required this.product,
@@ -88,17 +120,30 @@ class FavouriteCard extends StatelessWidget {
   }) : super(key: key);
   final Cart product;
   final VoidCallback press;
-  void add(int _price){
+
+  @override
+  State<FavouriteCard> createState() => _FavouriteCardState();
+}
+
+class _FavouriteCardState extends State<FavouriteCard> {
+  void add(int price){
     setState(() {
-      _price++;
+      price++;
     });
   }
+
+    void minus(int price){
+    setState(() {
+      price--;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: InkWell(
-        onTap: press,
+        onTap: widget.press,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
           decoration: BoxDecoration(
@@ -110,7 +155,7 @@ class FavouriteCard extends StatelessWidget {
               Column(
                 children: [
                   Image.asset(
-                    product.image,
+                    widget.product.image,
                     height: 100,
                     width: 100,
                     fit: BoxFit.cover,
@@ -125,7 +170,7 @@ class FavouriteCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product.item,
+                      widget.product.item,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -152,7 +197,7 @@ class FavouriteCard extends StatelessWidget {
                                   icon: Icon(
                                     Icons.remove,
                                   color: AppColor.placeholderBg,),
-                                  onPressed: minus(product.quantity),
+                                  onPressed:()=> minus(widget.product.quantity),
                                 ),
                               ),
                             ),
@@ -160,7 +205,7 @@ class FavouriteCard extends StatelessWidget {
                               width: 8.0,
                             ),
                             Text(
-                              '${product.quantity}',
+                              '${widget.product.quantity}',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 20,
@@ -181,14 +226,14 @@ class FavouriteCard extends StatelessWidget {
                                   icon: Icon(
                                     Icons.add,
                                   color: AppColor.placeholderBg,),
-                                  onPressed: add(product.quantity),
+                                  onPressed:()=> add(widget.product.quantity),
                                 ),
                               ),
                             )
                           ],
                         ),
                         Text(
-                          "Rs. ${product.price}",
+                          "Rs. ${widget.product.price}",
                           style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,

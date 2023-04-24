@@ -4,7 +4,7 @@ import 'package:frontend/views/general/forget_password.dart';
 import 'package:frontend/views/general/landing_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart';
-import '../../models/User.dart';
+import '../../models/user.dart';
 import '../utils/colors.dart';
 import '../utils/helper.dart';
 import 'dart:convert';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/models/User.dart';
+import 'package:frontend/models/user.dart';
 import 'package:frontend/urls.dart';
 import 'package:frontend/views/general/login_screen.dart';
 import '../utils/colors.dart';

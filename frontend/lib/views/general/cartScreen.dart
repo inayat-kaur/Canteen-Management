@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/const/colors.dart';
-import 'package:frontend/data/foodData.dart';
+// import 'package:frontend/data/foodData.dart';
+
+import '../../models/Cart.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({Key? key}) : super(key: key);
-  static const routeName = "/ViewCart";
+  CartScreen({Key? key}) : super(key: key);
+  // final Cart c = Get.put(Cart(quantity: ));
   @override
   _CartScreenState createState() => _CartScreenState();
 }
@@ -14,15 +16,15 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColor.orange,
         title: const Text(
           "Shopping Cart",
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       // bottomNavigationBar: const CustomBottomBar(selectMenu: MenuState.cart),
       body: SafeArea(
@@ -34,9 +36,9 @@ class _CartScreenState extends State<CartScreen> {
                   //use shrink wrap true and scrollphysics to avoid error because we are using listview in side listview or column
                   shrinkWrap: true,
                   physics: const ScrollPhysics(),
-                  itemCount: 4,
+                  // itemCount: 4,
                   itemBuilder: (context, index) => FavouriteCard(
-                        product: foodProducts[index],
+                        product: Cart[index],
                         press: () {},
                       )),
                       SizedBox(height: 30),
@@ -45,6 +47,7 @@ class _CartScreenState extends State<CartScreen> {
                         child: Column(
                            crossAxisAlignment:  CrossAxisAlignment.start,
                           children: [
+                            
                             Text(
                               "Grand Total:",
                               // textAlign: TextAlign.left,
@@ -83,8 +86,13 @@ class FavouriteCard extends StatelessWidget {
     required this.product,
     required this.press,
   }) : super(key: key);
-  final Product product;
+  final Cart product;
   final VoidCallback press;
+  void add(int _price){
+    setState(() {
+      _price++;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -94,7 +102,7 @@ class FavouriteCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
           decoration: BoxDecoration(
-              color: AppColor.orange.withOpacity(0.2),
+              color: AppColor.orange.withOpacity(0.1),
               borderRadius: BorderRadius.circular(15.0)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +125,7 @@ class FavouriteCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product.title,
+                      product.item,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -140,17 +148,19 @@ class FavouriteCard extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     color: AppColor.orange,
                                     borderRadius: BorderRadius.circular(10.0)),
-                                child: const Icon(
-                                  Icons.remove,
-                                  color: AppColor.placeholderBg,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.remove,
+                                  color: AppColor.placeholderBg,),
+                                  onPressed: minus(product.quantity),
                                 ),
                               ),
                             ),
                             const SizedBox(
                               width: 8.0,
                             ),
-                            const Text(
-                              "1",
+                            Text(
+                              '${product.quantity}',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 20,
@@ -167,9 +177,11 @@ class FavouriteCard extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     color: AppColor.orange,
                                     borderRadius: BorderRadius.circular(10.0)),
-                                child: const Icon(
-                                  Icons.add,
-                                  color: AppColor.placeholderBg,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.add,
+                                  color: AppColor.placeholderBg,),
+                                  onPressed: add(product.quantity),
                                 ),
                               ),
                             )

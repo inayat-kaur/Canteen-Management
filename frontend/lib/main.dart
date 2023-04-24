@@ -1,3 +1,4 @@
+//@dart=2.9
 import 'package:flutter/material.dart';
 import 'package:frontend/views/general/sign_up_screen.dart';
 import 'package:frontend/views/general/landing_screen.dart';

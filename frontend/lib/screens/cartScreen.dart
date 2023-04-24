@@ -14,15 +14,15 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: AppColor.orange,
         title: const Text(
           "Shopping Cart",
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
           ),
         ),
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       // bottomNavigationBar: const CustomBottomBar(selectMenu: MenuState.cart),
       body: SafeArea(
@@ -45,6 +45,7 @@ class _CartScreenState extends State<CartScreen> {
                         child: Column(
                            crossAxisAlignment:  CrossAxisAlignment.start,
                           children: [
+                            
                             Text(
                               "Grand Total:",
                               // textAlign: TextAlign.left,
@@ -94,7 +95,7 @@ class FavouriteCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
           decoration: BoxDecoration(
-              color: AppColor.orange.withOpacity(0.2),
+              color: AppColor.orange.withOpacity(0.1),
               borderRadius: BorderRadius.circular(15.0)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,

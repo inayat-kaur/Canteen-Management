@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/cartScreen.dart';
 import 'package:frontend/views/const/colors.dart';
 import 'package:frontend/views/general/sign_up_screen.dart';
 import 'package:frontend/views/utils/helper.dart';
@@ -71,8 +72,10 @@ class LandingScreen extends StatelessWidget {
                       child: ElevatedButton(
                           onPressed: () {
                             //navigate to login page
-                            Navigator.of(context)
-                                .pushReplacementNamed(LoginScreen.routeName);
+                            // Navigator.of(context)
+                            //     .pushReplacementNamed(LoginScreen.routeName);
+                                                  Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (_) => CartScreen()));
                           },
                           child: Text("Login"))),
                   SizedBox(

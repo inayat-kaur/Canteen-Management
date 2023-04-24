@@ -1,4 +1,5 @@
 String baseUrl = 'http://localhost:3000/';
+// String baseUrl = 'http://172.26.13.40:3000/';
 
 Uri addMenuItem = Uri.parse('${baseUrl}menu/addItem/');
 Uri deleteMenuItem(String id) => Uri.parse('${baseUrl}menu/deleteItem/$id');

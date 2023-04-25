@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 
 import 'package:frontend/views/utils/helper.dart';
 import 'package:http/http.dart';
-import '../../models/User.dart';
+import '../../models/user.dart';
 import '../../urls.dart';
 import '../utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import '../../models/Order.dart';
+import '../../models/order.dart';
 
 class OrderHistoryCanteen extends StatefulWidget {
   const OrderHistoryCanteen({super.key});

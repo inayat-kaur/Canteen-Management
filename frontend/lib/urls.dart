@@ -1,5 +1,5 @@
 // For running in Phone Use ipconfig and paste ipv4 wifi ip address instead of localhost
-String baseUrl = 'http://localhost:3000/';
+String baseUrl = 'https://canteenmanagementserver.onrender.com/';
 
 Uri addMenuItem = Uri.parse('${baseUrl}menu/addItem/');
 Uri deleteMenuItem(String id) => Uri.parse('${baseUrl}menu/deleteItem/$id');

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/customer/menu_page.dart';
+import 'package:frontend/views/general/order_history_canteen.dart';
+import 'package:frontend/views/general/order_history_user.dart';
 import 'package:frontend/views/general/profile_page.dart';
 import 'package:frontend/views/utils/helper.dart';
 import 'package:http/http.dart';
@@ -94,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           await SharedPreferences.getInstance();
                       prefs.setString('token', token);
                       Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (_) => menuPage()));
+                          MaterialPageRoute(builder: (_) => orderHistoryCanteen()));
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

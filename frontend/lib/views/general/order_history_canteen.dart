@@ -59,8 +59,9 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
         .toList();
 
     collectedOrders.sort((a, b) => b.time.compareTo(a.time));
+
     for (Order order in collectedOrders) {
-      groupedOrders.putIfAbsent(order.username, () => []).add(order);
+      groupedOrders.putIfAbsent(order.orderId, () => []).add(order);
     }
   }
 
@@ -73,8 +74,8 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
       body: ListView.builder(
         itemCount: groupedOrders.length,
         itemBuilder: (BuildContext context, int index) {
-          String username = groupedOrders.keys.toList()[index];
-          List<Order> userOrders = groupedOrders[username]!;
+          String orderid = groupedOrders.keys.toList()[index];
+          List<Order> userOrders = groupedOrders[orderid]!;
 
           // Calculate the total price for all items in the order
           int totalPrice = 0;
@@ -97,7 +98,7 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
                 padding: const EdgeInsets.fromLTRB(0, 0, 8.0, 8.0),
                 child: Center(
                   child: Text(
-                    username,
+                    userOrders[0].username,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18.0,

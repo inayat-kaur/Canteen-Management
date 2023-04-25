@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           await SharedPreferences.getInstance();
                       prefs.setString('token', token);
                       Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (_) => currentOrderCanteen()));
+                          MaterialPageRoute(builder: (_) => orderHistoryCanteen()));
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

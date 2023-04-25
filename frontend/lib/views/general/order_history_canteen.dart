@@ -10,7 +10,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../../models/Order.dart';
 
-
 class orderHistoryCanteen extends StatefulWidget {
   const orderHistoryCanteen({super.key});
   static const routeName = "/orderHistoryCanteen";
@@ -23,6 +22,7 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
   Map<String, List<Order>> groupedOrders = LinkedHashMap<String, List<Order>>();
   User user = User(username: '', role: 0, name: '', phone: '', password: '');
   get http => null;
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -30,6 +30,9 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
   }
 
   Future<void> _getOrders() async {
+    setState(() {
+      isLoading = true;
+    });
     Client client = Client();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? id = await prefs.getString('username');
@@ -63,6 +66,10 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
     for (Order order in collectedOrders) {
       groupedOrders.putIfAbsent(order.orderId, () => []).add(order);
     }
+    setState(() {
+      // Set isLoading to false after loading data
+      isLoading = false;
+    });
   }
 
   @override
@@ -70,72 +77,92 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Order History"),
+        actions: [
+          IconButton(
+            icon: isLoading ? CircularProgressIndicator() : Icon(Icons.refresh),
+            onPressed: () {
+              // Add your code here to refresh the data from the database
+
+              orders.clear();
+              groupedOrders.clear();
+              _getOrders();
+            },
+          ),
+        ],
       ),
-      body: ListView.builder(
-        itemCount: groupedOrders.length,
-        itemBuilder: (BuildContext context, int index) {
-          String orderid = groupedOrders.keys.toList()[index];
-          List<Order> userOrders = groupedOrders[orderid]!;
-
-          // Calculate the total price for all items in the order
-          int totalPrice = 0;
-          for (Order order in userOrders) {
-            totalPrice += order.price * order.quantity;
-          }
-
-          return Container(
-            margin: EdgeInsets.fromLTRB(8, 4, 8, 4),
-            padding: EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey.shade300,
-                width: 1.5,
-              ),
-              borderRadius: BorderRadius.circular(8.0),
+      body: Stack(
+        children: [
+          if (isLoading)
+            Center(
+              child: CircularProgressIndicator(),
             ),
-            child: ListTile(
-              title: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 8.0, 8.0),
-                child: Center(
-                  child: Text(
-                    userOrders[0].username,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
+          ListView.builder(
+            itemCount: groupedOrders.length,
+            itemBuilder: (BuildContext context, int index) {
+              String orderid = groupedOrders.keys.toList()[index];
+              List<Order> userOrders = groupedOrders[orderid]!;
+
+              // Calculate the total price for all items in the order
+              int totalPrice = 0;
+              for (Order order in userOrders) {
+                totalPrice += order.price * order.quantity;
+              }
+
+              return Container(
+                margin: EdgeInsets.fromLTRB(8, 4, 8, 4),
+                padding: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.grey.shade300,
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: ListTile(
+                  title: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 8.0, 8.0),
+                    child: Center(
+                      child: Text(
+                        userOrders[0].username,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18.0,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  for (Order order in userOrders)
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text('${order.quantity}x ${order.item}'),
-                        Text('₹${order.price * order.quantity}'),
-                      ],
-                    ),
-                  Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Total',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        '₹${totalPrice}',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      for (Order order in userOrders)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('${order.quantity}x ${order.item}'),
+                            Text('₹${order.price * order.quantity}'),
+                          ],
+                        ),
+                      Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Total',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            '₹${totalPrice}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
-          );
-        },
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

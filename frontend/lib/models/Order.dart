@@ -1,4 +1,5 @@
 class Order {
+  String orderId = "";
   String username = "";
   String orderType = "I"; // I: Instantaneous, P: Pre-Order
   String item = "";
@@ -10,6 +11,7 @@ class Order {
   DateTime time = DateTime.now();
 
   Order({
+    required this.orderId,
     required this.username,
     required this.orderType,
     required this.item,
@@ -21,10 +23,12 @@ class Order {
   });
 
   Order.fromJson(Map<String, dynamic> json) {
+    orderId = json['orderId'];
     username = json['username'];
     orderType = json['orderType'];
     item = json['item'];
     quantity = json['quantity'];
+    price = json['price'];
     orderStatus = json['order_status'];
     paymentStatus = json['payment_status'];
     time = DateTime.parse(json['delivery_time']);
@@ -32,13 +36,15 @@ class Order {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['username'] = this.username;
-    data['orderType'] = this.orderType;
-    data['item'] = this.item;
-    data['quantity'] = this.quantity;
-    data['order_status'] = this.orderStatus;
-    data['payment_status'] = this.paymentStatus;
-    data['delivery_time'] = this.time.toIso8601String();
+    data['orderId'] = orderId;
+    data['username'] = username;
+    data['orderType'] = orderType;
+    data['item'] = item;
+    data['quantity'] = quantity;
+    data['price'] = price;
+    data['order_status'] = orderStatus;
+    data['payment_status'] = paymentStatus;
+    data['delivery_time'] = time.toIso8601String();
     return data;
   }
 }

@@ -53,5 +53,5 @@
 #     "password": "qwerty12"
 # }
 
-GET https://canteenmanagementserver.onrender.com/cart/getMyCart/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjgyNTI3NjAxfQ.rsZa27VPOD1cndKkjVdZg1sWG7Dzns6Hs_FS_1xiN2M
+# GET https://canteenmanagementserver.onrender.com/cart/getMyCart/
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjgyNTI3NjAxfQ.rsZa27VPOD1cndKkjVdZg1sWG7Dzns6Hs_FS_1xiN2M

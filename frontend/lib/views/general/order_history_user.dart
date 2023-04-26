@@ -7,10 +7,8 @@ import '../../urls.dart';
 import '../utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import '../../models/Order.dart';
+import '../../models/order.dart';
 import 'dart:collection';
-
-
 
 class orderHistoryUser extends StatefulWidget {
   const orderHistoryUser({super.key});
@@ -54,7 +52,6 @@ class _orderHistoryUserState extends State<orderHistoryUser> {
     } else {
       throw Exception('Error fetching profile');
     }
-    
   }
 
   @override

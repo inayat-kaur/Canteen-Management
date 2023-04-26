@@ -8,7 +8,7 @@ import '../../urls.dart';
 import '../utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import '../../models/Order.dart';
+import '../../models/order.dart';
 
 class currentOrderCanteen extends StatefulWidget {
   const currentOrderCanteen({super.key});

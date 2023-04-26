@@ -34,6 +34,7 @@ Uri resetPassword2 = Uri.parse('${baseUrl}auth/resetPassword2');
 
 Uri addCartItem = Uri.parse('${baseUrl}cart/addItem');
 Uri deleteCartItem(String id) => Uri.parse('${baseUrl}cart/deleteItem/$id');
+Uri emptyCart = Uri.parse('${baseUrl}cart/deleteAllItems');
 Uri getMyCart = Uri.parse('${baseUrl}cart/getMyCart/');
 Uri updateCartItemQuantity(String id) =>
     Uri.parse('${baseUrl}cart/updateQuantity/$id');

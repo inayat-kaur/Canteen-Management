@@ -7,7 +7,8 @@ const router = express.Router();
 router.post('/addOrder', authenticateToken, async (req, res, next) => {
   try {
     const order = req.body;
-    const result = await orderService.addOrder(order);
+    const username = req.user.username;
+    const result = await orderService.addOrder(order,username);
     res.status(201).json(result);
   } catch (err) {
     next(err);

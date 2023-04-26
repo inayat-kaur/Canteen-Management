@@ -1,24 +1,25 @@
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:frontend/views/utils/helper.dart';
 import 'package:http/http.dart';
-import '../../models/user.dart';
+import '../../models/User.dart';
 import '../../urls.dart';
 import '../utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import '../../models/order.dart';
+import '../../models/Order.dart';
+import 'dart:collection';
 
-class OrderHistoryCanteen extends StatefulWidget {
-  const OrderHistoryCanteen({super.key});
-  static const routeName = "/orderHistoryCanteen";
+
+
+class orderHistoryUser extends StatefulWidget {
+  const orderHistoryUser({super.key});
+  static const routeName = "/orderHistoryUser";
   @override
-  State<OrderHistoryCanteen> createState() => _OrderHistoryCanteenState();
+  State<orderHistoryUser> createState() => _orderHistoryUserState();
 }
 
-class _OrderHistoryCanteenState extends State<OrderHistoryCanteen> {
+class _orderHistoryUserState extends State<orderHistoryUser> {
   List<Order> orders = [];
   User user = User(username: '', role: 0, name: '', phone: '', password: '');
   get http => null;
@@ -34,9 +35,8 @@ class _OrderHistoryCanteenState extends State<OrderHistoryCanteen> {
     String? id = await prefs.getString('username');
     if (id == null) id = '';
     String? token = await prefs.getString('token');
-
     final response = await client.get(
-      getOrders,
+      getOrdersByUser(id),
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -45,13 +45,16 @@ class _OrderHistoryCanteenState extends State<OrderHistoryCanteen> {
     if (response.statusCode == 200) {
       List<dynamic> jsonData = json.decode(response.body);
       orders = [];
-
-      setState(() {
-        orders = jsonData.map((e) => Order.fromJson(e)).toList();
-      });
+      setState(
+        () {
+          orders = jsonData.map((e) => Order.fromJson(e)).toList();
+        },
+      );
+      // print(orders[0].username);
     } else {
       throw Exception('Error fetching profile');
     }
+    
   }
 
   @override

@@ -36,18 +36,17 @@ async function getMyCart(username){
     return result;
 }
 
-async function updateQuantity(username, item, amount) {
-    quantity = await db.query('SELECT quantity FROM cart WHERE username = ? AND item = ?', [username, item]);
-    if(quantity+amount<=0){
+async function updateQuantity(username, item, quantity) {
+    if(quantity<=0){
         result = deleteItem(username, item);
         return result;
     }
     else{
-        result = await db.query('UPDATE cart SET quantity = ? WHERE username = ? AND item = ?', [quantity+amount, username, item]);
+        result = await db.query('UPDATE cart SET quantity = ? WHERE username = ? AND item = ?', [quantity, username, item]);
         let message = 'Error in updating quantity';
 
         if (result.affectedRows) {
-            message = `quantity updated to ${quantity+amount} for ${item}`;
+            message = `quantity updated to ${quantity} for ${item}`;
         }
         return {message};
     }

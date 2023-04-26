@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/customer/menuItem.dart';
 import 'package:frontend/views/customer/category_menu_page.dart';
+import 'package:frontend/views/general/profile_page.dart';
 
 class menuPage extends StatefulWidget {
   @override
@@ -41,7 +42,8 @@ class _menuPageState extends State<menuPage> {
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
-              // Navigate to profile page
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => Profile()));
             },
           ),
         ],

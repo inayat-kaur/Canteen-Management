@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/urls.dart';
+import 'package:frontend/controllers/general/profile_page_controller.dart';
 import 'package:frontend/views/general/forget_password.dart';
 import 'package:frontend/views/general/landing_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart';
-import '../../models/User.dart';
+import '../../models/user.dart';
 import '../utils/colors.dart';
 import '../utils/helper.dart';
-import 'dart:convert';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -23,71 +20,16 @@ class _ProfileState extends State<Profile> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
 
-  Future<void> getProfile() async {
-    Client client = Client();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = await prefs.getString('token');
-    final response = await client.get(
-      getUserProfile,
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-    );
-    if (response.statusCode == 200) {
-      Map<String, dynamic> jsonMap = jsonDecode(response.body);
-      Map<String, dynamic> message = jsonMap['message'][0];
-      setState(() {
-        user.fromJson(message);
-      });
-    } else {
-      throw Exception('Error fetching profile');
-    }
-    client.close();
-  }
-
-  Future<void> updateName() async {
-    String newName = _nameController.text.trim();
-    Client client = Client();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = await prefs.getString('token');
-    final response = await client.put(updateUserName, headers: {
-      'Authorization': 'Bearer $token',
-    }, body: {
-      'name': newName,
+  void initialize() async {
+    Map<String, dynamic> message = await getProfile();
+    setState(() {
+      user.fromJson(message);
     });
-    if (response.statusCode == 200) {
-      setState(() {
-        user.name = newName;
-      });
-    } else {
-      throw Exception('Error updating profile');
-    }
-    client.close();
-  }
-
-  Future<void> updatePhone() async {
-    String newPhone = _phoneController.text.trim();
-    Client client = Client();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = await prefs.getString('token');
-    final response = await client.put(updateUserPhone, headers: {
-      'Authorization': 'Bearer $token',
-    }, body: {
-      'phone': newPhone,
-    });
-    if (response.statusCode == 200) {
-      setState(() {
-        user.phone = newPhone;
-      });
-    } else {
-      throw Exception('Error updating profile');
-    }
-    client.close();
   }
 
   @override
   void initState() {
-    getProfile();
+    initialize();
     super.initState();
   }
 
@@ -136,9 +78,11 @@ class _ProfileState extends State<Profile> {
                             trailing: editName
                                 ? IconButton(
                                     icon: Icon(Icons.save),
-                                    onPressed: () {
-                                      updateName();
+                                    onPressed: () async {
+                                      String newName = await updateName(
+                                          _nameController.text.trim());
                                       setState(() {
+                                        user.name = newName;
                                         editName = false;
                                       });
                                     },
@@ -173,10 +117,12 @@ class _ProfileState extends State<Profile> {
                             trailing: editPhone
                                 ? IconButton(
                                     icon: Icon(Icons.save),
-                                    onPressed: () {
-                                      updatePhone();
+                                    onPressed: () async {
+                                      String newPhone = await updateName(
+                                          _phoneController.text.trim());
                                       setState(() {
-                                        editPhone = false;
+                                        user.name = newPhone;
+                                        editName = false;
                                       });
                                     },
                                   )
@@ -203,9 +149,7 @@ class _ProfileState extends State<Profile> {
                             leading: Icon(Icons.logout),
                             title: Text("Logout"),
                             onTap: () async {
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              prefs.setString('token', '');
+                              logout();
                               Navigator.of(context).pushReplacementNamed(
                                   LandingScreen.routeName);
                             },

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/views/customer/menu_page.dart';
 import 'package:frontend/views/general/landing_screen.dart';
 import 'package:frontend/views/customer/order_history_user.dart';
+import 'package:frontend/views/general/login_screen.dart';
+import 'package:frontend/views/general/order_history_canteen.dart';
 import 'package:frontend/views/general/profile_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/helper.dart';
@@ -14,13 +16,12 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   late Timer _timer;
-
   Future<void> getNextPage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = await prefs.getString('token');
     if (token != null && token != "") {
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => menuPage()));
+          .pushReplacement(MaterialPageRoute(builder: (_) => LoginScreen()));
     } else
       Navigator.of(context).pushReplacementNamed(LandingScreen.routeName);
   }

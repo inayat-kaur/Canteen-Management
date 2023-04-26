@@ -6,7 +6,8 @@ const router = express.Router();
 router.post('/addItem', authenticateToken, async (req, res, next) => {
   try {
     const cartItem = req.body;
-    const result = await cartService.addItem(cartItem);
+    username = req.user.username;
+    const result = await cartService.addItem(cartItem,username);
     res.status(201).json(result);
   } catch (err) {
     next(err);
@@ -49,7 +50,7 @@ router.put('/updateQuantity/:id', authenticateToken, async (req, res, next) => {
     username = req.user.username;
     const item = req.params.id;
     const quantity = req.body.quantity;
-    const result = await cartService.updatePrice(username, item, quantity);
+    const result = await cartService.updateQuantity(username, item, quantity);
     res.status(200).json(result);
   } catch (err) {
     next(err);

@@ -1,18 +1,18 @@
 const db = require('./db');
 
-async function addItem(cartItem) {
-    if (!cartItem.item || !cartItem.username) {
-      throw new Error('Missing or invalid menu item');
+async function addItem(cartItem,username) {
+    if (!cartItem.item || !username) {
+      throw new Error('Missing or invalid cart item');
     }
 
-    const queryStmt = `INSERT INTO cart (username, item, quantity) VALUES (?, ?, ?, ?)`;
-    const values = [cartItem.username,cartItem.item,cartItem.quantity];
+    const queryStmt = `INSERT INTO cart (username, item, quantity) VALUES (?, ?, ?)`;
+    const values = [username,cartItem.item,cartItem.quantity];
     const result = await db.query(queryStmt, values);
   
-    let message = 'Error in inserting an item in menu';
+    let message = 'Error in inserting an item in cart';
   
     if (result.affectedRows) {
-      message = `${cartItem.item} added to menu`;
+      message = `${cartItem.item} added to cart`;
     }
   
     return {message};
@@ -20,12 +20,14 @@ async function addItem(cartItem) {
 
   
 async function deleteItem(username, item) {
-    const result = await db.query('DELETE FROM menu WHERE username=? and item = ?',[username], [item]);
+    const queryStmt = `DELETE FROM cart WHERE username = ? AND item = ?`;
+    const values = [username,item];
+    const result = await db.query(queryStmt, values);
   
-    let message = 'Error in deleting an item from menu';
+    let message = 'Error in deleting an item from cart';
   
     if (result.affectedRows) {
-      message = `${item} deleted from menu`;
+      message = `${item} deleted from cart`;
     }
   
     return {message};

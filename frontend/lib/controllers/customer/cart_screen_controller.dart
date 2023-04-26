@@ -131,7 +131,11 @@ int getTotal(List<Product> products) {
 
 Future<void> orderCartItems(
     List<Product> foodProducts, List<String> orderOptions) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String token = prefs.getString('token')!;
   String OrderID = '';
+  OrderID = token.split('.')[1];
+  OrderID += DateTime.now().toString();
   Order order = Order(
       orderId: OrderID,
       username: "",
@@ -142,8 +146,6 @@ Future<void> orderCartItems(
       orderStatus: "N",
       paymentStatus: "N",
       time: DateTime.now());
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token')!;
   Client client = Client();
   for (int i = 0; i < foodProducts.length; i++) {
     order.item = foodProducts[i].title;
@@ -159,7 +161,7 @@ Future<void> orderCartItems(
       'price': order.price.toString(),
       'orderStatus': order.orderStatus,
       'paymentStatus': order.paymentStatus,
-      'time': order.time.toString(),
+      'delivery_time': order.time.toString(),
     });
   }
   final response = await client

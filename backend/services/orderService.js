@@ -1,8 +1,8 @@
 const db = require('./db');
 //const { v4: uuidv4 } = require('uuid');
 
-async function addOrder(order) {
-    if(!order || !order.orderId || !order.item || !order.username || !order.orderType || !order.quantity){
+async function addOrder(order, username) {
+    if(!order || !order.orderId || !order.item || username || !order.orderType || !order.quantity){
         throw new Error('Missing or invalid order');
     }
 
@@ -10,7 +10,7 @@ async function addOrder(order) {
     //const orderId = uuidv4();
 
     const queryStmt = `INSERT INTO orders (orderId, username, orderType, item, quantity, order_status, payment_status, delivery_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-    const values = [order.orderId, order.username, order.orderType, order.item, order.quantity, order.order_status, order.payment_status, delivery_time];
+    const values = [order.orderId, username, order.orderType, order.item, order.quantity, order.order_status, order.payment_status, delivery_time];
     const result = await db.query(queryStmt, values);
 
     let message = 'Error in inserting an order';

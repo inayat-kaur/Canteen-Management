@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:frontend/views/customer/cart_screen.dart';
 import 'package:frontend/views/customer/menu_page.dart';
 import 'package:frontend/views/general/landing_screen.dart';
 import 'package:frontend/views/customer/order_history_user.dart';

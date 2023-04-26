@@ -31,6 +31,18 @@ async function deleteItem(username, item) {
     return {message};
 }
 
+async function deleteAllItems(username){
+    const result = await db.query('DELETE FROM cart WHERE username = ?', [username]);
+
+    let message = 'Error in deleting all items from cart';
+
+    if (result.affectedRows) {
+        message = `All items deleted from cart`;
+    }
+
+    return {message};
+}
+
 async function getMyCart(username){
     const result = await db.query('SELECT * FROM cart WHERE username = ?', [username]);
     return result;
@@ -55,6 +67,7 @@ async function updateQuantity(username, item, quantity) {
 module.exports = {
     addItem,
     deleteItem,
+    deleteAllItems,
     getMyCart,
     updateQuantity
 };

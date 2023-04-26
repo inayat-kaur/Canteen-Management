@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/customer/menuItem.dart';
-import 'package:frontend/views/customer/category_menu_page.dart';
+import 'package:frontend/views/owner/category_menu_page.dart';
 
 class menuPage extends StatefulWidget {
   @override
@@ -8,36 +8,51 @@ class menuPage extends StatefulWidget {
 }
 
 class _menuPageState extends State<menuPage> {
+  List<Map<String, dynamic>> _items = [
+    {
+      "id": 1,
+      "name": "Pizza",
+      "description": "Delicious pizza with your choice of toppings",
+      "price": 10.99,
+      "image": "https://www.example.com/images/pizza.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Burger",
+      "description": "Juicy burger with cheese and bacon",
+      "price": 7.99,
+      "image": "https://www.example.com/images/burger.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Salad",
+      "description": "Healthy salad with fresh veggies and dressing",
+      "price": 5.99,
+      "image": "https://www.example.com/images/salad.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Pasta",
+      "description": "Classic pasta dish with marinara sauce",
+      "price": 8.99,
+      "image": "https://www.example.com/images/pasta.jpg"
+    }
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Welcome"),
+        title: Text("Your Menu"),
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
               // Navigate to cart page
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) => menuItem(
-              //             imagePath: 'https://example.com/image.jpg',
-              //             name: 'Item Name',
-              //             price: 10,
-              //             rating: 4,
-              //             itemCount: 0,
-              //           )),
-              // );
+
             },
           ),
-          IconButton(
-            icon: Icon(Icons.favorite),
-            onPressed: () {
-              // Navigate to wishlist page
-            },
-          ),
+
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
@@ -87,7 +102,7 @@ class _menuPageState extends State<menuPage> {
                             left: 30.0,
                             top: 45.0,
                           ),
-                           child: Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
+                          child: Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
                           // Image.network(
                           //   'frontend/assets/real/fruit.jpg',
                           //   fit: BoxFit.cover,
@@ -183,11 +198,11 @@ class _menuPageState extends State<menuPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildClickableContainer(context, 'Image 1', 'Text 1',
-                        'frontend/assets/real/fruit.jpg'),
+                          'frontend/assets/real/fruit.jpg'),
                       _buildClickableContainer(context, 'Image 2', 'Text 2',
-                        'frontend/assets/real/fruit.jpg'),
+                          'frontend/assets/real/fruit.jpg'),
                       _buildClickableContainer(context, 'Image 3', 'Text 3',
-                        'frontend/assets/real/fruit.jpg'),
+                          'frontend/assets/real/fruit.jpg'),
                     ],
                   ),
                   SizedBox(height: 10.0),
@@ -238,8 +253,8 @@ Widget _buildClickableContainer(
         context,
         MaterialPageRoute(
             builder: (context) => CategoryMenuPage(
-                  category: title,
-                )),
+              category: title,
+            )),
       );
     },
     child: Container(

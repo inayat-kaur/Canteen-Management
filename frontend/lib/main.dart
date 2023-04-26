@@ -1,6 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:frontend/views/general/sign_up_screen.dart';
+import 'package:frontend/views/customer/menu_page.dart';
 import 'package:frontend/views/general/landing_screen.dart';
 import 'views/general/splash_screen.dart';
 import 'views/owner/order_history_canteen.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: SplashScreen(),
+      home: menuPage(),
       routes: {
         LandingScreen.routeName: (context) => LandingScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),

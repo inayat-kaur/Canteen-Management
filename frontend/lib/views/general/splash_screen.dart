@@ -19,11 +19,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> getNextPage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = await prefs.getString('token');
+    
     if (token != null && token != "") {
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (_) => LoginScreen()));
-    } else
+      // Navigator.of(context).pushReplacementNamed(LandingScreen.routeName);
+    } else {
       Navigator.of(context).pushReplacementNamed(LandingScreen.routeName);
+    }
   }
 
   @override

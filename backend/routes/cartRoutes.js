@@ -27,8 +27,8 @@ router.delete('/deleteItem/:id', authenticateToken, async (req, res, next) => {
 router.get('/getMyCart', authenticateToken, async (req, res, next) => {
   try {
     username = req.user.username;
-    const menu = await menuService.getMyCart(username);
-    res.status(200).json(menu);
+    const cart = await cartService.getMyCart(username);
+    res.status(200).json(cart);
   } catch (err) {
     next(err);
   }

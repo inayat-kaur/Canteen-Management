@@ -1,5 +1,5 @@
 // For running in Phone Use ipconfig and paste ipv4 wifi ip address instead of localhost
-String baseUrl = 'http://localhost:3000/';
+String baseUrl = 'https://canteenmanagementserver.onrender.com/';
 
 Uri addMenuItem = Uri.parse('${baseUrl}menu/addItem/');
 Uri deleteMenuItem(String id) => Uri.parse('${baseUrl}menu/deleteItem/$id');
@@ -8,6 +8,7 @@ Uri updateItemAvailability(String id) =>
     Uri.parse('${baseUrl}menu/updateAvailability/$id');
 Uri updateItemRating(String id) => Uri.parse('${baseUrl}menu/updateRating/$id');
 Uri getMenu = Uri.parse('${baseUrl}menu/getMenu/');
+Uri getCategories = Uri.parse('${baseUrl}menu/getCategories/');
 
 Uri addOrder = Uri.parse('${baseUrl}orders/addOrder/');
 Uri deleteOrder(int id, String item) =>

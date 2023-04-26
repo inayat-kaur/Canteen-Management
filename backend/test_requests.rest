@@ -10,7 +10,7 @@
 # }
 
 
-# POST http://localhost:3000/auth/login
+# POST https://canteenmanagementserver.onrender.com/auth/login
 # Content-Type: application/json
 
 # {
@@ -18,8 +18,8 @@
 #     "password": "1234"
 # }
 
-# GET https://canteenmanagementserver.onrender.com/orders/getOrders/
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImphdGluQGdtYWlsLmNvbSIsImlhdCI6MTY4MjM2MzAzM30.Hv34kzvxQwFzueUL1HHHsxzHmvjOh0Sx365z1m9-_g4
+# # GET https://canteenmanagementserver.onrender.com/orders/getOrdersByUser/jatin@gmail.com
+# # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImphdGluQGdtYWlsLmNvbSIsImlhdCI6MTY4MjM2MzAzM30.Hv34kzvxQwFzueUL1HHHsxzHmvjOh0Sx365z1m9-_g4
 
 
 # PUT http://localhost:3000/users/updateName/
@@ -29,6 +29,16 @@
 # {
 #     "name": "helloagain"
 # }
+
+PUT https://canteenmanagementserver.onrender.com/orders/updatePaymentStatus/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImphdGluQGdtYWlsLmNvbSIsImlhdCI6MTY4MjUzOTc0MX0.rv46CVhzUilIk7Tjk_TtfIzOXZL8oEssEJn8OLn5e1A
+
+{
+    "orderId": "jatin@gmail.com"
+    
+}
+
 
 # POST http://localhost:3000/auth/resetPassword
 # Content-Type: application/json

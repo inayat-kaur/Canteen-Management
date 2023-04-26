@@ -57,7 +57,6 @@ async function updatePaymentStatus(orderId, paymentStatus, item) {
     return {message};
 }
 
-// getOrders
 
 async function getOrders() {
     const result = await db.query('SELECT * FROM orders');

@@ -9,9 +9,29 @@ OTPs = [];
 
 router.post('/signUp', async (req, res, next) => {
     try {
+        match = false;
         const user = req.body;
-        const result = await authService.signUp(user);
-        res.status(201).json(result);
+        const OTP = user.OTP;
+        for(i=0; i<OTPs.length; i++){
+            if(OTPs[i][0] == user.username){
+                if(OTPs[i][1] == OTP){
+                    OTPs.splice(i, 1);
+                    match = true;
+                    break;
+                }
+                else{
+                    res.status(401).json("Wrong OTP");
+                    return;
+                }
+            }
+        }
+        if(match) {
+            const result = await authService.signUp(user);
+            res.status(201).json(result);
+        }else{
+            res.status(401).json("No OTP for this account");
+            return;
+        }
     } catch (err) {
         next(err);
     }
@@ -40,8 +60,9 @@ router.post('/mailOTP', async (req, res, next) => {
             }
         }
         if(!present)OTPs.push([req.body.username, OTP]);
-        mailController.sendMail(req.body.username, 'OTP for password reset', `Your OTP is ${OTP}`)
+        mailController.sendMail(req.body.username, 'OTP for Meal Monkey', `Your OTP is ${OTP}`)
         res.status(201).json("OTP sent");
+        console.log(OTPs);
     } catch (err) {
         next(err);
     }
@@ -72,7 +93,7 @@ router.post('/resetPassword2', async (req, res, next) => {
                     break;
                 }
                 else{
-                    res.status(201).json("Wrong OTP");
+                    res.status(401).json("Wrong OTP");
                     return;
                 }
             }
@@ -81,7 +102,7 @@ router.post('/resetPassword2', async (req, res, next) => {
             const result = await authService.resetPassword(username, password);
             res.status(201).json(result);
         }else{
-            res.status(201).json("No OTP for this account");
+            res.status(401).json("No OTP for this account");
             return;
         }
     } catch (err) {

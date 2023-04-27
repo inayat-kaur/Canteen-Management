@@ -7,6 +7,7 @@ import 'views/general/splash_screen.dart';
 import 'views/owner/order_history_canteen.dart';
 import 'views/general/login_screen.dart';
 import 'package:frontend/views/utils/colors.dart';
+import 'package:frontend/views/owner/add_menu_item_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: menuPage(),
+      //home: AddMenuItem(category: "Snacks"),
       routes: {
         LandingScreen.routeName: (context) => LandingScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),

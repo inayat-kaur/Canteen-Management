@@ -64,43 +64,55 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
       body: Column(
         children: [
           SizedBox(height: 5.0),
-          TextField(
+      Padding(
+        padding: EdgeInsets.all(10.0),
+        child: TextField(
+
             decoration: InputDecoration(
+
               hintText: "Search",
               prefixIcon: Icon(Icons.search),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(20.0),
+
               ),
             )
           ),
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: TextField(
-          //     decoration: InputDecoration(
-          //       hintText: "Search",
-          //       prefixIcon: Icon(Icons.search),
-          //       border: OutlineInputBorder(
-          //         borderRadius: BorderRadius.circular(20.0),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          Expanded(
-            child: Text('Text')
-          )
+      ),
+         SizedBox(height: 5.0),
+      menuItem(
+
+        name: 'Item Name',
+        price: 10,
+        rating: 4,
+        image: 'assets/images/real/fruit.jpg',
+        count:3,
+
+      ),
+          menuItem(
+
+            name: 'Item Name2',
+            price: 10,
+            rating: 4,
+            image: 'assets/images/real/fruit.jpg',
+            count:3
+
+          ),
+
           // ListView.builder(
           //   itemCount: 1,
           //   itemBuilder: (context, index) {
-          //     return Text("Test");
-          //     // return  menuItem(
-          //     //
-          //     //   name: 'Item Name',
-          //     //   price: 10,
-          //     //   rating: 4,
-          //     //   image: 'assets/images/real/fruit.jpg',
-          //     //
-          //     // );
-          //       // add other properties as needed
+          //
+          //     return
+          //       menuItem(
+          //
+          //       name: 'Item Name',
+          //       price: 10,
+          //       rating: 4,
+          //       image: 'assets/images/real/fruit.jpg',
+          //
+          //     );
+          //      // add other properties as needed
           //
           //   },
           // ),

@@ -166,6 +166,7 @@ class menuItem extends StatefulWidget {
   final double price;
   final double rating;
   final String image;
+  final int count;
 
   const menuItem({
     Key? key,
@@ -173,6 +174,7 @@ class menuItem extends StatefulWidget {
     required this.price,
     required this.rating,
     required this.image,
+    required this.count,
   }) : super(key: key);
 
   @override
@@ -180,16 +182,32 @@ class menuItem extends StatefulWidget {
 }
 
 class _menuItemState extends State<menuItem> {
-  int itemCount = 0;
+  int itemCount =0;
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Image.network(widget.image),
+    return Container(
+       margin: EdgeInsetsDirectional.only(start: 15,top:5,end:15,bottom:5),
+        decoration: BoxDecoration(
+        border: Border.all(
+        color: Colors.orange,
+        width: 2.0,
+
+    ),
+    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+    ),
+      child:ListTile(
+      contentPadding: EdgeInsetsDirectional.only(start: 15,top:10,end:15,bottom:10),
+      horizontalTitleGap: 20,
+      leading: Image.asset(widget.image ),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(widget.name),
+          Text(widget.name, overflow: TextOverflow.ellipsis,),
           Row(
             children: [
               Icon(Icons.star, color: Colors.amber, size: 16),
@@ -202,7 +220,8 @@ class _menuItemState extends State<menuItem> {
       subtitle: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('\$${widget.price.toStringAsFixed(2)}'),
+          Text(' \u{20B9}${widget.price.toStringAsFixed(2)}',
+            overflow: TextOverflow.ellipsis,),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
@@ -217,7 +236,7 @@ class _menuItemState extends State<menuItem> {
                       itemCount--;
                     });
                   },
-                  child: Icon(Icons.remove, size: 16),
+                  child: Icon(Icons.remove, size: 20),
                 ),
                 SizedBox(width: 8),
                 Text(itemCount.toString(), style: TextStyle(fontSize: 16)),
@@ -228,13 +247,14 @@ class _menuItemState extends State<menuItem> {
                       itemCount++;
                     });
                   },
-                  child: Icon(Icons.add, size: 16),
+                  child: Icon(Icons.add, size: 20),
                 ),
               ],
             ),
           ),
         ],
       ),
+    ),
     );
   }
 }

@@ -2,42 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:frontend/views/customer/menuItem.dart';
 import 'package:frontend/views/owner/category_menu_page.dart';
 
-class menuPage extends StatefulWidget {
+class menuPageOwner extends StatefulWidget {
   @override
-  _menuPageState createState() => _menuPageState();
+  _menuPageStateOwner createState() => _menuPageStateOwner();
 }
 
-class _menuPageState extends State<menuPage> {
-  List<Map<String, dynamic>> _items = [
-    {
-      "id": 1,
-      "name": "Pizza",
-      "description": "Delicious pizza with your choice of toppings",
-      "price": 10.99,
-      "image": "https://www.example.com/images/pizza.jpg"
-    },
-    {
-      "id": 2,
-      "name": "Burger",
-      "description": "Juicy burger with cheese and bacon",
-      "price": 7.99,
-      "image": "https://www.example.com/images/burger.jpg"
-    },
-    {
-      "id": 3,
-      "name": "Salad",
-      "description": "Healthy salad with fresh veggies and dressing",
-      "price": 5.99,
-      "image": "https://www.example.com/images/salad.jpg"
-    },
-    {
-      "id": 4,
-      "name": "Pasta",
-      "description": "Classic pasta dish with marinara sauce",
-      "price": 8.99,
-      "image": "https://www.example.com/images/pasta.jpg"
-    }
-  ];
+class _menuPageStateOwner extends State<menuPageOwner> {
+  final TextEditingController _text1Controller = TextEditingController();
+  final TextEditingController _text2Controller = TextEditingController();
+
+  String _savedText1 = '';
+  String _savedText2 = '';
 
   @override
   Widget build(BuildContext context) {
@@ -114,19 +89,30 @@ class _menuPageState extends State<menuPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              'First text field',
-                              style: TextStyle(fontSize: 20.0),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                            TextField(
+                              controller: _text1Controller,
+                              decoration: InputDecoration(
+                                labelText: 'Enter Offer',
+                              ),
                             ),
-                            SizedBox(height: 5.0),
-                            Text(
-                              'Second text fieldjsiuaye78fhodif90weif0wrofiljah',
-                              style: TextStyle(fontSize: 16.0),
-                              maxLines: 5,
-                              overflow: TextOverflow.ellipsis,
+                            TextField(
+                              controller: _text2Controller,
+                              decoration: InputDecoration(
+                                labelText: 'Details',
+                              ),
                             ),
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _savedText1 = _text1Controller.text;
+                                  _savedText2 = _text2Controller.text;
+                                });
+                                // Save text to database or variable
+                              },
+                              child: Text('Save'),
+                            ),
+
+
                           ],
                         ),
                       ),
@@ -153,11 +139,9 @@ class _menuPageState extends State<menuPage> {
                             left: 30.0,
                             top: 45.0,
                           ),
-                          child:  Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
+                          child: Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
                           // Image.network(
-                          //
-                          //
-                          //   'assets/images/real/fruit.jpg',
+                          //   'frontend/assets/real/fruit.jpg',
                           //   fit: BoxFit.cover,
                           // ),
                         ),
@@ -167,19 +151,30 @@ class _menuPageState extends State<menuPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              'First text field',
-                              style: TextStyle(fontSize: 20.0),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                            TextField(
+                              controller: _text1Controller,
+                              decoration: InputDecoration(
+                                labelText: 'Enter Offer',
+                              ),
                             ),
-                            SizedBox(height: 5.0),
-                            Text(
-                              'Second text fieldjsiuaye78fhodif90weif0wrofiljah',
-                              style: TextStyle(fontSize: 16.0),
-                              maxLines: 5,
-                              overflow: TextOverflow.ellipsis,
+                            TextField(
+                              controller: _text2Controller,
+                              decoration: InputDecoration(
+                                labelText: 'Details',
+                              ),
                             ),
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _savedText1 = _text1Controller.text;
+                                  _savedText2 = _text2Controller.text;
+                                });
+                                // Save text to database or variable
+                              },
+                              child: Text('Save'),
+                            ),
+
+
                           ],
                         ),
                       ),
@@ -252,7 +247,7 @@ Widget _buildClickableContainer(
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => CategoryMenuPage(
+            builder: (context) => CategoryMenuPageOwner(
               category: title,
             )),
       );

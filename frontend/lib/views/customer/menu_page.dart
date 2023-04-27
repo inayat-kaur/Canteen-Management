@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/views/customer/menuItem.dart';
 import 'package:frontend/views/customer/category_menu_page.dart';
 import 'package:frontend/views/general/profile_page.dart';
+import 'package:frontend/views/owner/menu_page.dart';
 
 class menuPage extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class _menuPageState extends State<menuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text("Welcome"),
         actions: [
@@ -36,7 +38,12 @@ class _menuPageState extends State<menuPage> {
           IconButton(
             icon: Icon(Icons.favorite),
             onPressed: () {
-              // Navigate to wishlist page
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>menuPageOwner(),
+                ),
+              );
             },
           ),
           IconButton(
@@ -176,6 +183,7 @@ class _menuPageState extends State<menuPage> {
               ],
             ),
           ),
+
           Container(
             margin: EdgeInsets.all(10.0),
             child: SingleChildScrollView(

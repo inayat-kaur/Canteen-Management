@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:frontend/views/customer/cart_screen.dart';
 import 'package:frontend/views/customer/menu_page.dart';
 import 'package:frontend/views/general/landing_screen.dart';
 import 'package:frontend/views/customer/order_history_user.dart';
@@ -19,11 +20,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> getNextPage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = await prefs.getString('token');
+    
     if (token != null && token != "") {
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (_) => LoginScreen()));
-    } else
+      // Navigator.of(context).pushReplacementNamed(LandingScreen.routeName);
+    } else {
       Navigator.of(context).pushReplacementNamed(LandingScreen.routeName);
+    }
   }
 
   @override

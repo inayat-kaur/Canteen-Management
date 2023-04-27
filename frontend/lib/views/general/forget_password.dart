@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import '../../controllers/general/forget_password_controller.dart';
 import '../../urls.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/colors.dart';
 import '../utils/helper.dart';
 
@@ -18,84 +17,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   TextEditingController _otpController = TextEditingController();
   int resetPassword = 1;
   bool otpSent = false;
-
-  Future<void> resetPass1(context) async {
-    Client client = Client();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = await prefs.getString('token');
-    String password = _passwordController.text.trim();
-    final response = await client.post(
-      resetPassword1,
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-      body: {
-        'password': password,
-      },
-    );
-    if (response.statusCode == 201) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Password reset successfully"),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Password reset failed"),
-        ),
-      );
-    }
-  }
-
-  void resetPass2(context) async {
-    Client client = Client();
-    final response = await client.post(
-      resetPassword2,
-      body: {
-        'username': _usernameController.text.trim(),
-        'password': _passwordController.text.trim(),
-        'otp': _otpController.text.trim(),
-      },
-    );
-    if (response.statusCode == 201) {
-      if (!otpSent) otpSent = true;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Password reset successfully"),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Password reset failed"),
-        ),
-      );
-    }
-  }
-
-  void sendOTP(context) async {
-    Client client = Client();
-    final response = await client.post(
-      mailOTP,
-      body: {
-        "username": _usernameController.text.trim(),
-      },
-    );
-    if (response.statusCode == 201) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("OTP sent successfully"),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("OTP sending failed"),
-        ),
-      );
-    }
-  }
 
   Future<void> getLoggedInState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -202,6 +123,23 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   Spacer(
                     flex: 1,
                   ),
+                  (resetPassword == 2)
+                      ? SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              sendOTP(context, _usernameController.text.trim());
+                            },
+                            child: (otpSent)
+                                ? Text("Resend OTP")
+                                : Text("Send OTP"),
+                          ),
+                        )
+                      : Text(""),
+                  Spacer(
+                    flex: 1,
+                  ),
                   SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -217,29 +155,24 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           );
                         } else {
                           if (resetPassword == 1) {
-                            resetPass1(context);
+                            setState(() {
+                              otpSent = resetPass1(
+                                      context, _passwordController.text.trim())
+                                  as bool;
+                            });
                           } else {
-                            resetPass2(context);
+                            resetPass2(
+                                context,
+                                _usernameController.text.trim(),
+                                _passwordController.text.trim(),
+                                _otpController.text.trim(),
+                                otpSent);
                           }
                         }
                       },
                       child: Text("Reset"),
                     ),
                   ),
-                  (resetPassword == 2)
-                      ? SizedBox(
-                          width: double.infinity,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              sendOTP(context);
-                            },
-                            child: (otpSent)
-                                ? Text("Resend OTP")
-                                : Text("Send OTP"),
-                          ),
-                        )
-                      : Text(""),
                   Spacer(flex: 16)
                 ],
               )),

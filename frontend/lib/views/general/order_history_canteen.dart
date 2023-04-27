@@ -1,14 +1,12 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'dart:collection';
-import 'package:frontend/views/utils/helper.dart';
 import 'package:http/http.dart';
 import '../../models/User.dart';
 import '../../urls.dart';
-import '../utils/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../../models/Order.dart';
+import 'package:intl/intl.dart';
 
 class orderHistoryCanteen extends StatefulWidget {
   const orderHistoryCanteen({super.key});
@@ -36,9 +34,8 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
     Client client = Client();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? id = await prefs.getString('username');
-    if (id == null) id = '';
+    id ??= '';
     String? token = await prefs.getString('token');
-
     final response = await client.get(
       getOrders,
       headers: {
@@ -79,7 +76,9 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
         title: const Text("Order History"),
         actions: [
           IconButton(
-            icon: isLoading ? CircularProgressIndicator() : Icon(Icons.refresh),
+            icon: isLoading
+                ? const CircularProgressIndicator()
+                : const Icon(Icons.refresh),
             onPressed: () {
               // Add your code here to refresh the data from the database
 
@@ -93,7 +92,7 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
       body: Stack(
         children: [
           if (isLoading)
-            Center(
+            const Center(
               child: CircularProgressIndicator(),
             ),
           ListView.builder(
@@ -109,8 +108,8 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
               }
 
               return Container(
-                margin: EdgeInsets.fromLTRB(8, 4, 8, 4),
-                padding: EdgeInsets.all(8.0),
+                margin: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
                   border: Border.all(
                     color: Colors.grey.shade300,
@@ -119,17 +118,44 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: ListTile(
-                  title: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 8.0, 8.0),
-                    child: Center(
-                      child: Text(
-                        userOrders[0].username,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
+                  title: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0.0, 8.0),
+                        child: Center(
+                          child: Text(
+                            userOrders[0].username,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.0,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0.0, 8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "#${userOrders[0].orderId}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 18.0,
+                              ),
+                            ),
+                            Text(
+                              DateFormat('MMMM d, h:mm a')
+                                  .format(userOrders[0].time),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w100,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -142,17 +168,17 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
                             Text('₹${order.price * order.quantity}'),
                           ],
                         ),
-                      Divider(),
+                      const Divider(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Total',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            '₹${totalPrice}',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            '₹$totalPrice',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),

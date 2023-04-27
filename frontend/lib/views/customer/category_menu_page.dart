@@ -13,26 +13,19 @@ class CategoryMenuPage extends StatefulWidget {
 class _CategoryMenuPageState extends State<CategoryMenuPage> {
   List<String> menuItems = [];
 
+
+
+  final _searchController = TextEditingController();
+
   @override
-  void initState() {
-    super.initState();
-    // In this example, we're just hard-coding some menu items for each category
-    // You can replace this with your own data source or API call
-    if (widget.category == 'Image 1') {
-      menuItems = ['Fried Calamari', 'Bruschetta', 'Garlic Bread'];
-    } else if (widget.category == 'Entrees') {
-      menuItems = [
-        'Spaghetti Bolognese',
-        'Chicken Parmesan',
-        'Pizza Margherita'
-      ];
-    } else if (widget.category == 'Desserts') {
-      menuItems = ['Tiramisu', 'Cannoli', 'Gelato'];
-    }
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.category),
@@ -41,17 +34,17 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
               icon: Icon(Icons.shopping_cart),
               onPressed: () {
                 // Navigate to cart page
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => menuItem(
-                            imagePath: 'https://example.com/image.jpg',
-                            name: 'Item Name',
-                            price: 10,
-                            rating: 4,
-                            itemCount: 0,
-                          )),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => menuItem(
+                //             imagePath: 'https://example.com/image.jpg',
+                //             name: 'Item Name',
+                //             price: 10,
+                //             rating: 4,
+                //             itemCount: 0,
+                //           )),
+                // );
               },
             ),
             IconButton(
@@ -68,13 +61,72 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
             ),
           ],
         ),
-        body: menuItem(
-          imagePath: 'https://example.com/image.jpg',
-          name: 'Item Name',
-          price: 10,
-          rating: 4,
-          itemCount: 0,
-        )
+      body: Column(
+        children: [
+          SizedBox(height: 5.0),
+      Padding(
+        padding: EdgeInsets.all(10.0),
+        child: TextField(
+
+            decoration: InputDecoration(
+
+              hintText: "Search",
+              prefixIcon: Icon(Icons.search),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.0),
+
+              ),
+            )
+          ),
+      ),
+         SizedBox(height: 5.0),
+      menuItem(
+
+        name: 'Item Name',
+        price: 10,
+        rating: 4,
+        image: 'assets/images/real/fruit.jpg',
+        count:3,
+
+      ),
+          menuItem(
+
+            name: 'Item Name2',
+            price: 10,
+            rating: 4,
+            image: 'assets/images/real/fruit.jpg',
+            count:3
+
+          ),
+
+          // ListView.builder(
+          //   itemCount: 1,
+          //   itemBuilder: (context, index) {
+          //
+          //     return
+          //       menuItem(
+          //
+          //       name: 'Item Name',
+          //       price: 10,
+          //       rating: 4,
+          //       image: 'assets/images/real/fruit.jpg',
+          //
+          //     );
+          //      // add other properties as needed
+          //
+          //   },
+          // ),
+
+        ],
+      ),
+    );
+        // body:menuItem(
+        //   imagePath: 'assets/images/real/fruit.jpg',
+        //   name: 'Item Name',
+        //   price: 10,
+        //   rating: 4,
+        //   itemCount: 0,
+        // )
 
         // ListView.builder(
         //   itemCount: menuItems.length,
@@ -85,6 +137,6 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
         //     );
         //   },
         // ),
-        );
+       // );
   }
 }

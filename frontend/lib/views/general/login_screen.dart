@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/views/customer/menu_page.dart';
+import 'package:frontend/views/general/order_history_canteen.dart';
+import 'package:frontend/views/general/order_user.dart';
 import 'package:frontend/views/general/profile_page.dart';
 import 'package:frontend/views/utils/helper.dart';
 import 'package:http/http.dart';
@@ -33,18 +36,18 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
           child: Column(
             children: [
-              Spacer(
+              const Spacer(
                 flex: 7,
               ),
               Text(
                 "Login",
                 style: Helper.getTheme(context).titleLarge,
               ),
-              Spacer(
+              const Spacer(
                 flex: 1,
               ),
-              Text("Add your details to login"),
-              Spacer(
+              const Text("Add your details to login"),
+              const Spacer(
                 flex: 1,
               ),
               TextField(
@@ -54,13 +57,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   fillColor: AppColor.placeholderBg,
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: AppColor.placeholder,
                   ),
                 ),
                 controller: _usernameController,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 decoration: InputDecoration(
                   hintText: "Password",
@@ -68,13 +71,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   fillColor: AppColor.placeholderBg,
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: AppColor.placeholder,
                   ),
                 ),
                 controller: _passwordController,
               ),
-              Spacer(
+              const Spacer(
                 flex: 1,
               ),
               SizedBox(
@@ -92,20 +95,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       prefs.setString('token', token);
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (_) => Profile()));
+                      prefs.setString('username', username);
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (_) => const currentOrderCanteen()));
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text("Login Failed"),
                         ),
                       );
                     }
                   },
-                  child: Text("Login"),
+                  child: const Text("Login"),
                 ),
               ),
-              Spacer(
+              const Spacer(
                 flex: 1,
               ),
               GestureDetector(
@@ -113,9 +117,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => ForgetPassword()));
                 },
-                child: Text("Forget your password?"),
+                child: const Text("Forget your password?"),
               ),
-              Spacer(
+              const Spacer(
                 flex: 4,
               ),
               GestureDetector(
@@ -125,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Text("Don't have an Account?"),
                     Text(
                       "Sign Up",

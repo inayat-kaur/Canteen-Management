@@ -8,16 +8,17 @@ Uri updateItemAvailability(String id) =>
     Uri.parse('${baseUrl}menu/updateAvailability/$id');
 Uri updateItemRating(String id) => Uri.parse('${baseUrl}menu/updateRating/$id');
 Uri getMenu = Uri.parse('${baseUrl}menu/getMenu/');
+Uri getCategories = Uri.parse('${baseUrl}menu/getCategories/');
 
 Uri addOrder = Uri.parse('${baseUrl}orders/addOrder/');
 Uri deleteOrder(int id, String item) =>
     Uri.parse('${baseUrl}orders/deleteOrder/$id/$item');
 Uri updateOrderStatus(int id, String item) =>
     Uri.parse('${baseUrl}orders/updateOrderStatus/$id/$item');
-Uri updatePaymentStatus(int id, String item) =>
+Uri updatePaymentStatus(String id, String item) =>
     Uri.parse('${baseUrl}orders/updatePaymentStatus/$id/$item');
 Uri getOrders = Uri.parse('${baseUrl}orders/getOrders/');
-Uri getOrdersByUser(String id) => Uri.parse('${baseUrl}orders/deleteOrder/$id');
+Uri getOrdersByUser(String id) => Uri.parse('${baseUrl}orders/getOrdersByUser/$id');
 Uri getOrdersByStatus(String status) =>
     Uri.parse('${baseUrl}orders/getOrdersByStatus/$status');
 
@@ -33,6 +34,7 @@ Uri resetPassword2 = Uri.parse('${baseUrl}auth/resetPassword2');
 
 Uri addCartItem = Uri.parse('${baseUrl}cart/addItem');
 Uri deleteCartItem(String id) => Uri.parse('${baseUrl}cart/deleteItem/$id');
+Uri emptyCart = Uri.parse('${baseUrl}cart/deleteAllItems');
 Uri getMyCart = Uri.parse('${baseUrl}cart/getMyCart/');
 Uri updateCartItemQuantity(String id) =>
     Uri.parse('${baseUrl}cart/updateQuantity/$id');

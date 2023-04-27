@@ -1,16 +1,14 @@
 const db = require('./db');
 //const { v4: uuidv4 } = require('uuid');
 
-async function addOrder(order) {
-    if(!order || !order.orderId || !order.item || !order.username || !order.orderType || !order.quantity){
+async function addOrder(order, username) {
+    if(!order || !order.orderId || !order.item || !username || !order.orderType || !order.quantity){
         throw new Error('Missing or invalid order');
     }
+    const delivery_time = order.delivery_time ? new Date(order.delivery_time).toISOString().slice(0, 19).replace('T', ' ') : new Date("0000-00-00 12:00:00.000000").toISOString().slice(0, 19).replace('T', ' ');
 
-    const delivery_time = order.delivery_time ? new Date(order.delivery_time).toISOString().slice(0, 19).replace('T', ' ') : null;
-    //const orderId = uuidv4();
-
-    const queryStmt = `INSERT INTO orders (orderId, username, orderType, item, quantity, order_status, payment_status, delivery_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-    const values = [order.orderId, order.username, order.orderType, order.item, order.quantity, order.order_status, order.payment_status, delivery_time];
+    const queryStmt = `INSERT INTO orders (orderId, username, orderType, item, quantity,price, order_status, payment_status, delivery_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)`;
+    const values = [order.orderId, username, order.orderType, order.item, order.quantity,order.price, order.orderStatus, order.paymentStatus, delivery_time];
     const result = await db.query(queryStmt, values);
 
     let message = 'Error in inserting an order';
@@ -59,7 +57,6 @@ async function updatePaymentStatus(orderId, paymentStatus, item) {
     return {message};
 }
 
-// getOrders
 
 async function getOrders() {
     const result = await db.query('SELECT * FROM orders');

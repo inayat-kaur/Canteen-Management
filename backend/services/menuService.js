@@ -70,6 +70,11 @@ async function getMenu() {
   return rows;
 }
 
+async function getCategories(){
+  const rows = await db.query('SELECT DISTINCT category FROM menu');
+  return rows;
+}
+
 module.exports = {
   addItem,
   deleteItem,
@@ -77,6 +82,7 @@ module.exports = {
   updateAvailability,
   updateRating,
   getMenu,
+  getCategories
 };
 
 

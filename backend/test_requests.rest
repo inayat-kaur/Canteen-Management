@@ -10,7 +10,7 @@
 # }
 
 
-# POST http://localhost:3000/auth/login
+# POST https://canteenmanagementserver.onrender.com/auth/login
 # Content-Type: application/json
 
 # {
@@ -18,8 +18,8 @@
 #     "password": "1234"
 # }
 
-GET https://canteenmanagementserver.onrender.com/orders/getOrders/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImphdGluQGdtYWlsLmNvbSIsImlhdCI6MTY4MjM2MzAzM30.Hv34kzvxQwFzueUL1HHHsxzHmvjOh0Sx365z1m9-_g4
+# # GET https://canteenmanagementserver.onrender.com/orders/getOrdersByUser/jatin@gmail.com
+# # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImphdGluQGdtYWlsLmNvbSIsImlhdCI6MTY4MjM2MzAzM30.Hv34kzvxQwFzueUL1HHHsxzHmvjOh0Sx365z1m9-_g4
 
 
 # PUT http://localhost:3000/users/updateName/
@@ -29,6 +29,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphd
 # {
 #     "name": "helloagain"
 # }
+
+PUT https://canteenmanagementserver.onrender.com/orders/updatePaymentStatus/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImphdGluQGdtYWlsLmNvbSIsImlhdCI6MTY4MjUzOTc0MX0.rv46CVhzUilIk7Tjk_TtfIzOXZL8oEssEJn8OLn5e1A
+
+{
+    "orderId": "jatin@gmail.com"
+    
+}
+
 
 # POST http://localhost:3000/auth/resetPassword
 # Content-Type: application/json
@@ -45,3 +55,57 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphd
 #     "username": "inayatk.grewal@gmail.com"
 # }
 
+# POST https://canteenmanagementserver.onrender.com/auth/login
+# Content-Type: application/json
+
+# {
+#     "username": "test@gmail.com",
+#     "password": "qwerty12"
+# }
+
+# GET https://canteenmanagementserver.onrender.com/cart/getMyCart/
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjgyNTI3NjAxfQ.rsZa27VPOD1cndKkjVdZg1sWG7Dzns6Hs_FS_1xiN2M
+
+# POST http://localhost:3000/auth/login
+# Content-Type: application/json
+
+# {
+#     "username": "test@gmail.com",
+#     "password": "qwerty12"
+# }
+
+# POST http://localhost:3000/cart/addItem
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjgyNTM4ODc1fQ.CW9bYf0ocWV55hx8SoaVRTEo9GWasiyAMbBwgI7KR-A
+
+# {
+#     "item": "Tea",
+#     "quantity": 4
+# }
+
+# PUT http://localhost:3000/cart/updateQuantity/Tea
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjgyNTM4ODc1fQ.CW9bYf0ocWV55hx8SoaVRTEo9GWasiyAMbBwgI7KR-A
+
+# {
+#     "quantity": 10
+# }
+
+# DELETE http://localhost:3000/cart/deleteItem/Tea
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjgyNTM4ODc1fQ.CW9bYf0ocWV55hx8SoaVRTEo9GWasiyAMbBwgI7KR-A
+
+# POST http://localhost:3000/orders/addOrder
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAZ21haWwuY29tIiwiaWF0IjoxNjgyNTM4ODc1fQ.CW9bYf0ocWV55hx8SoaVRTEo9GWasiyAMbBwgI7KR-A
+
+# {
+#     "orderId": "aevhjwdjm124",
+#     "orderType": "I",
+#     "item": "Tea",
+#     "quantity": "4",
+#     "price": "10",
+#     "orderStatus": "N",
+#     "paymentStatus": "N",
+#     "delivery_time": "2021-03-01 12:00:00.000000"
+# }

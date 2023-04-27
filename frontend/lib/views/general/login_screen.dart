@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/views/customer/menu_page.dart';
-import 'package:frontend/views/general/order_history_canteen.dart';
-import 'package:frontend/views/general/order_history_user.dart';
 import 'package:frontend/views/general/profile_page.dart';
 import 'package:frontend/views/utils/helper.dart';
 import 'package:http/http.dart';
@@ -11,8 +8,7 @@ import 'sign_up_screen.dart';
 import 'forget_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:frontend/views/customer/order_history_user.dart';
-import 'package:frontend/views/general/current_orders_canteen.dart';
-import '../customer/cart_screen.dart';
+import 'cart_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = "/loginScreen";
@@ -97,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           await SharedPreferences.getInstance();
                       prefs.setString('token', token);
                       Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (_) => orderHistoryCanteen()));
+                          MaterialPageRoute(builder: (_) => Profile()));
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/general/sign_up_screen.dart';
 import 'package:frontend/views/general/landing_screen.dart';
+import 'package:frontend/views/owner/edit_menu_item_screen.dart';
 import 'views/general/splash_screen.dart';
 import 'views/owner/order_history_canteen.dart';
 import 'views/general/login_screen.dart';
 import 'package:frontend/views/utils/colors.dart';
+import 'package:frontend/models/menu.dart';
 
 void main() {
   runApp(MyApp());
@@ -36,7 +38,16 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: SplashScreen(),
+      //home: SplashScreen(),
+      home: EditMenuItem(
+          menu: Menu(
+        item: "Chicken Rice",
+        price: 55,
+        availability: "U",
+        rating: 4,
+        category: "Rice",
+        type: 1,
+      )),
       routes: {
         LandingScreen.routeName: (context) => LandingScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),

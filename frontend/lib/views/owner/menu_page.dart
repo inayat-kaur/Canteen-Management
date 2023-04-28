@@ -1,56 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/customer/menuItem.dart';
-import 'package:frontend/views/customer/category_menu_page.dart';
-import 'package:frontend/views/general/profile_page.dart';
-import 'package:frontend/views/owner/menu_page.dart';
+import 'package:frontend/views/owner/category_menu_page.dart';
 
-class menuPage extends StatefulWidget {
+class menuPageOwner extends StatefulWidget {
   @override
-  _menuPageState createState() => _menuPageState();
+  _menuPageStateOwner createState() => _menuPageStateOwner();
 }
 
-class _menuPageState extends State<menuPage> {
+class _menuPageStateOwner extends State<menuPageOwner> {
+  final TextEditingController _text1Controller = TextEditingController();
+  final TextEditingController _text2Controller = TextEditingController();
+
+  String _savedText1 = '';
+  String _savedText2 = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Text("Welcome"),
+        title: Text("Your Menu"),
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
               // Navigate to cart page
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) => menuItem(
-              //             imagePath: 'https://example.com/image.jpg',
-              //             name: 'Item Name',
-              //             price: 10,
-              //             rating: 4,
-              //             itemCount: 0,
-              //           )),
-              // );
+
             },
           ),
-          IconButton(
-            icon: Icon(Icons.favorite),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>menuPageOwner(),
-                ),
-              );
-            },
-          ),
+
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => Profile()));
+              // Navigate to profile page
             },
           ),
         ],
@@ -96,7 +77,7 @@ class _menuPageState extends State<menuPage> {
                             left: 30.0,
                             top: 45.0,
                           ),
-                           child: Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
+                          child: Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
                           // Image.network(
                           //   'frontend/assets/real/fruit.jpg',
                           //   fit: BoxFit.cover,
@@ -108,19 +89,30 @@ class _menuPageState extends State<menuPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              'First text field',
-                              style: TextStyle(fontSize: 20.0),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                            TextField(
+                              controller: _text1Controller,
+                              decoration: InputDecoration(
+                                labelText: 'Enter Offer',
+                              ),
                             ),
-                            SizedBox(height: 5.0),
-                            Text(
-                              'Second text fieldjsiuaye78fhodif90weif0wrofiljah',
-                              style: TextStyle(fontSize: 16.0),
-                              maxLines: 5,
-                              overflow: TextOverflow.ellipsis,
+                            TextField(
+                              controller: _text2Controller,
+                              decoration: InputDecoration(
+                                labelText: 'Details',
+                              ),
                             ),
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _savedText1 = _text1Controller.text;
+                                  _savedText2 = _text2Controller.text;
+                                });
+                                // Save text to database or variable
+                              },
+                              child: Text('Save'),
+                            ),
+
+
                           ],
                         ),
                       ),
@@ -147,11 +139,9 @@ class _menuPageState extends State<menuPage> {
                             left: 30.0,
                             top: 45.0,
                           ),
-                          child:  Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
+                          child: Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
                           // Image.network(
-                          //
-                          //
-                          //   'assets/images/real/fruit.jpg',
+                          //   'frontend/assets/real/fruit.jpg',
                           //   fit: BoxFit.cover,
                           // ),
                         ),
@@ -161,19 +151,30 @@ class _menuPageState extends State<menuPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              'First text field',
-                              style: TextStyle(fontSize: 20.0),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
+                            TextField(
+                              controller: _text1Controller,
+                              decoration: InputDecoration(
+                                labelText: 'Enter Offer',
+                              ),
                             ),
-                            SizedBox(height: 5.0),
-                            Text(
-                              'Second text fieldjsiuaye78fhodif90weif0wrofiljah',
-                              style: TextStyle(fontSize: 16.0),
-                              maxLines: 5,
-                              overflow: TextOverflow.ellipsis,
+                            TextField(
+                              controller: _text2Controller,
+                              decoration: InputDecoration(
+                                labelText: 'Details',
+                              ),
                             ),
+                            ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  _savedText1 = _text1Controller.text;
+                                  _savedText2 = _text2Controller.text;
+                                });
+                                // Save text to database or variable
+                              },
+                              child: Text('Save'),
+                            ),
+
+
                           ],
                         ),
                       ),
@@ -183,7 +184,6 @@ class _menuPageState extends State<menuPage> {
               ],
             ),
           ),
-
           Container(
             margin: EdgeInsets.all(10.0),
             child: SingleChildScrollView(
@@ -193,11 +193,11 @@ class _menuPageState extends State<menuPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildClickableContainer(context, 'Image 1', 'Text 1',
-                        'frontend/assets/real/fruit.jpg'),
+                          'frontend/assets/real/fruit.jpg'),
                       _buildClickableContainer(context, 'Image 2', 'Text 2',
-                        'frontend/assets/real/fruit.jpg'),
+                          'frontend/assets/real/fruit.jpg'),
                       _buildClickableContainer(context, 'Image 3', 'Text 3',
-                        'frontend/assets/real/fruit.jpg'),
+                          'frontend/assets/real/fruit.jpg'),
                     ],
                   ),
                   SizedBox(height: 10.0),
@@ -247,9 +247,9 @@ Widget _buildClickableContainer(
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => CategoryMenuPage(
-                  category: title,
-                )),
+            builder: (context) => CategoryMenuPageOwner(
+              category: title,
+            )),
       );
     },
     child: Container(

@@ -87,8 +87,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () async {
-                    String username = _usernameController.text;
-                    String password = _passwordController.text;
+                    String username = _usernameController.text.trim();
+                    String password = _passwordController.text.trim();
 
                     bool credentialsValidated =
                         await loginUser(username, password);

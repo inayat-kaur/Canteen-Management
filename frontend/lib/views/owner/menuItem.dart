@@ -65,7 +65,7 @@ class _menuItemStateOwner extends State<menuItemOwner> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
+                border: Border.all(color: Colors.orange),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: GestureDetector(
@@ -86,8 +86,8 @@ class _menuItemStateOwner extends State<menuItemOwner> {
                 child: Text(
                   'Edit',
                   style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    color: Colors.blue,
+                   // decoration: TextDecoration.underline,
+                    color: Colors.orange,
                   ),
                 ),
               ),

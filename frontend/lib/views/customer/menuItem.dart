@@ -226,32 +226,55 @@ class _menuItemState extends State<menuItem> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
+                border: Border.all(color: Colors.orange),
                 borderRadius: BorderRadius.circular(4),
               ),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        itemCount--;
-                      });
-                    },
-                    child: Icon(Icons.remove, size: 20),
+              child: GestureDetector(
+                onTap: () {
+                  // Handle text click
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => EditMenuItem(
+                  //             imagePath: 'https://example.com/image.jpg',
+                  //             name: 'Item Name',
+                  //             price: 10,
+                  //             rating: 4,
+                  //             itemCount: 0,
+                  //           )),
+                  // );
+                },
+                child: Text(
+                  'Add Item',
+                  style: TextStyle(
+
+                    color: Colors.orange,
                   ),
-                  SizedBox(width: 8),
-                  Text(itemCount.toString(), style: TextStyle(fontSize: 16)),
-                  SizedBox(width: 8),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        itemCount++;
-                      });
-                    },
-                    child: Icon(Icons.add, size: 20),
-                  ),
-                ],
+                ),
               ),
+              // child: Row(
+              //   children: [
+              //     GestureDetector(
+              //       onTap: () {
+              //         setState(() {
+              //           itemCount--;
+              //         });
+              //       },
+              //       child: Icon(Icons.remove, size: 20),
+              //     ),
+              //     SizedBox(width: 8),
+              //     Text(itemCount.toString(), style: TextStyle(fontSize: 16)),
+              //     SizedBox(width: 8),
+              //     GestureDetector(
+              //       onTap: () {
+              //         setState(() {
+              //           itemCount++;
+              //         });
+              //       },
+              //       child: Icon(Icons.add, size: 20),
+              //     ),
+              //   ],
+              // ),
             ),
           ],
         ),

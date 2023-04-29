@@ -214,39 +214,21 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+        Expanded(
 
-          Container(
-            margin: EdgeInsets.all(10.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildClickableContainer(context, 'snacks', 'Text 1',
-                          'frontend/assets/real/fruit.jpg', menu),
-                      _buildClickableContainer(context, 'Image 2', 'Text 2',
-                          'frontend/assets/real/fruit.jpg', menu),
-                      _buildClickableContainer(context, 'Image 3', 'Text 3',
-                          'frontend/assets/real/fruit.jpg', menu),
-                    ],
-                  ),
-                  SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildClickableContainer(context, 'Image 4', 'Text 4',
-                          'https://example.com/image4.jpg', menu),
-                      _buildClickableContainer(context, 'Image 5', 'Text 5',
-                          'https://example.com/image5.jpg', menu),
-                      _buildClickableContainer(context, 'Image 6', 'Text 6',
-                          'https://example.com/image6.jpg', menu),
-                    ],
-                  ),
-                ],
-              ),
+          child: GridView.builder(
+            itemCount: categoriesList.length,
+            itemBuilder: (context, index) => _buildClickableContainer( context,categoriesList[index],
+                'assets/images/real/fruit.jpg',  menu),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+             childAspectRatio: 1,
             ),
-          )
+          ),)
+
+
+      //
+
 
           // Expanded(
           //   child: ListView.builder(
@@ -271,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 Widget _buildClickableContainer(BuildContext context, String title,
-    String subtitle, String imageUrl, List<Menu> menu) {
+    String imageUrl, List<Menu> menu) {
   return GestureDetector(
     onTap: () {
       List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
@@ -284,7 +266,8 @@ Widget _buildClickableContainer(BuildContext context, String title,
       );
     },
     child: Container(
-      width: MediaQuery.of(context).size.width / 3 - 20.0,
+      margin: EdgeInsets.only(left: 5,right:5 ,top: 5,bottom: 5),
+     width: MediaQuery.of(context).size.width / 3 - 20.0,
       height: 150.0,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -315,10 +298,7 @@ Widget _buildClickableContainer(BuildContext context, String title,
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 5.0),
-          Text(
-            subtitle,
-            style: TextStyle(fontSize: 14.0, color: Colors.grey),
-          ),
+
         ],
       ),
     ),

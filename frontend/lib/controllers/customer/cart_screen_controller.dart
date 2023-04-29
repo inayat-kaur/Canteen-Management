@@ -134,8 +134,19 @@ Future<void> orderCartItems(
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token')!;
   String OrderID = '';
-  OrderID = token.split('.')[1];
-  OrderID += DateTime.now().toString();
+  String temp = token.split('.')[1];
+  OrderID += temp.substring(2, 4);
+  OrderID += DateTime.now().hour.toString();
+  OrderID += temp.substring(0, 2);
+  OrderID += DateTime.now().day.toString();
+  OrderID += DateTime.now().second.toString();
+  OrderID += temp.substring(6, 8);
+  OrderID += DateTime.now().minute.toString();
+  OrderID += DateTime.now().year.toString();
+  OrderID += temp.substring(8, 12);
+  OrderID += DateTime.now().month.toString();
+  OrderID += DateTime.now().millisecond.toString();
+  print(OrderID);
   Order order = Order(
       orderId: OrderID,
       username: "",
@@ -163,6 +174,7 @@ Future<void> orderCartItems(
       'paymentStatus': order.paymentStatus,
       'delivery_time': order.time.toString(),
     });
+    print("Order placed");
   }
   final response = await client
       .delete(emptyCart, headers: {'Authorization': 'Bearer $token'});

@@ -163,8 +163,8 @@ import 'package:flutter/material.dart';
 
 class menuItem extends StatefulWidget {
   final String name;
-  final double price;
-  final double rating;
+  final int price;
+  final int rating;
   final String image;
   final int count;
 

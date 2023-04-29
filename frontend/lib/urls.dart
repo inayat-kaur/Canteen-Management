@@ -18,7 +18,8 @@ Uri updateOrderStatus(int id, String item) =>
 Uri updatePaymentStatus(String id, String item) =>
     Uri.parse('${baseUrl}orders/updatePaymentStatus/$id/$item');
 Uri getOrders = Uri.parse('${baseUrl}orders/getOrders/');
-Uri getOrdersByUser(String id) => Uri.parse('${baseUrl}orders/getOrdersByUser/$id');
+Uri getOrdersByUser(String id) =>
+    Uri.parse('${baseUrl}orders/getOrdersByUser/$id');
 Uri getOrdersByStatus(String status) =>
     Uri.parse('${baseUrl}orders/getOrdersByStatus/$status');
 

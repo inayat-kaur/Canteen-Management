@@ -1,15 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/controllers/customer/home_controller.dart';
+import 'package:frontend/controllers/general/profile_page_controller.dart';
 import 'package:frontend/views/customer/menuItem.dart';
 import 'package:frontend/views/customer/category_menu_page.dart';
 import 'package:frontend/views/general/profile_page.dart';
 import 'package:frontend/views/owner/menu_page.dart';
 
-class menuPage extends StatefulWidget {
+import '../../models/menu.dart';
+import 'cart_screen.dart';
+
+class HomeScreen extends StatefulWidget {
   @override
-  _menuPageState createState() => _menuPageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _menuPageState extends State<menuPage> {
+class _HomeScreenState extends State<HomeScreen> {
+  List<Menu> menu = [];
+  List<String> categoriesList = [];
+
+  Future<void> fetchMenuItems() async {
+    String token = await getToken();
+    menu = await fetchMenu(token);
+    print("====================================");
+    print(menu);
+    categoriesList = await fetchCategories(token);
+    print(categoriesList);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchMenuItems();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,29 +43,22 @@ class _menuPageState extends State<menuPage> {
           IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
-              // Navigate to cart page
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) => menuItem(
-              //             imagePath: 'https://example.com/image.jpg',
-              //             name: 'Item Name',
-              //             price: 10,
-              //             rating: 4,
-              //             itemCount: 0,
-              //           )),
-              // );
+              //Navigate to cart page
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
             },
           ),
           IconButton(
             icon: Icon(Icons.favorite),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>menuPageOwner(),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => menuPageOwner(),
+              //   ),
+              //);
             },
           ),
           IconButton(
@@ -58,18 +73,28 @@ class _menuPageState extends State<menuPage> {
       body: Column(
         children: [
           SizedBox(height: 5.0),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Search",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: TextField(
+          //     decoration: InputDecoration(
+          //       hintText: "Search",
+          //       prefixIcon: Icon(Icons.search),
+          //       border: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(20.0),
+          //       ),
+          //     ),
+          //     // onChanged: (value) {
+          //     //   List<Menu> filteredMenu = searchMenu(menu, value);
+          //     //   Navigator.push(
+          //     //     context,
+          //     //     MaterialPageRoute(
+          //     //         builder: (context) => CategoryMenuPage(
+          //     //               category: filteredMenu,
+          //     //             )),
+          //     //   );
+          //     // },
+          //   ),
+          // ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 10.0),
             height: 200.0,
@@ -96,7 +121,10 @@ class _menuPageState extends State<menuPage> {
                             left: 30.0,
                             top: 45.0,
                           ),
-                           child: Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
+                          child: Image.asset(
+                            'assets/images/real/fruit.jpg',
+                            fit: BoxFit.cover,
+                          ),
                           // Image.network(
                           //   'frontend/assets/real/fruit.jpg',
                           //   fit: BoxFit.cover,
@@ -147,7 +175,10 @@ class _menuPageState extends State<menuPage> {
                             left: 30.0,
                             top: 45.0,
                           ),
-                          child:  Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
+                          child: Image.asset(
+                            'assets/images/real/fruit.jpg',
+                            fit: BoxFit.cover,
+                          ),
                           // Image.network(
                           //
                           //
@@ -192,12 +223,12 @@ class _menuPageState extends State<menuPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      _buildClickableContainer(context, 'Image 1', 'Text 1',
-                        'frontend/assets/real/fruit.jpg'),
+                      _buildClickableContainer(context, 'snacks', 'Text 1',
+                          'frontend/assets/real/fruit.jpg', menu),
                       _buildClickableContainer(context, 'Image 2', 'Text 2',
-                        'frontend/assets/real/fruit.jpg'),
+                          'frontend/assets/real/fruit.jpg', menu),
                       _buildClickableContainer(context, 'Image 3', 'Text 3',
-                        'frontend/assets/real/fruit.jpg'),
+                          'frontend/assets/real/fruit.jpg', menu),
                     ],
                   ),
                   SizedBox(height: 10.0),
@@ -205,11 +236,11 @@ class _menuPageState extends State<menuPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildClickableContainer(context, 'Image 4', 'Text 4',
-                          'https://example.com/image4.jpg'),
+                          'https://example.com/image4.jpg', menu),
                       _buildClickableContainer(context, 'Image 5', 'Text 5',
-                          'https://example.com/image5.jpg'),
+                          'https://example.com/image5.jpg', menu),
                       _buildClickableContainer(context, 'Image 6', 'Text 6',
-                          'https://example.com/image6.jpg'),
+                          'https://example.com/image6.jpg', menu),
                     ],
                   ),
                 ],
@@ -239,16 +270,16 @@ class _menuPageState extends State<menuPage> {
   }
 }
 
-Widget _buildClickableContainer(
-    BuildContext context, String title, String subtitle, String imageUrl) {
+Widget _buildClickableContainer(BuildContext context, String title,
+    String subtitle, String imageUrl, List<Menu> menu) {
   return GestureDetector(
     onTap: () {
-      // Do something when the container is clicked
+      List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => CategoryMenuPage(
-                  category: title,
+                  category: filteredMenu,
                 )),
       );
     },
@@ -271,7 +302,6 @@ Widget _buildClickableContainer(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
           Image.asset(
             //imageUrl,
             'assets/images/real/fruit.jpg',

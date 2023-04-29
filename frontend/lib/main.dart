@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:frontend/views/general/sign_up_screen.dart';
-import 'package:frontend/views/customer/menu_page.dart';
+import 'package:frontend/views/customer/home_screen.dart';
 import 'package:frontend/views/general/landing_screen.dart';
 import 'package:frontend/views/owner/edit_menu_item_screen.dart';
 import 'views/general/splash_screen.dart';
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: menuPage(),
+      home: SplashScreen(),
       //home: AddMenuItem(category: "Snacks"),
       routes: {
         LandingScreen.routeName: (context) => LandingScreen(),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/views/customer/menu_page.dart';
+import 'package:frontend/views/customer/home_screen.dart';
 import 'package:frontend/views/general/order_history_canteen.dart';
 import 'package:frontend/views/general/order_user.dart';
 import 'package:frontend/views/general/profile_page.dart';
+import 'package:frontend/views/general/current_orders_canteen.dart';
 import 'package:frontend/views/utils/helper.dart';
 import 'package:http/http.dart';
+import '../../controllers/general/login_screen_controller.dart';
 import '../../urls.dart';
 import '../utils/colors.dart';
 import 'sign_up_screen.dart';
@@ -87,17 +89,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () async {
                     String username = _usernameController.text;
                     String password = _passwordController.text;
-                    Response response = await client.post(login,
-                        body: {"username": username, "password": password});
-                    if (response.statusCode == 201) {
-                      String token =
-                          response.body.substring(1, response.body.length - 1);
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.setString('token', token);
-                      prefs.setString('username', username);
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (_) => const currentOrderCanteen()));
+
+                    bool credentialsValidated =
+                        await loginUser(username, password);
+                    if (credentialsValidated) {
+                      int role = await getRole(username);
+                      if (role == 0) {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (_) => HomeScreen()));
+                      } else {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (_) => const currentOrderCanteen()));
+                      }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(

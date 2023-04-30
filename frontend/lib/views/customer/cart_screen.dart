@@ -1,280 +1,311 @@
-// import 'package:flutter/material.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:http/http.dart' as http;
-// import '../../urls.dart';
-// import 'dart:convert';
-// import '../../main.dart';
-// import '../../models/Cart.dart';
-// import '../../models/menu.dart';
-// import '../utils/colors.dart';
-// import 'package:frontend/controllers/customer/cart_page_controller.dart';
+import 'package:flutter/material.dart';
+import 'package:frontend/views/utils/colors.dart';
+import 'package:frontend/controllers/customer/cart_screen_controller.dart';
+import 'order_options_dialog.dart';
 
-// class CartScreen extends StatefulWidget {
-//   CartScreen({Key? key}) : super(key: key);
-//   // final Cart c = Get.put(Cart(quantity: ));
-//   @override
-//   _CartScreenState createState() => _CartScreenState();
-// }
+class CartScreen extends StatefulWidget {
+  const CartScreen({Key? key}) : super(key: key);
+  static const routeName = "/ViewCart";
+  @override
+  _CartScreenState createState() => _CartScreenState();
+}
 
-// class _CartScreenState extends State<CartScreen> {
-//   @override
-//   get http => null;
-  
-//     void initialize() async {
-//     List<Menu> message = await fetchMenu();
-//     // setState(() {
-//     //   user.fromJson(message);
-//     // });
-//   }
+class _CartScreenState extends State<CartScreen> {
+  List<Product> foodProducts = [];
+  int total = 0;
 
-//   // Future<void> getMenu() async {
-//   //   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   //   String? token = await prefs.getString('token');
+  Future<void> initialize() async {
+    List<Product> products = await getProducts();
+    setState(() {
+      foodProducts = products;
+    });
+  }
 
-//   //   Future<List<Cart>> fetchCart(String token) async {
-//   //     final response = await http.get(
-//   //       getMyCart,
-//   //       headers: {
-//   //         'Authorization': 'Bearer $token',
-//   //         'Content-Type': 'application/json',
-//   //       },
-//   //     );
+  @override
+  void initState() {
+    initialize();
+    super.initState();
+  }
 
-//   //       if (response.statusCode == 200) {
-//   //       final List<dynamic> cartJson = json.decode(response.body);
-//   //       List<Cart> cart = [];
-//   //       cartJson.forEach((item) {
-//   //         cart.add(Cart.fromJson(item));
-//   //       });
-//   //       return cart;
-//   //     } else {
-//   //       throw Exception('Failed to fetch menu');
-//   //     }
-//   //   }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: const Text(
+          "Shopping Cart",
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+          child: ListView(
+            children: [
+              ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ScrollPhysics(),
+                  itemCount: foodProducts.length,
+                  itemBuilder: (context, index) =>
+                      FavouriteCard(product: foodProducts[index])),
+              SizedBox(height: 30),
+              Container(
+                padding: EdgeInsets.only(left: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ElevatedButton(
+                      child: Text(
+                        "Place Order",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                        ),
+                      ),
+                      onPressed: () async {
+                        List<String> orderOptions = [];
+                        // orderOptions = await showDialog(
+                        //   context: context,
+                        //   builder: (BuildContext context) {
+                        //     return ServiceDialog();
+                        //   },
+                        // );
+                        orderCartItems(foodProducts, orderOptions);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
-//   //   Future<List<Menu>> fetchMenu(String token) async {
-//   //     final response = await http.get(
-//   //       getMenu,
-//   //       headers: {
-//   //         'Authorization': 'Bearer $token',
-//   //         'Content-Type': 'application/json',
-//   //       },
-//   //     );
+class FavouriteCard extends StatefulWidget {
+  const FavouriteCard({Key? key, required this.product}) : super(key: key);
+  final Product product;
 
-//   //     if (response.statusCode == 200) {
-//   //       final List<dynamic> menuJson = json.decode(response.body);
-//   //       List<Menu> menu = [];
-//   //       menuJson.forEach((item) {
-//   //         menu.add(Menu.fromJson(item));
-//   //       });
-//   //       return menu;
-//   //     } else {
-//   //       throw Exception('Failed to fetch menu');
-//   //     }
-//   //   }
-//   // }
+  @override
+  State<FavouriteCard> createState() => _FavouriteCardState();
+}
 
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: AppColor.orange,
-//         title: const Text(
-//           "Shopping Cart",
-//           style: TextStyle(
-//             color: Colors.white,
-//           ),
-//         ),
-//         elevation: 0,
-//         iconTheme: const IconThemeData(color: Colors.white),
-//       ),
-//       // bottomNavigationBar: const CustomBottomBar(selectMenu: MenuState.cart),
-//       body: SafeArea(
-//         child: Padding(
-//           padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-//           child: ListView(
-//             children: [
-//               ListView.builder(
-//                   //use shrink wrap true and scrollphysics to avoid error because we are using listview in side listview or column
-//                   shrinkWrap: true,
-//                   physics: const ScrollPhysics(),
-//                   // itemCount: 4,
-//                   itemBuilder: (context, index) => FavouriteCard(
-//                         product: cart[index],
-//                         press: () {},
-//                       )),
-//               SizedBox(height: 30),
-//               Container(
-//                 padding: EdgeInsets.only(left: 30),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Text(
-//                       "Grand Total:",
-//                       // textAlign: TextAlign.left,
-//                       style: const TextStyle(
-//                         fontSize: 18,
-//                         color: Colors.black,
-//                       ),
-//                     ),
-//                     SizedBox(height: 20),
-//                     Text(
-//                       "Place Order",
-//                       style: const TextStyle(
-//                         fontSize: 18,
-//                         color: Colors.black,
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+class _FavouriteCardState extends State<FavouriteCard> {
+  bool isdeleted = false;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: isdeleted
+          ? Text("")
+          : InkWell(
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
+                decoration: BoxDecoration(
+                    color: (widget.product.availability == "A")
+                        ? AppColor.orange.withOpacity(0.3)
+                        : AppColor.orange.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(15.0)),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        Image.asset(
+                          widget.product.image,
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.cover,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      width: 10.0,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                widget.product.title,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColor.orange,
+                                ),
+                              ),
+                              const Spacer(),
+                              Text(widget.product.category),
+                              const Spacer(),
+                              (widget.product.type == 0)
+                                  ? Icon(
+                                      Icons.center_focus_strong_sharp,
+                                      color: Color.fromARGB(255, 9, 85, 11),
+                                      size: 30,
+                                    )
+                                  : Icon(
+                                      Icons.circle,
+                                      color: Colors.red,
+                                      size: 30,
+                                    ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 50.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        if (widget.product.quantity > 1) {
+                                          widget.product.quantity--;
+                                        }
+                                      });
+                                    },
+                                    child: Container(
+                                      height: 25,
+                                      width: 25,
+                                      decoration: BoxDecoration(
+                                          color: AppColor.orange,
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                      child: const Icon(
+                                        Icons.remove,
+                                        color: AppColor.placeholderBg,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  Text(
+                                    widget.product.quantity.toString(),
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8.0,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        widget.product.quantity++;
+                                      });
+                                    },
+                                    child: Container(
+                                      height: 25,
+                                      width: 25,
+                                      decoration: BoxDecoration(
+                                          color: AppColor.orange,
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                      child: const Icon(
+                                        Icons.add,
+                                        color: AppColor.placeholderBg,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              RatingStars(widget.product.rating),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "Rs. ${widget.product.price}",
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              ElevatedButton(
+                                child: Text("Save Changes"),
+                                onPressed: () {
+                                  updateQuantity(widget.product.title,
+                                      widget.product.quantity);
+                                },
+                              ),
+                              ElevatedButton(
+                                child: Text("Delete Item"),
+                                onPressed: () {
+                                  deleteItem(widget.product.title);
+                                  setState(() {
+                                    isdeleted = true;
+                                  });
+                                },
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+    );
+  }
+}
 
-// class FavouriteCard extends StatefulWidget {
-//   const FavouriteCard({
-//     Key? key,
-//     required this.product,
-//     required this.press,
-//   }) : super(key: key);
-//   final Cart product;
-//   final VoidCallback press;
+class RatingStars extends StatefulWidget {
+  final int rating;
+  const RatingStars(this.rating, {super.key});
 
-//   @override
-//   State<FavouriteCard> createState() => _FavouriteCardState();
-// }
+  @override
+  State<RatingStars> createState() => _RatingStarsState();
+}
 
-// class _FavouriteCardState extends State<FavouriteCard> {
-//   void add(int price) {
-//     setState(() {
-//       price++;
-//     });
-//   }
-
-//   void minus(int price) {
-//     setState(() {
-//       price--;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(vertical: 10.0),
-//       child: InkWell(
-//         onTap: widget.press,
-//         child: Container(
-//           padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 8.0),
-//           decoration: BoxDecoration(
-//               color: AppColor.orange.withOpacity(0.1),
-//               borderRadius: BorderRadius.circular(15.0)),
-//           child: Row(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Column(
-//                 children: [
-//                   Image.asset(
-//                     widget.product.image,
-//                     height: 100,
-//                     width: 100,
-//                     fit: BoxFit.cover,
-//                   ),
-//                 ],
-//               ),
-//               const SizedBox(
-//                 width: 10.0,
-//               ),
-//               Expanded(
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Text(
-//                       widget.product.item,
-//                       style: const TextStyle(
-//                         fontSize: 18,
-//                         fontWeight: FontWeight.bold,
-//                         color: AppColor.orange,
-//                       ),
-//                     ),
-//                     const SizedBox(
-//                       height: 50.0,
-//                     ),
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         Row(
-//                           children: [
-//                             InkWell(
-//                               onTap: () {},
-//                               child: Container(
-//                                 height: 25,
-//                                 width: 25,
-//                                 decoration: BoxDecoration(
-//                                     color: AppColor.orange,
-//                                     borderRadius: BorderRadius.circular(10.0)),
-//                                 child: IconButton(
-//                                   icon: Icon(
-//                                     Icons.remove,
-//                                     color: AppColor.placeholderBg,
-//                                   ),
-//                                   onPressed: () =>
-//                                       minus(widget.product.quantity),
-//                                 ),
-//                               ),
-//                             ),
-//                             const SizedBox(
-//                               width: 8.0,
-//                             ),
-//                             Text(
-//                               '${widget.product.quantity}',
-//                               style: TextStyle(
-//                                 color: Colors.black,
-//                                 fontSize: 20,
-//                               ),
-//                             ),
-//                             const SizedBox(
-//                               width: 8.0,
-//                             ),
-//                             InkWell(
-//                               onTap: () {},
-//                               child: Container(
-//                                 height: 25,
-//                                 width: 25,
-//                                 decoration: BoxDecoration(
-//                                     color: AppColor.orange,
-//                                     borderRadius: BorderRadius.circular(10.0)),
-//                                 child: IconButton(
-//                                   icon: Icon(
-//                                     Icons.add,
-//                                     color: AppColor.placeholderBg,
-//                                   ),
-//                                   onPressed: () => add(widget.product.quantity),
-//                                 ),
-//                               ),
-//                             )
-//                           ],
-//                         ),
-//                         Text(
-//                           "Rs. ${widget.product.price}",
-//                           style: const TextStyle(
-//                             fontSize: 15,
-//                             fontWeight: FontWeight.bold,
-//                             color: Colors.black,
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ],
-//                 ),
-//               )
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+class _RatingStarsState extends State<RatingStars> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        children: [
+          Icon(
+            Icons.star,
+            color: (widget.rating >= 1) ? Colors.red : Colors.grey,
+          ),
+          Icon(
+            Icons.star,
+            color: (widget.rating >= 2) ? Colors.red : Colors.grey,
+          ),
+          Icon(
+            Icons.star,
+            color: (widget.rating >= 3) ? Colors.red : Colors.grey,
+          ),
+          Icon(
+            Icons.star,
+            color: (widget.rating >= 4) ? Colors.red : Colors.grey,
+          ),
+          Icon(
+            Icons.star,
+            color: (widget.rating >= 5) ? Colors.red : Colors.grey,
+          ),
+        ],
+      ),
+    );
+  }
+}

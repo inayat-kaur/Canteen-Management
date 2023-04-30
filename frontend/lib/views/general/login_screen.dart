@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/views/customer/menu_page.dart';
+import 'package:frontend/views/customer/home_screen.dart';
+import 'package:frontend/views/general/order_history_canteen.dart';
+import 'package:frontend/views/general/order_user.dart';
 import 'package:frontend/views/general/profile_page.dart';
+import 'package:frontend/views/general/current_orders_canteen.dart';
 import 'package:frontend/views/utils/helper.dart';
 import 'package:http/http.dart';
+import '../../controllers/general/login_screen_controller.dart';
 import '../../urls.dart';
 import '../utils/colors.dart';
 import 'sign_up_screen.dart';
 import 'forget_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:frontend/views/customer/order_history_user.dart';
-import '../customer/cart_screen.dart';
+import 'cart_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = "/loginScreen";
@@ -34,18 +38,18 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
           child: Column(
             children: [
-              Spacer(
+              const Spacer(
                 flex: 7,
               ),
               Text(
                 "Login",
                 style: Helper.getTheme(context).titleLarge,
               ),
-              Spacer(
+              const Spacer(
                 flex: 1,
               ),
-              Text("Add your details to login"),
-              Spacer(
+              const Text("Add your details to login"),
+              const Spacer(
                 flex: 1,
               ),
               TextField(
@@ -55,13 +59,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   fillColor: AppColor.placeholderBg,
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: AppColor.placeholder,
                   ),
                 ),
                 controller: _usernameController,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextField(
                 decoration: InputDecoration(
                   hintText: "Password",
@@ -69,13 +73,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   fillColor: AppColor.placeholderBg,
-                  hintStyle: TextStyle(
+                  hintStyle: const TextStyle(
                     color: AppColor.placeholder,
                   ),
                 ),
                 controller: _passwordController,
               ),
-              Spacer(
+              const Spacer(
                 flex: 1,
               ),
               SizedBox(
@@ -83,30 +87,32 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () async {
-                    String username = _usernameController.text;
-                    String password = _passwordController.text;
-                    Response response = await client.post(login,
-                        body: {"username": username, "password": password});
-                    if (response.statusCode == 201) {
-                      String token =
-                          response.body.substring(1, response.body.length - 1);
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.setString('token', token);
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (_) => menuPage()));
+                    String username = _usernameController.text.trim();
+                    String password = _passwordController.text.trim();
+
+                    bool credentialsValidated =
+                        await loginUser(username, password);
+                    if (credentialsValidated) {
+                      int role = await getRole(username);
+                      if (role == 0) {
+                        Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (_) => HomeScreen()));
+                      } else {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (_) => const currentOrderCanteen()));
+                      }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text("Login Failed"),
                         ),
                       );
                     }
                   },
-                  child: Text("Login"),
+                  child: const Text("Login"),
                 ),
               ),
-              Spacer(
+              const Spacer(
                 flex: 1,
               ),
               GestureDetector(
@@ -114,9 +120,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => ForgetPassword()));
                 },
-                child: Text("Forget your password?"),
+                child: const Text("Forget your password?"),
               ),
-              Spacer(
+              const Spacer(
                 flex: 4,
               ),
               GestureDetector(
@@ -126,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Text("Don't have an Account?"),
                     Text(
                       "Sign Up",

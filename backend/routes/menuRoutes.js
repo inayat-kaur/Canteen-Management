@@ -65,4 +65,14 @@ router.get('/getMenu', authenticateToken, async (req, res, next) => {
   }
 });
 
+router.get('/getCategories', authenticateToken, async (req, res, next) => {
+  try {
+    const category = await menuService.getCategories();
+    console.log(category);
+    res.status(200).json(category);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

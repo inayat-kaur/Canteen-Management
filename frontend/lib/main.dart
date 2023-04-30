@@ -1,11 +1,14 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:frontend/views/general/sign_up_screen.dart';
+import 'package:frontend/views/customer/home_screen.dart';
 import 'package:frontend/views/general/landing_screen.dart';
+import 'package:frontend/views/owner/edit_menu_item_screen.dart';
 import 'views/general/splash_screen.dart';
 import 'views/owner/order_history_canteen.dart';
 import 'views/general/login_screen.dart';
 import 'package:frontend/views/utils/colors.dart';
+import 'package:frontend/views/owner/add_menu_item_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,6 +40,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: SplashScreen(),
+      //home: AddMenuItem(category: "Snacks"),
       routes: {
         LandingScreen.routeName: (context) => LandingScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),

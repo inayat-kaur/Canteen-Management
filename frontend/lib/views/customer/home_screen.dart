@@ -1,77 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/controllers/customer/home_controller.dart';
+import 'package:frontend/controllers/general/profile_page_controller.dart';
 import 'package:frontend/views/customer/menuItem.dart';
 import 'package:frontend/views/customer/category_menu_page.dart';
+import 'package:frontend/views/general/profile_page.dart';
+import 'package:frontend/views/owner/menu_page.dart';
 
-class menuPage extends StatefulWidget {
+import '../../models/menu.dart';
+import 'cart_screen.dart';
+
+class HomeScreen extends StatefulWidget {
   @override
-  _menuPageState createState() => _menuPageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _menuPageState extends State<menuPage> {
-  List<Map<String, dynamic>> _items = [
-    {
-      "id": 1,
-      "name": "Pizza",
-      "description": "Delicious pizza with your choice of toppings",
-      "price": 10.99,
-      "image": "https://www.example.com/images/pizza.jpg"
-    },
-    {
-      "id": 2,
-      "name": "Burger",
-      "description": "Juicy burger with cheese and bacon",
-      "price": 7.99,
-      "image": "https://www.example.com/images/burger.jpg"
-    },
-    {
-      "id": 3,
-      "name": "Salad",
-      "description": "Healthy salad with fresh veggies and dressing",
-      "price": 5.99,
-      "image": "https://www.example.com/images/salad.jpg"
-    },
-    {
-      "id": 4,
-      "name": "Pasta",
-      "description": "Classic pasta dish with marinara sauce",
-      "price": 8.99,
-      "image": "https://www.example.com/images/pasta.jpg"
-    }
-  ];
+class _HomeScreenState extends State<HomeScreen> {
+  List<Menu> menu = [];
+  List<String> categoriesList = [];
+
+  Future<void> fetchMenuItems() async {
+    String token = await getToken();
+    menu = await fetchMenu(token);
+    print("====================================");
+    print(menu);
+    categoriesList = await fetchCategories(token);
+    print(categoriesList);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchMenuItems();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: Text("Welcome"),
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
-              // Navigate to cart page
+              //Navigate to cart page
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => menuItem(
-                          imagePath: 'https://example.com/image.jpg',
-                          name: 'Item Name',
-                          price: 10,
-                          rating: 4,
-                          itemCount: 0,
-                        )),
+                MaterialPageRoute(builder: (context) => CartScreen()),
               );
             },
           ),
           IconButton(
             icon: Icon(Icons.favorite),
             onPressed: () {
-              // Navigate to wishlist page
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => menuPageOwner(),
+              //   ),
+              //);
             },
           ),
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
-              // Navigate to profile page
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => Profile()));
             },
           ),
         ],
@@ -79,18 +73,28 @@ class _menuPageState extends State<menuPage> {
       body: Column(
         children: [
           SizedBox(height: 5.0),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Search",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: TextField(
+          //     decoration: InputDecoration(
+          //       hintText: "Search",
+          //       prefixIcon: Icon(Icons.search),
+          //       border: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(20.0),
+          //       ),
+          //     ),
+          //     // onChanged: (value) {
+          //     //   List<Menu> filteredMenu = searchMenu(menu, value);
+          //     //   Navigator.push(
+          //     //     context,
+          //     //     MaterialPageRoute(
+          //     //         builder: (context) => CategoryMenuPage(
+          //     //               category: filteredMenu,
+          //     //             )),
+          //     //   );
+          //     // },
+          //   ),
+          // ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 10.0),
             height: 200.0,
@@ -117,10 +121,14 @@ class _menuPageState extends State<menuPage> {
                             left: 30.0,
                             top: 45.0,
                           ),
-                          child: Image.network(
-                            'https://example.com/image.jpg',
+                          child: Image.asset(
+                            'assets/images/real/fruit.jpg',
                             fit: BoxFit.cover,
                           ),
+                          // Image.network(
+                          //   'frontend/assets/real/fruit.jpg',
+                          //   fit: BoxFit.cover,
+                          // ),
                         ),
                       ),
                       Expanded(
@@ -167,10 +175,16 @@ class _menuPageState extends State<menuPage> {
                             left: 30.0,
                             top: 45.0,
                           ),
-                          child: Image.network(
-                            'https://example.com/image.jpg',
+                          child: Image.asset(
+                            'assets/images/real/fruit.jpg',
                             fit: BoxFit.cover,
                           ),
+                          // Image.network(
+                          //
+                          //
+                          //   'assets/images/real/fruit.jpg',
+                          //   fit: BoxFit.cover,
+                          // ),
                         ),
                       ),
                       Expanded(
@@ -200,38 +214,21 @@ class _menuPageState extends State<menuPage> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.all(10.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildClickableContainer(context, 'Image 1', 'Text 1',
-                          'https://example.com/image1.jpg'),
-                      _buildClickableContainer(context, 'Image 2', 'Text 2',
-                          'https://example.com/image2.jpg'),
-                      _buildClickableContainer(context, 'Image 3', 'Text 3',
-                          'https://example.com/image3.jpg'),
-                    ],
-                  ),
-                  SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildClickableContainer(context, 'Image 4', 'Text 4',
-                          'https://example.com/image4.jpg'),
-                      _buildClickableContainer(context, 'Image 5', 'Text 5',
-                          'https://example.com/image5.jpg'),
-                      _buildClickableContainer(context, 'Image 6', 'Text 6',
-                          'https://example.com/image6.jpg'),
-                    ],
-                  ),
-                ],
-              ),
+        Expanded(
+
+          child: GridView.builder(
+            itemCount: categoriesList.length,
+            itemBuilder: (context, index) => _buildClickableContainer( context,categoriesList[index],
+                'assets/images/real/fruit.jpg',  menu),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+             childAspectRatio: 1,
             ),
-          )
+          ),)
+
+
+      //
+
 
           // Expanded(
           //   child: ListView.builder(
@@ -255,21 +252,22 @@ class _menuPageState extends State<menuPage> {
   }
 }
 
-Widget _buildClickableContainer(
-    BuildContext context, String title, String subtitle, String imageUrl) {
+Widget _buildClickableContainer(BuildContext context, String title,
+    String imageUrl, List<Menu> menu) {
   return GestureDetector(
     onTap: () {
-      // Do something when the container is clicked
+      List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => CategoryMenuPage(
-                  category: title,
+                  category: filteredMenu,
                 )),
       );
     },
     child: Container(
-      width: MediaQuery.of(context).size.width / 3 - 20.0,
+      margin: EdgeInsets.only(left: 5,right:5 ,top: 5,bottom: 5),
+     width: MediaQuery.of(context).size.width / 3 - 20.0,
       height: 150.0,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -287,8 +285,9 @@ Widget _buildClickableContainer(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.network(
-            imageUrl,
+          Image.asset(
+            //imageUrl,
+            'assets/images/real/fruit.jpg',
             width: 80.0,
             height: 80.0,
             fit: BoxFit.cover,
@@ -299,10 +298,7 @@ Widget _buildClickableContainer(
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 5.0),
-          Text(
-            subtitle,
-            style: TextStyle(fontSize: 14.0, color: Colors.grey),
-          ),
+
         ],
       ),
     ),

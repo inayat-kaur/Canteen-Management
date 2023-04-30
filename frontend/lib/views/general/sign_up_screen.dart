@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/models/user.dart';
-import 'package:frontend/urls.dart';
+import 'package:frontend/controllers/general/sign_up_page_controller.dart';
 import 'package:frontend/views/general/login_screen.dart';
 import '../utils/colors.dart';
 import '../utils/helper.dart';
-import 'package:http/http.dart';
 
 class SignUpScreen extends StatefulWidget {
   // const SignUpScreen({super.key});
@@ -20,7 +18,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
-  Client client = Client();
+  TextEditingController _otpController = TextEditingController();
+  bool otpSent = false;
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +114,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _confirmPasswordController,
                 ),
                 Spacer(),
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: "OTP",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    fillColor: AppColor.placeholderBg,
+                    hintStyle: TextStyle(
+                      color: AppColor.placeholder,
+                    ),
+                  ),
+                  controller: _otpController,
+                ),
+                Spacer(),
+                SizedBox(
+                    height: 50,
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        sendOTP(context, _emailController.text.trim());
+                        setState(() {
+                          otpSent = true;
+                        });
+                      },
+                      child: (otpSent) ? Text("Resend OTP") : Text("Send OTP"),
+                    )),
+                Spacer(),
                 SizedBox(
                   height: 50,
                   width: double.infinity,
@@ -131,30 +157,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         );
                       } else {
-                        User user = User(
-                          name: _nameController.text,
-                          role: 0,
-                          username: _emailController.text,
-                          phone: _phoneController.text,
-                          password: _passwordController.text,
-                        );
-                        Response response =
-                            await client.post(signUp, body: user.toJson());
-                        if (response.statusCode == 201) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Sign Up Successful"),
-                            ),
-                          );
-                          Navigator.of(context)
-                              .pushReplacementNamed(LoginScreen.routeName);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Sign Up Failed"),
-                            ),
-                          );
-                        }
+                        signUpUser(
+                            context,
+                            _nameController.text.trim(),
+                            _emailController.text.trim(),
+                            _passwordController.text.trim(),
+                            _phoneController.text.trim(),
+                            _otpController.text.trim());
                       }
                     },
                     child: Text("Sign Up"),

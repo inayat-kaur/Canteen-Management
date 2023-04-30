@@ -34,6 +34,7 @@ Future<List<String>> fetchCategories(String token) async {
     },
   );
   print("getCategories called");
+  print(response);
   if (response.statusCode == 200) {
     final List<dynamic> categoriesJson = json.decode(response.body);
     final List<String> categories =
@@ -41,6 +42,8 @@ Future<List<String>> fetchCategories(String token) async {
     print(categories);
     return categories;
   } else {
+    print('Error: ${response.statusCode}');
+    print('Response body: ${response.body}');
     throw Exception('Failed to fetch categories');
   }
 }
@@ -58,6 +61,7 @@ List<Menu> searchMenu(List<Menu> menu, String searchText) {
 }
 
 List<Menu> filterMenuBasedOnCategory(List<Menu> menu, String category) {
+  print("filterMenuBasedOnCategory called");
   List<Menu> filteredMenu = [];
   menu.forEach((menuItem) {
     if (menuItem.category.toLowerCase() == category.toLowerCase()) {

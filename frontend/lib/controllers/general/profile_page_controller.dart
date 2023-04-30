@@ -71,3 +71,13 @@ Future<String> getToken() async {
   print("getToken() called");
   return token;
 }
+
+Future<String> getUsername() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? username = await prefs.getString('username');
+  if (username == null) {
+    return "";
+  }
+  print("getUsername() called");
+  return username;
+}

@@ -1,3 +1,4 @@
+import 'package:frontend/controllers/general/profile_page_controller.dart';
 import 'package:frontend/models/order.dart';
 import 'package:frontend/models/cart.dart';
 import 'package:frontend/models/menu.dart';
@@ -25,6 +26,24 @@ class Product {
       required this.rating,
       required this.category,
       required this.type});
+}
+
+Future<void> addToCart(String name) async {
+  String token = await getToken();
+  Client client = Client();
+  print("Add to cart called");
+  final response = await client.post(addCartItem, headers: {
+    'Authorization': 'Bearer $token',
+  }, body: {
+    'item': name,
+    'quantity': '1',
+  });
+  client.close();
+  if (response.statusCode == 201) {
+    print('Added to cart');
+  } else {
+    throw Exception('Failed to add to cart');
+  }
 }
 
 Future<List<Menu>> fetchMenu() async {

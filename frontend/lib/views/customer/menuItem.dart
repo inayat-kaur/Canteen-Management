@@ -1,165 +1,8 @@
-// import 'package:flutter/material.dart';
-//
-//
-// class menuItem extends StatefulWidget {
-//   final String name;
-//   final int price;
-//   final int rating;
-//   final String imagePath;
-//   final int itemCount;
-//   const menuItem({ Key? key, required this.name,required this.price,required this.rating,required this.imagePath,required this.itemCount }): super(key: key);
-//   @override
-//   State<menuItem> createState() => _menuItemState();
-// }
-//
-// class _menuItemState extends State<menuItem> {
-//  int itemCount=0;
-//
-//   void addItem() {
-//     setState(() {
-//       itemCount ++;
-//     });
-//   }
-//
-//   void removeItem() {
-//     setState(() {
-//       if (itemCount > 0) {
-//         itemCount--;
-//       }
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//
-//     return
-//     Container(
-//           width: double.infinity-12, // width equal to phone screen
-//           height: 160, // fixed height of 20
-//           padding: EdgeInsets.only(right: 5,left: 5,top:5),
-//           child: Container(
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(10), // round corners with radius of 10
-//               border: Border.all(color: Colors.orange.shade400), // grey border
-//             ),
-//             padding: EdgeInsets.all(10), // padding of 10 on all sides
-//             child:
-//                 Row(
-//                     mainAxisSize: MainAxisSize.max,
-//                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                     children: <Widget>[
-//                       Flexible(
-//                           child:
-//                           Container(
-//                             decoration: BoxDecoration(
-//                               border: Border.all(
-//                                 color: Colors.green.shade200,
-//                                 width: 1.0,
-//                               ),
-//                             ),
-//                             child:
-//                             Image.asset(
-//
-//                               'assets/images/real/fruit.jpg',
-//                               width: 30,
-//                               height: 90,
-//                             ),
-//                           )
-//                       ),
-//
-//                       Column(
-//                         children: <Widget>[
-//                           // First Row
-//                           Row(
-//                             children: <Widget>[
-//                               // Widgets for the first row
-//
-//                               Text(' $widget.name ',
-//                                 style: const TextStyle(
-//                                   color: Colors.black,
-//                                   fontSize: 17,
-//                                 ),),
-//                               Icon(
-//                                 Icons.star,
-//                                 color: Colors.yellow,
-//
-//                               ),
-//                               Text(' $widget.rating ',
-//                                 style: const TextStyle(
-//                                   color: Colors.black,
-//                                   fontSize: 13,
-//                                 ),),
-//
-//                             ],
-//                           ),
-//
-//                           // Second Row
-//                           Row(
-//                             children: <Widget>[
-//                               // Widgets for the second row
-//                               Icon(
-//                                 Icons.currency_rupee,
-//                                 color: Colors.black,
-//
-//                               ),
-//                               Text(' $widget.price ',
-//                                 style: const TextStyle(
-//                                   color: Colors.black,
-//                                   fontSize: 13,
-//                                 ),),
-//                               Flexible(
-//                                   child:
-//                                   Container(
-//                                     child:
-//                                     Row(
-//                                       mainAxisAlignment: MainAxisAlignment.center,
-//                                       children: [
-//                                         ElevatedButton(
-//                                           onPressed: removeItem,
-//                                           child: Icon(Icons.remove),
-//                                           style: ElevatedButton.styleFrom(
-//                                             shape: CircleBorder(),
-//                                             padding: EdgeInsets.all(9),
-//                                           ),
-//                                         ),
-//                                         SizedBox(width: 1),
-//                                         Text(itemCount.toString(), style: TextStyle(fontSize: 17)),
-//                                         SizedBox(width: 1),
-//                                         ElevatedButton(
-//                                           onPressed: addItem,
-//                                           child: Icon(Icons.add),
-//                                           style: ElevatedButton.styleFrom(
-//                                             shape: CircleBorder(),
-//                                             padding: EdgeInsets.all(9),
-//                                           ),
-//                                         ),
-//                                       ],
-//                                     ),
-//                                   )
-//                               ),
-//
-//                             ],
-//                           ),
-//                         ],
-//                       ),
-//
-//
-//
-//                     ]
-//                 ),
-//
-//            // the child widget you want to wrap with this container
-//           ),
-//         );
-//
-//
-//
-//
-// }}
-//
-//
-//
 import 'package:flutter/material.dart';
+import 'package:frontend/controllers/customer/cart_screen_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../models/cart.dart';
 
 class menuItem extends StatefulWidget {
   final String name;
@@ -182,7 +25,26 @@ class menuItem extends StatefulWidget {
 }
 
 class _menuItemState extends State<menuItem> {
-  int itemCount = 0;
+  bool isAddedToCart = false;
+
+  Future<void> checkIfItemAddedToCart() async {
+    print("checkIfItemAddedToCart");
+    List<Cart> cartItems = await fetchCart();
+    for (int i = 0; i < cartItems.length; i++) {
+      if (cartItems[i].item == widget.name) {
+        setState(() {
+          isAddedToCart = true;
+        });
+        break;
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfItemAddedToCart();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -231,25 +93,27 @@ class _menuItemState extends State<menuItem> {
               ),
               child: GestureDetector(
                 onTap: () {
-                  // Handle text click
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => EditMenuItem(
-                  //             imagePath: 'https://example.com/image.jpg',
-                  //             name: 'Item Name',
-                  //             price: 10,
-                  //             rating: 4,
-                  //             itemCount: 0,
-                  //           )),
-                  // );
+                  print("tap detected");
+                  if (!isAddedToCart) {
+                    print("add to cart case");
+                    setState(() {
+                      isAddedToCart = true;
+                    });
+                    addToCart(widget.name);
+                  } else {
+                    print("remove from cart case");
+                    setState(() {
+                      isAddedToCart = false;
+                    });
+                    deleteItem(widget.name);
+                  }
                 },
                 child: Text(
-                  'Add Item',
+                  isAddedToCart ? 'Added to Cart' : 'Add Item',
                   style: TextStyle(
-
-                    color: Colors.orange,
-                  ),
+                      color: isAddedToCart ? Colors.green : Colors.orange,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               // child: Row(

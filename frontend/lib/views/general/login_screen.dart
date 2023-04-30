@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/views/customer/category_menu_page.dart';
 import 'package:frontend/views/customer/home_screen.dart';
 import 'package:frontend/views/general/order_history_canteen.dart';
 import 'package:frontend/views/general/order_user.dart';
@@ -7,7 +8,9 @@ import 'package:frontend/views/general/current_orders_canteen.dart';
 import 'package:frontend/views/utils/helper.dart';
 import 'package:http/http.dart';
 import '../../controllers/general/login_screen_controller.dart';
+import '../../models/menu.dart';
 import '../../urls.dart';
+import '../customer/menuItem.dart';
 import '../utils/colors.dart';
 import 'sign_up_screen.dart';
 import 'forget_password.dart';
@@ -95,8 +98,18 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (credentialsValidated) {
                       int role = await getRole(username);
                       if (role == 0) {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (_) => HomeScreen()));
+                        // Navigator.of(context).pushReplacement(
+                        //     MaterialPageRoute(builder: (_) => HomeScreen()));
+                        Menu maggi = Menu(
+                            item: "Maggi",
+                            price: 20,
+                            availability: "A",
+                            rating: 4,
+                            category: "Snacks",
+                            type: 0);
+                        List<Menu> menu = [maggi];
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (_) => CategoryMenuPage(category: menu)));
                       } else {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (_) => const currentOrderCanteen()));

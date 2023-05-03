@@ -40,6 +40,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: SplashScreen(),
+      //home: HomeScreen(),
       //home: AddMenuItem(category: "Snacks"),
       routes: {
         LandingScreen.routeName: (context) => LandingScreen(),

@@ -16,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Menu> menu = [];
-  List<String> categoriesList = [];
+  List<String> categoriesList = ['ygftydf','rdtygu','htf6','gvy'];
 
   Future<void> fetchMenuItems() async {
     String token = await getToken();

@@ -1,14 +1,14 @@
 // import 'package:flutter/material.dart';
 // import 'package:frontend/views/utils/colors.dart';
 // import 'package:frontend/data/foodData.dart';
-
+//
 // class CartScreen extends StatefulWidget {
 //   const CartScreen({Key? key}) : super(key: key);
 //   static const routeName = "/ViewCart";
 //   @override
 //   _CartScreenState createState() => _CartScreenState();
 // }
-
+//
 // class _CartScreenState extends State<CartScreen> {
 //   @override
 //   Widget build(BuildContext context) {
@@ -71,7 +71,7 @@
 //     );
 //   }
 // }
-
+//
 // class FavouriteCard extends StatelessWidget {
 //   const FavouriteCard({
 //     Key? key,

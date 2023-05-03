@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:frontend/views/customer/menuItem.dart';
 import 'package:frontend/views/owner/category_menu_page.dart';
 
+import 'order_history_canteen.dart';
+
 class menuPageOwner extends StatefulWidget {
   @override
   _menuPageStateOwner createState() => _menuPageStateOwner();
@@ -21,13 +23,12 @@ class _menuPageStateOwner extends State<menuPageOwner> {
         title: Text("Your Menu"),
         actions: [
           IconButton(
-            icon: Icon(Icons.shopping_cart),
+            icon: Icon(Icons.history),
             onPressed: () {
-              // Navigate to cart page
-
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => orderHistoryCanteen()));
             },
           ),
-
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
@@ -77,7 +78,10 @@ class _menuPageStateOwner extends State<menuPageOwner> {
                             left: 30.0,
                             top: 45.0,
                           ),
-                          child: Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
+                          child: Image.asset(
+                            'assets/images/real/fruit.jpg',
+                            fit: BoxFit.cover,
+                          ),
                           // Image.network(
                           //   'frontend/assets/real/fruit.jpg',
                           //   fit: BoxFit.cover,
@@ -111,8 +115,6 @@ class _menuPageStateOwner extends State<menuPageOwner> {
                               },
                               child: Text('Save'),
                             ),
-
-
                           ],
                         ),
                       ),
@@ -139,7 +141,10 @@ class _menuPageStateOwner extends State<menuPageOwner> {
                             left: 30.0,
                             top: 45.0,
                           ),
-                          child: Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
+                          child: Image.asset(
+                            'assets/images/real/fruit.jpg',
+                            fit: BoxFit.cover,
+                          ),
                           // Image.network(
                           //   'frontend/assets/real/fruit.jpg',
                           //   fit: BoxFit.cover,
@@ -173,8 +178,6 @@ class _menuPageStateOwner extends State<menuPageOwner> {
                               },
                               child: Text('Save'),
                             ),
-
-
                           ],
                         ),
                       ),
@@ -248,8 +251,8 @@ Widget _buildClickableContainer(
         context,
         MaterialPageRoute(
             builder: (context) => CategoryMenuPageOwner(
-              category: title,
-            )),
+                  category: title,
+                )),
       );
     },
     child: Container(
@@ -271,7 +274,6 @@ Widget _buildClickableContainer(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
           Image.asset(
             //imageUrl,
             'assets/images/real/fruit.jpg',

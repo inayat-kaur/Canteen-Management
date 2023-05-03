@@ -1,11 +1,10 @@
-import 'package:frontend/controllers/general/profile_page_controller.dart';
 import 'package:frontend/models/order.dart';
 import 'package:frontend/models/cart.dart';
 import 'package:frontend/models/menu.dart';
 import 'package:frontend/urls.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../../my_services.dart';
 
 class Product {
   String image;
@@ -29,7 +28,8 @@ class Product {
 }
 
 Future<void> addToCart(String name) async {
-  String token = await getToken();
+  MyService myService = MyService();
+  String token = myService.getToken();
   Client client = Client();
   print("Add to cart called");
   final response = await client.post(addCartItem, headers: {
@@ -47,8 +47,8 @@ Future<void> addToCart(String name) async {
 }
 
 Future<List<Menu>> fetchMenu() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token')!;
+  MyService myService = MyService();
+  String token = myService.getToken();
   Client client = Client();
   final response = await client.get(getMenu, headers: {
     'Authorization': 'Bearer $token',
@@ -67,8 +67,8 @@ Future<List<Menu>> fetchMenu() async {
 }
 
 Future<List<Cart>> fetchCart() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token')!;
+  MyService myService = MyService();
+  String token = myService.getToken();
   Client client = Client();
   final response = await client.get(getMyCart, headers: {
     'Authorization': 'Bearer $token',
@@ -110,8 +110,8 @@ Future<List<Product>> getProducts() async {
 }
 
 void updateQuantity(String item, int quantity) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token')!;
+  MyService myService = MyService();
+  String token = myService.getToken();
   Client client = Client();
   final response = await client.put(updateCartItemQuantity(item), headers: {
     'Authorization': 'Bearer $token',
@@ -127,8 +127,8 @@ void updateQuantity(String item, int quantity) async {
 }
 
 void deleteItem(String item) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token')!;
+  MyService myService = MyService();
+  String token = myService.getToken();
   Client client = Client();
   final response = await client.delete(deleteCartItem(item),
       headers: {'Authorization': 'Bearer $token'});
@@ -150,8 +150,8 @@ int getTotal(List<Product> products) {
 
 Future<void> orderCartItems(
     List<Product> foodProducts, List<String> orderOptions) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token')!;
+  MyService myService = MyService();
+  String token = myService.getToken();
   String OrderID = '';
   String temp = token.split('.')[1];
   OrderID += temp.substring(2, 4);

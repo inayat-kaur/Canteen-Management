@@ -6,7 +6,6 @@ import '../../models/user.dart';
 import '../utils/colors.dart';
 import '../utils/helper.dart';
 
-
 class Profile extends StatefulWidget {
   const Profile({super.key});
 
@@ -21,11 +20,8 @@ class _ProfileState extends State<Profile> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
 
-  void initialize() async {
-    Map<String, dynamic> message = await getProfile();
-    setState(() {
-      user.fromJson(message);
-    });
+  void initialize() {
+    user = getProfile();
   }
 
   @override

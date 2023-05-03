@@ -4,6 +4,8 @@ import 'package:frontend/controllers/general/splash_screen_controller.dart';
 import '../utils/helper.dart';
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -14,12 +16,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     _timer = Timer(const Duration(milliseconds: 4000), () {
-      //navigate to login screen
       getNextPage(context);
     });
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(

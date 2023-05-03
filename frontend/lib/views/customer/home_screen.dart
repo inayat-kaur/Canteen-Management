@@ -7,6 +7,7 @@ import 'package:frontend/views/general/profile_page.dart';
 import 'package:frontend/views/owner/menu_page.dart';
 
 import '../../models/menu.dart';
+import '../../my_services.dart';
 import 'cart_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,7 +20,8 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> categoriesList = [];
 
   Future<void> fetchMenuItems() async {
-    String token = await getToken();
+    MyService myService = MyService();
+    String token = myService.getToken();
     menu = await fetchMenu(token);
     print("====================================");
     print(menu);
@@ -214,21 +216,19 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-        Expanded(
-
-          child: GridView.builder(
-            itemCount: categoriesList.length,
-            itemBuilder: (context, index) => _buildClickableContainer( context,categoriesList[index],
-                'assets/images/real/fruit.jpg',  menu),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-             childAspectRatio: 1,
+          Expanded(
+            child: GridView.builder(
+              itemCount: categoriesList.length,
+              itemBuilder: (context, index) => _buildClickableContainer(context,
+                  categoriesList[index], 'assets/images/real/fruit.jpg', menu),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 1,
+              ),
             ),
-          ),)
+          )
 
-
-      //
-
+          //
 
           // Expanded(
           //   child: ListView.builder(
@@ -252,8 +252,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Widget _buildClickableContainer(BuildContext context, String title,
-    String imageUrl, List<Menu> menu) {
+Widget _buildClickableContainer(
+    BuildContext context, String title, String imageUrl, List<Menu> menu) {
   return GestureDetector(
     onTap: () {
       List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
@@ -266,8 +266,8 @@ Widget _buildClickableContainer(BuildContext context, String title,
       );
     },
     child: Container(
-      margin: EdgeInsets.only(left: 5,right:5 ,top: 5,bottom: 5),
-     width: MediaQuery.of(context).size.width / 3 - 20.0,
+      margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
+      width: MediaQuery.of(context).size.width / 3 - 20.0,
       height: 150.0,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -298,7 +298,6 @@ Widget _buildClickableContainer(BuildContext context, String title,
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 5.0),
-
         ],
       ),
     ),

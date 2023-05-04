@@ -53,7 +53,7 @@ class _menuPageStateOwner extends State<menuPageOwner> {
         title: Text("Your Menu"),
         actions: [
           IconButton(
-            icon: Icon(Icons.cloud),
+            icon: Icon(Icons.notification_add_outlined),
             onPressed: () {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => currentOrderCanteen()));
@@ -228,8 +228,8 @@ class _menuPageStateOwner extends State<menuPageOwner> {
           Expanded(
             child: GridView.builder(
               itemCount: categoriesList.length,
-              itemBuilder: (context, index) => _buildClickableContainer(context,
-                  categoriesList[index], menu),
+              itemBuilder: (context, index) => _buildClickableContainer(
+                  context, categoriesList[index], menu),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 1,
@@ -260,8 +260,7 @@ class _menuPageStateOwner extends State<menuPageOwner> {
 }
 
 Widget _buildClickableContainer(
-    BuildContext context, String title,  List<Menu> menu) {
-
+    BuildContext context, String title, List<Menu> menu) {
   if (title == "Add new Category") {
     return GestureDetector(
       onTap: () async {
@@ -316,7 +315,7 @@ Widget _buildClickableContainer(
     );
   }
   List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
-  String imageUrl=filteredMenu[0].image;
+  String imageUrl = filteredMenu[0].image;
   return GestureDetector(
     onTap: () {
       List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
@@ -324,11 +323,11 @@ Widget _buildClickableContainer(
         context,
         MaterialPageRoute(
             builder: (context) => CategoryMenuPage(
-              category: filteredMenu,
-              searchValue: "",
-              categoryTitle: filteredMenu[0].category,
-              original: filteredMenu,
-            )),
+                  category: filteredMenu,
+                  searchValue: "",
+                  categoryTitle: filteredMenu[0].category,
+                  original: filteredMenu,
+                )),
       );
     },
     child: Container(
@@ -353,7 +352,6 @@ Widget _buildClickableContainer(
         children: [
           Image.network(
             imageUrl,
-
             width: 80.0,
             height: 80.0,
             fit: BoxFit.cover,

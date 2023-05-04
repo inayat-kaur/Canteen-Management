@@ -34,7 +34,7 @@ class _EditMenuItemState extends State<EditMenuItem> {
             child: SafeArea(
                 child: Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: 40,
+                horizontal: 10,
                 vertical: 30,
               ),
               child: Column(children: [

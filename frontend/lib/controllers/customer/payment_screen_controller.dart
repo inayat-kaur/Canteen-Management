@@ -88,6 +88,7 @@ Future<void> orderCartItems(
       'paymentStatus': order.paymentStatus,
       'delivery_time': order.time.toString(),
     });
+    print(response.statusCode);
     print("Order placed");
   }
   final response = await client

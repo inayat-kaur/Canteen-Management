@@ -8,6 +8,7 @@ import '../../my_services.dart';
 import '../../urls.dart';
 import 'package:http/http.dart';
 
+// get all the products/items which are common to both menu and cart
 List<Product> getProducts() {
   MyService myService = MyService();
   List<Menu> menu = myService.getMyMenu();
@@ -37,6 +38,7 @@ List<Product> getProductsHelper(List<Menu> menu, List<Cart> cart) {
   return foodProducts;
 }
 
+// calculates the total of the items in the cart
 int getTotal(List<Product> products) {
   int total = 0;
   for (int i = 0; i < products.length; i++) {
@@ -45,6 +47,7 @@ int getTotal(List<Product> products) {
   return total;
 }
 
+// the function places an order of the items in the cart.
 Future<void> orderCartItems(
     List<Product> foodProducts, List<String> orderOptions, context) async {
   MyService myService = MyService();

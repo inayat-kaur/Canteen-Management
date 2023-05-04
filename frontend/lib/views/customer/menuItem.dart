@@ -4,18 +4,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/cart.dart';
 import '../../models/menu.dart';
-
+//widget to represent a menuIitem categoriwise
 class menuItem extends StatefulWidget {
   final Menu menuitem;
 
   const menuItem({
     Key? key,
     required this.menuitem,
-    // required this.name,
-    // required this.price,
-    // required this.rating,
-    // required this.image,
-    // required this.count,
   }) : super(key: key);
 
   @override

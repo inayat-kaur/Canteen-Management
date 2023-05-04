@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'package:frontend/models/Order.dart';
 import 'package:frontend/urls.dart';
 
+// get all the orders from the database for a given customer and these are sorted based on the time of order
 Future<List<Order>> getOrders(
     Map<String, List<Order>> groupedOrdersUser) async {
   Map<String, List<Order>> gou = {};
@@ -63,6 +64,7 @@ Future<List<Order>> getOrders(
   return orders;
 }
 
+// it just returns the status of the current order based on the order status code stored in the database
 String orderStatus(String status) {
   if (status == "C") {
     return "Collected";

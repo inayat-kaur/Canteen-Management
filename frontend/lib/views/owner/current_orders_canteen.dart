@@ -84,16 +84,17 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
     });
   }
 
-  Future<void> _updatePaymentStatus(String orderid, String item) async {
+  Future<void> _updatePaymentStatus(
+      String orderid, String item, String status) async {
     Client client = Client();
     MyService myService = MyService();
     String token = myService.getToken();
-    final response = await client.put(
-      updatePaymentStatus(orderid, item),
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-    );
+    final response =
+        await client.put(updatePaymentStatus(orderid, item), headers: {
+      'Authorization': 'Bearer $token',
+    }, body: {
+      'paymentStatus': status,
+    });
 
     if (response.statusCode == 200) {
       print("Connected");
@@ -102,16 +103,17 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
     }
   }
 
-  Future<void> _updateOrderStatus(String orderid, String item) async {
+  Future<void> _updateOrderStatus(
+      String orderid, String item, String status) async {
     Client client = Client();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-    final response = await client.put(
-      updatePaymentStatus(orderid, item),
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-    );
+    MyService myService = MyService();
+    String token = myService.getToken();
+    final response =
+        await client.put(updatePaymentStatus(orderid, item), headers: {
+      'Authorization': 'Bearer $token',
+    }, body: {
+      'orderStatus': status,
+    });
 
     if (response.statusCode == 200) {
       print("Connected");
@@ -316,14 +318,15 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
                                                   paymentButtonColor1 =
                                                       Colors.green;
                                                 });
-                                                Navigator.pop(context);
 
                                                 for (Order order
                                                     in userOrders) {
                                                   _updatePaymentStatus(
                                                       order.orderId,
-                                                      order.item);
+                                                      order.item,
+                                                      order.paymentStatus);
                                                 }
+                                                Navigator.pop(context);
                                               },
                                               child: const Text("Confirm"),
                                             ),
@@ -372,13 +375,11 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
                                           for (Order order in userOrders) {
                                             order.orderStatus = "C";
                                           }
-
-                                          Navigator.pop(context);
-
                                           for (Order order in userOrders) {
-                                            _updateOrderStatus(
-                                                order.orderId, order.item);
+                                            _updateOrderStatus(order.orderId,
+                                                order.item, order.orderStatus);
                                           }
+                                          Navigator.pop(context);
                                         },
                                         child: const Text("Confirm"),
                                       ),
@@ -566,15 +567,14 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
                                                   paymentButtonColor2 =
                                                       Colors.green;
                                                 });
+                                                for (Order order
+                                                    in userOrders) {
+                                                  _updatePaymentStatus(
+                                                      order.orderId,
+                                                      order.item,
+                                                      order.paymentStatus);
+                                                }
                                                 Navigator.pop(context);
-
-                                                // for (Order order
-                                                //     in userOrders) {
-                                                //   _updatePaymentStatus(
-                                                //       order.orderId,
-                                                //       order.item);
-                                                // }
-                                                // TO DO
                                               },
                                               child: const Text("Confirm"),
                                             ),
@@ -623,16 +623,11 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
                                           for (Order order in userOrders) {
                                             order.orderStatus = "R";
                                           }
-
+                                          for (Order order in userOrders) {
+                                            _updateOrderStatus(order.orderId,
+                                                order.item, order.orderStatus);
+                                          }
                                           Navigator.pop(context);
-
-                                          // for (Order order
-                                          //     in userOrders) {
-                                          //   _updateOrderStatus(
-                                          //       order.orderId,
-                                          //       order.item);
-                                          // }
-                                          // TO DO
                                         },
                                         child: const Text("Confirm"),
                                       ),

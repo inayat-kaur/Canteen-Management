@@ -22,10 +22,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> fetchMenuItems() async {
     MyService myService = MyService();
     String token = myService.getToken();
-    menu = await fetchMenu(token);
+    List<Menu> menu2 = await fetchMenu(token);
+    setState(() {
+      menu = menu2;
+    });
     print("====================================");
     print(menu);
-    categoriesList = await fetchCategories(token);
+    List<String> categoriesList2 = await fetchCategories(token);
+    setState(() {
+      categoriesList = categoriesList2;
+    });
     print(categoriesList);
   }
 

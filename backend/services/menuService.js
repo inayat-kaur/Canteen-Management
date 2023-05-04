@@ -4,7 +4,7 @@ async function addItem(menuItem) {
   if (!menuItem || !menuItem.item || !menuItem.price || !menuItem.availability || !menuItem.rating) {
     throw new Error('Missing or invalid menu item');
   }
-  const queryStmt = `INSERT INTO menu (item, price, availability, rating) VALUES (?, ?, ?, ?)`;
+  const queryStmt = `INSERT INTO menu (item, price, availability, rating, category,type) VALUES (?, ?, ?, ?,?,?)`;
   const values = [menuItem.item, menuItem.price, menuItem.availability, menuItem.rating];
   const result = await db.query(queryStmt, values);
 

@@ -25,17 +25,6 @@ Future<List<Menu>> fetchMenu() async {
 }
 
 Future<List<String>> fetchCategories(String token) async {
-  MyService myService = MyService();
-  if (myService.getMyMenu().isNotEmpty) {
-    List<String> categories = [];
-    List<Menu> mymenu = myService.getMyMenu();
-    for (var item in mymenu) {
-      if (!categories.contains(item.category)) {
-        categories.add(item.category);
-      }
-    }
-    return categories;
-  }
   Client client = Client();
   final response = await client.get(
     getCategories,

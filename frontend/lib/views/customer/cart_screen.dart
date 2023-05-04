@@ -4,6 +4,9 @@ import 'package:frontend/controllers/customer/cart_screen_controller.dart';
 import 'package:frontend/models/cart.dart';
 import 'order_options_dialog.dart';
 
+//TODO
+//Ordering deleted Items
+
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
   static const routeName = "/ViewCart";

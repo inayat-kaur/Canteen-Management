@@ -37,6 +37,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(title: Text("Profile"), centerTitle: true),
         body: Container(
             width: Helper.getScreenWidth(context),
             height: Helper.getScreenHeight(context),
@@ -146,22 +147,28 @@ class _ProfileState extends State<Profile> {
                             },
                           ),
                           SizedBox(height: 20),
-                          ListTile(
-                            leading: Icon(Icons.history),
-                            title: Text("Check Order History"),
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (_) => orderHistoryUser()));
-                            },
-                          ),
+                          (user.role == 1)
+                              ? Text("")
+                              : ListTile(
+                                  leading: Icon(Icons.history),
+                                  title: Text("Check Order History"),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                orderHistoryUser()));
+                                  },
+                                ),
                           SizedBox(height: 20),
                           ListTile(
                             leading: Icon(Icons.logout),
                             title: Text("Logout"),
                             onTap: () async {
                               logout();
-                              Navigator.of(context).pushReplacementNamed(
-                                  LandingScreen.routeName);
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (_) => LandingScreen()),
+                                  (route) => false);
                             },
                           )
                         ]),

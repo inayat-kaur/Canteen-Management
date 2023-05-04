@@ -19,18 +19,30 @@ class _menuPageStateOwner extends State<menuPageOwner> {
   String _savedText1 = '';
   String _savedText2 = '';
 
-  List<Menu> menu = [];
-  List<String> categoriesList = [];
+  late List<Menu> menu = [];
+  late List<String> categoriesList = [];
 
   Future<void> fetchMenuItems() async {
     MyService myService = MyService();
     String token = myService.getToken();
-    menu = await fetchMenu();
+    List<Menu> menu2 = await fetchMenu();
+    setState(() {
+      menu = menu2;
+    });
     print("====================================");
     print(menu);
-    categoriesList = await fetchCategories(token);
+    List<String> categoriesList2 = await fetchCategories(token);
+    setState(() {
+      categoriesList = categoriesList2;
+    });
     print(categoriesList);
     categoriesList.add("Add new Category");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchMenuItems();
   }
 
   @override

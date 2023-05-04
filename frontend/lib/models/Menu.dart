@@ -27,11 +27,11 @@ class Menu {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['item'] = this.item;
-    data['price'] = this.price;
+    data['price'] = this.price.toString();
     data['availability'] = this.availability;
-    data['rating'] = this.rating;
+    data['rating'] = this.rating.toString();
     data['category'] = this.category;
-    data['type'] = this.type;
+    data['type'] = this.type.toString();
     return data;
   }
 }

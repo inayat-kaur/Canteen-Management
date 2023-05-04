@@ -11,18 +11,17 @@ class AddNewCategoryItem extends StatefulWidget {
 
 class _AddNewCategoryItemState extends State<AddNewCategoryItem> {
   final _formKey = GlobalKey<FormState>();
+  Menu menu = Menu(
+    item: "",
+    price: 0,
+    availability: "U",
+    rating: 0,
+    category: "",
+    type: 0,
+  );
 
   @override
   Widget build(BuildContext context) {
-    final menu = Menu(
-      item: "",
-      price: 0,
-      availability: "U",
-      rating: 0,
-      category: "",
-      type: 0,
-    );
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Menu Item'),
@@ -35,7 +34,9 @@ class _AddNewCategoryItemState extends State<AddNewCategoryItem> {
             TextFormField(
               decoration: const InputDecoration(labelText: "Category Name"),
               onChanged: (value) {
-                menu.category = value;
+                setState(() {
+                  menu.category = value;
+                });
               },
             ),
             const SizedBox(height: 10),
@@ -45,7 +46,9 @@ class _AddNewCategoryItemState extends State<AddNewCategoryItem> {
                 AddMenuItemController().validateItemName(value);
               },
               onChanged: (value) {
-                menu.item = value;
+                setState(() {
+                  menu.item = value;
+                });
               },
             ),
             const SizedBox(height: 10),
@@ -59,7 +62,9 @@ class _AddNewCategoryItemState extends State<AddNewCategoryItem> {
                 AddMenuItemController().validatePrice(value);
               },
               onChanged: (value) {
-                menu.price = int.parse(value);
+                setState(() {
+                  menu.price = int.parse(value);
+                });
               },
             ),
             const SizedBox(height: 10),
@@ -111,7 +116,7 @@ class _AddNewCategoryItemState extends State<AddNewCategoryItem> {
                   // validate the form inputs
                   if (_formKey.currentState!.validate()) {
                     // save the menu item data
-                    AddMenuItemController().addMenuItem(menu);
+                    AddMenuItemController().addNewMenuItem(menu, context);
                   }
                 },
                 child: const Text("Add item in the Menu"),

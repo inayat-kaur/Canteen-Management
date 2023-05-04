@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => ForgetPassword()));
                 },
-                child: const Text("Forget your password?"),
+                child: const Text("Forgot your password?"),
               ),
               const Spacer(
                 flex: 4,

@@ -76,7 +76,7 @@ class _AddMenuItemState extends State<AddMenuItem> {
                       child: Text(value == 'A' ? "Available" : "Unavailable"),
                     );
                   }).toList(),
-                ),
+                )
               ],
             ),
             const SizedBox(height: 10),
@@ -106,7 +106,7 @@ class _AddMenuItemState extends State<AddMenuItem> {
                   // validate the form inputs
                   if (_formKey.currentState!.validate()) {
                     // save the menu item data
-                    AddMenuItemController().addMenuItem(menu);
+                    AddMenuItemController().addNewMenuItem(menu, context);
                   }
                 },
                 child: const Text("Add item in the Menu"),

@@ -38,10 +38,6 @@ class _PaymentState extends State<Payment> {
                       vertical: 30,
                     ),
                     child: Column(children: [
-                      Text(
-                        "Payment",
-                        style: Helper.getTheme(context).titleLarge,
-                      ),
                       Expanded(
                           child:
                               ListView(padding: EdgeInsets.all(20), children: [

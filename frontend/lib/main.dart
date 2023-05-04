@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'views/general/splash_screen.dart';
 import 'package:frontend/views/utils/colors.dart';
 import 'my_services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? token = prefs.getString('token');
   MyService myService = MyService();
-  if (token != null) myService.updateToken(token);
   myService.initialize();
 
   runApp(const MyApp());

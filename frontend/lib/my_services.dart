@@ -60,6 +60,9 @@ class MyService {
       }
       client.close();
     }
+  }
+
+  void printtest() {
     print("####################################");
     print(_cart.length);
     print(_menu.length);

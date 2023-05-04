@@ -27,7 +27,7 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Welcome"),
+        title:  Text(widget.category[0].category),
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
@@ -38,12 +38,12 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
               );
             },
           ),
-          IconButton(
-            icon: Icon(Icons.favorite),
-            onPressed: () {
-              // Navigate to wishlist page
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.favorite),
+          //   onPressed: () {
+          //     // Navigate to wishlist page
+          //   },
+          // ),
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
@@ -76,7 +76,7 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
                   name: widget.category[index].item,
                   price: widget.category[index].price,
                   rating: widget.category[index].rating,
-                  image: 'assets/images/real/fruit.jpg',
+                  image: 'assets/images/real/apple_pie.jpg',
                   count: 0,
                 );
               },

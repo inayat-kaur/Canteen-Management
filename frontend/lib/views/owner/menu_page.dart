@@ -109,7 +109,7 @@ class _menuPageStateOwner extends State<menuPageOwner> {
                             top: 45.0,
                           ),
                           child: Image.asset(
-                            'assets/images/real/fruit.jpg',
+                            'assets/images/virtual/offer.png',
                             fit: BoxFit.cover,
                           ),
                           // Image.network(
@@ -172,7 +172,7 @@ class _menuPageStateOwner extends State<menuPageOwner> {
                             top: 45.0,
                           ),
                           child: Image.asset(
-                            'assets/images/real/fruit.jpg',
+                            'assets/images/virtual/clock.png',
                             fit: BoxFit.cover,
                           ),
                           // Image.network(
@@ -282,7 +282,8 @@ Widget _buildClickableContainer(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
+            Center(
+              child:IconButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => AddNewCategoryItem()));
@@ -291,11 +292,14 @@ Widget _buildClickableContainer(
                   Icons.add,
                   size: 50.0,
                   color: Colors.black,
-                )),
+
+                )),),
             SizedBox(height: 10.0),
             Text(
+
               title,
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
             SizedBox(height: 5.0),
           ],

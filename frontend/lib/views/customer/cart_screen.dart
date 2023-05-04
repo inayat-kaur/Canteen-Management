@@ -3,6 +3,7 @@ import 'package:frontend/views/customer/payment_screen.dart';
 import 'package:frontend/views/utils/colors.dart';
 import 'package:frontend/controllers/customer/cart_screen_controller.dart';
 import 'package:frontend/models/cart.dart';
+import 'package:frontend/views/customer/menu_item_cart.dart';
 import 'order_options_dialog.dart';
 
 //TODO
@@ -46,17 +47,23 @@ class _CartScreenState extends State<CartScreen> {
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-          child: ListView(
-            children: [
-              ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ScrollPhysics(),
-                  itemCount: foodProducts.length,
-                  itemBuilder: (context, index) =>
-                      FavouriteCard(product: foodProducts[index])),
+      body: Column(
+          children: [
+          SizedBox(height: 5.0),
+    Expanded(
+    child:
+             ListView.builder(itemCount: foodProducts.length,
+                itemBuilder: (context, index) {
+                  return menuItemCart(product: foodProducts[index],);
+                  // return menuItemCart(
+                  //   name: foodProducts[index].title,
+                  //   price: foodProducts[index].price,
+                  //   rating: foodProducts[index].rating,
+                  //   image: "assets/images/real/pizza.jpg",
+                  //   count: 1,
+                  // );
+                },),
+    ),
               SizedBox(height: 30),
               Container(
                 padding: EdgeInsets.only(left: 30),
@@ -89,9 +96,9 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ],
           ),
-        ),
-      ),
-    );
+        );
+
+
   }
 }
 

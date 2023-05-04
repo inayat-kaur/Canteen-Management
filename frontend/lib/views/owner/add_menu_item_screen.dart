@@ -50,6 +50,18 @@ class _AddMenuItemState extends State<AddMenuItem> {
             ),
             const SizedBox(height: 10),
             TextFormField(
+              decoration: const InputDecoration(labelText: "Item Image Link"),
+              validator: (value) {
+                AddMenuItemController().validateItemName(value);
+              },
+              onChanged: (value) {
+                setState(() {
+                  menu.image = value;
+                });
+              },
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
               decoration: const InputDecoration(
                 labelText: "Price",
                 prefixText: "₹",

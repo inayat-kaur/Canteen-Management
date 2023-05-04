@@ -69,33 +69,32 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
         children: [
           SizedBox(height: 5.0),
           Padding(
-              padding: EdgeInsets.all(10.0),
-              child: TextField(
-                autofocus: true,
-                controller: _searchController,
+            padding: EdgeInsets.all(10.0),
+            child: TextField(
                 decoration: InputDecoration(
-                  hintText: "Search",
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                ),
-                onChanged: (value) {
-                  List<Menu> filteredMenu = searchMenu(widget.original, value);
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CategoryMenuPage(
-                              category: filteredMenu,
-                              searchValue: _searchController.text,
-                              original: widget.original,
-                              categoryTitle: widget.categoryTitle,
-                            )),
-                  );
-                },
-              )),
+              hintText: "Search",
+              prefixIcon: Icon(Icons.search),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            )),
+          ),
           SizedBox(height: 5.0),
           Expanded(
+            child: (widget.category.isNotEmpty)
+            ? ListView.builder(
+              itemCount: widget.category.length,
+              itemBuilder: (context, index) {
+                return menuItem(
+                  menuitem: widget.category[index],
+                  // name: widget.category[index].item,
+                  // price: widget.category[index].price,
+                  // rating: widget.category[index].rating,
+                  // image: widget.category[index].image,
+                  // count: 0,
+                );
+              },
+            ),
             child: (widget.category.isNotEmpty)
                 ? ListView.builder(
                     itemCount: widget.category.length,

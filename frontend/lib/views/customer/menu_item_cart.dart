@@ -65,7 +65,7 @@ class _menuItemStateCart extends State<menuItemCart> {
         EdgeInsetsDirectional.only(start: 15, top: 10, end: 15, bottom: 10),
         horizontalTitleGap: 20,
         //leading: Image.asset(widget.product.image),
-        leading: Image.asset("assets/images/real/pizza2.jpg"),
+        leading: Image.network(widget.product.image),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

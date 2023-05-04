@@ -11,7 +11,6 @@ Future<void> loginUser(String username, String password, context) async {
   Client client = Client();
   Response response = await client
       .post(login, body: {"username": username, "password": password});
-  print(response.body);
   if (response.statusCode == 201) {
     String token = response.body.substring(1, response.body.length - 1);
     MyService myService = MyService();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/controllers/general/profile_page_controller.dart';
+import 'package:frontend/views/customer/order_history_user.dart';
 import 'package:frontend/views/general/forget_password.dart';
 import 'package:frontend/views/general/landing_screen.dart';
 import '../../models/user.dart';
@@ -20,8 +21,11 @@ class _ProfileState extends State<Profile> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
 
-  void initialize() {
-    user = getProfile();
+  void initialize() async {
+    User user1 = await getProfile();
+    setState(() {
+      user = user1;
+    });
   }
 
   @override
@@ -139,6 +143,15 @@ class _ProfileState extends State<Profile> {
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (_) => ForgetPassword()));
+                            },
+                          ),
+                          SizedBox(height: 20),
+                          ListTile(
+                            leading: Icon(Icons.history),
+                            title: Text("Check Order History"),
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (_) => orderHistoryUser()));
                             },
                           ),
                           SizedBox(height: 20),

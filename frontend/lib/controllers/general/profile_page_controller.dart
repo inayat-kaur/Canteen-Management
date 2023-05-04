@@ -5,9 +5,22 @@ import 'package:frontend/models/user.dart';
 import '../../my_services.dart';
 import '../../urls.dart';
 
-User getProfile() {
+Future<User> getProfile() async {
   MyService myServices = MyService();
   User user = myServices.getProfile();
+  if (user.username == '') {
+    Client client = Client();
+    String token = myServices.getToken();
+    final response = await client
+        .get(getUserProfile, headers: {'Authorization': 'Bearer $token'});
+    if (response.statusCode == 200) {
+      Map<String, dynamic> body = json.decode(response.body);
+      user.fromJson(body['message'][0]);
+      myServices.updateProfile(user);
+    } else {
+      throw Exception('Error getting profile');
+    }
+  }
   return user;
 }
 

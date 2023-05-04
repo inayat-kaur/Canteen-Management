@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/controllers/customer/cart_screen_controller.dart';
+import 'package:frontend/views/owner/edit_menu_item_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/cart.dart';
+import '../../models/menu.dart';
 
 class menuItem extends StatefulWidget {
   final String name;
@@ -10,6 +12,7 @@ class menuItem extends StatefulWidget {
   final int rating;
   final String image;
   final int count;
+  final Menu mymenu;
 
   const menuItem({
     Key? key,
@@ -18,6 +21,7 @@ class menuItem extends StatefulWidget {
     required this.rating,
     required this.image,
     required this.count,
+    required this.mymenu,
   }) : super(key: key);
 
   @override
@@ -109,8 +113,10 @@ class _menuItemState extends State<menuItem> {
                 //     }
                 //   },
                 child: IconButton(
-                    icon: Icon(Icons.add_shopping_cart, color: Colors.green),
-                    onPressed: () => addToCart(widget.name))),
+                    icon: Icon(Icons.edit, color: Colors.green),
+                    onPressed: () => EditMenuItem(
+                          menu: widget.mymenu,
+                        ))),
             // child: Row(
             //   children: [
             //     GestureDetector(

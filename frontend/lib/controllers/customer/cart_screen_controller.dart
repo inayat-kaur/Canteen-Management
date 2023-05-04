@@ -6,27 +6,6 @@ import 'package:http/http.dart';
 import 'dart:convert';
 import '../../my_services.dart';
 
-class Product {
-  String image;
-  String title;
-  int price;
-  int quantity;
-  String availability;
-  int rating;
-  String category;
-  int type;
-
-  Product(
-      {required this.image,
-      required this.title,
-      required this.price,
-      required this.quantity,
-      required this.availability,
-      required this.rating,
-      required this.category,
-      required this.type});
-}
-
 Future<void> addToCart(String name) async {
   MyService myService = MyService();
   String token = myService.getToken();
@@ -40,6 +19,8 @@ Future<void> addToCart(String name) async {
   });
   client.close();
   if (response.statusCode == 201) {
+    myService.addCart(Cart(
+        item: name, username: myService.getProfile().username, quantity: 1));
     print('Added to cart');
   } else {
     throw Exception('Failed to add to cart');
@@ -48,6 +29,10 @@ Future<void> addToCart(String name) async {
 
 Future<List<Menu>> fetchMenu() async {
   MyService myService = MyService();
+  if (myService.getMyMenu().isNotEmpty) {
+    return myService.getMyMenu();
+  }
+
   String token = myService.getToken();
   Client client = Client();
   final response = await client.get(getMenu, headers: {
@@ -68,6 +53,10 @@ Future<List<Menu>> fetchMenu() async {
 
 Future<List<Cart>> fetchCart() async {
   MyService myService = MyService();
+  if (myService.getCart().isNotEmpty) {
+    return myService.getCart();
+  }
+
   String token = myService.getToken();
   Client client = Client();
   final response = await client.get(getMyCart, headers: {
@@ -120,6 +109,7 @@ void updateQuantity(String item, int quantity) async {
   });
   client.close();
   if (response.statusCode == 200) {
+    myService.incrementInCart(item, quantity);
     print('Quantity updated');
   } else {
     throw Exception('Failed to update quantity');
@@ -134,6 +124,14 @@ void deleteItem(String item) async {
       headers: {'Authorization': 'Bearer $token'});
   client.close();
   if (response.statusCode == 200) {
+    Cart cartItem = Cart(item: '', quantity: 0, username: '');
+    for (int i = 0; i < myService.getCart().length; i++) {
+      if (myService.getCart()[i].item == item) {
+        cartItem = myService.getCart()[i];
+        break;
+      }
+    }
+    myService.removeCart(cartItem);
     print('Item deleted');
   } else {
     throw Exception('Failed to delete item');
@@ -154,13 +152,13 @@ Future<void> orderCartItems(
   String token = myService.getToken();
   String OrderID = '';
   String temp = token.split('.')[1];
-  OrderID += temp.substring(2, 4);
-  OrderID += DateTime.now().hour.toString();
+  OrderID += DateTime.now().minute.toString();
   OrderID += temp.substring(0, 2);
+  OrderID += DateTime.now().hour.toString();
+  OrderID += temp.substring(2, 4);
   OrderID += DateTime.now().day.toString();
   OrderID += DateTime.now().second.toString();
   OrderID += temp.substring(6, 8);
-  OrderID += DateTime.now().minute.toString();
   OrderID += DateTime.now().year.toString();
   OrderID += temp.substring(8, 12);
   OrderID += DateTime.now().month.toString();
@@ -198,6 +196,12 @@ Future<void> orderCartItems(
   final response = await client
       .delete(emptyCart, headers: {'Authorization': 'Bearer $token'});
   if (response.statusCode == 200) {
+    MyService myService = MyService();
+    List<Cart> cart = myService.getCart();
+    Cart item;
+    for (item in cart) {
+      myService.removeCart(item);
+    }
     print('Cart emptied');
   } else {
     throw Exception('Failed to empty cart');

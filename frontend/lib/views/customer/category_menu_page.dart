@@ -76,7 +76,7 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
                   name: widget.category[index].item,
                   price: widget.category[index].price,
                   rating: widget.category[index].rating,
-                  image: 'assets/images/real/fruit.jpg',
+                  image: 'assets/images/real/apple_pie.jpg',
                   count: 0,
                 );
               },

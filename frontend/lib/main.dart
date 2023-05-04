@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Canteen Management App',
+      title: 'zeroWait',
       theme: ThemeData(
         fontFamily: "Metropolis",
         primarySwatch: Colors.red,

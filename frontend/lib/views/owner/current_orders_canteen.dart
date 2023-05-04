@@ -88,12 +88,12 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
     Client client = Client();
     MyService myService = MyService();
     String token = myService.getToken();
-    final response = await client.put(
-      updatePaymentStatus(orderid, item),
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-    );
+    final response =
+        await client.put(updatePaymentStatus(orderid, item), headers: {
+      'Authorization': 'Bearer $token',
+    }, body: {
+      'paymentStatus': 'Y',
+    });
 
     if (response.statusCode == 200) {
       print("Connected");
@@ -104,14 +104,14 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
 
   Future<void> _updateOrderStatus(String orderid, String item) async {
     Client client = Client();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-    final response = await client.put(
-      updatePaymentStatus(orderid, item),
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-    );
+    MyService myService = MyService();
+    String token = myService.getToken();
+    final response =
+        await client.put(updatePaymentStatus(orderid, item), headers: {
+      'Authorization': 'Bearer $token',
+    }, body: {
+      'orderStatus': 'R'
+    });
 
     if (response.statusCode == 200) {
       print("Connected");
@@ -316,7 +316,6 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
                                                   paymentButtonColor1 =
                                                       Colors.green;
                                                 });
-                                                Navigator.pop(context);
 
                                                 for (Order order
                                                     in userOrders) {
@@ -324,6 +323,7 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
                                                       order.orderId,
                                                       order.item);
                                                 }
+                                                Navigator.pop(context);
                                               },
                                               child: const Text("Confirm"),
                                             ),
@@ -372,13 +372,11 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
                                           for (Order order in userOrders) {
                                             order.orderStatus = "C";
                                           }
-
-                                          Navigator.pop(context);
-
                                           for (Order order in userOrders) {
                                             _updateOrderStatus(
                                                 order.orderId, order.item);
                                           }
+                                          Navigator.pop(context);
                                         },
                                         child: const Text("Confirm"),
                                       ),

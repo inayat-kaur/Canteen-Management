@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/views/general/login_screen.dart';
 import 'package:http/http.dart';
 import '../../urls.dart';
 import '../../my_services.dart';
@@ -49,6 +50,8 @@ Future<bool> resetPass2(
         content: Text("Password reset successfully"),
       ),
     );
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => LoginScreen()), (route) => false);
   } else if (response.statusCode == 401) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

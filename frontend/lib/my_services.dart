@@ -12,7 +12,7 @@ class MyService {
   factory MyService() => _instance;
 
   late User _profile;
-  late String _token;
+  late String _token = '';
   late List<Cart> _cart;
   late List<Menu> _menu;
 

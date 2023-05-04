@@ -60,6 +60,10 @@ class MyService {
       }
       client.close();
     }
+    print("####################################");
+    print(_cart.length);
+    print(_menu.length);
+    print(_token);
   }
 
   List<Menu> getMyMenu() {

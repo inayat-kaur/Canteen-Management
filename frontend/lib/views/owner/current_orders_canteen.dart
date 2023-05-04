@@ -221,7 +221,7 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0.0, 8.0),
-                      child: Row(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -468,7 +468,7 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0.0, 8.0),
-                      child: Row(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(

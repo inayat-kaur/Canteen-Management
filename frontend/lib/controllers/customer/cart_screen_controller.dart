@@ -88,7 +88,7 @@ List<Product> getProductsHelper(List<Menu> menu, List<Cart> cart) {
     for (int j = 0; j < menu.length; j++) {
       if (cart[i].item == menu[j].item) {
         foodProducts.add(Product(
-          image: 'assets/images/food.jpg',
+          image: menu[j].image,
           title: menu[j].item,
           price: menu[j].price,
           quantity: cart[i].quantity,

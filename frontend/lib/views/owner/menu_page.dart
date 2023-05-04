@@ -352,8 +352,8 @@ Widget _buildClickableContainer(
         children: [
           Image.network(
             imageUrl,
-            width: 80.0,
-            height: 80.0,
+            width: 60.0,
+            height: 60.0,
             fit: BoxFit.cover,
           ),
           SizedBox(height: 10.0),

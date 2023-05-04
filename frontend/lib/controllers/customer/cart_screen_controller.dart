@@ -9,13 +9,6 @@ import '../../my_services.dart';
 Future<void> addToCart(String name) async {
   MyService myService = MyService();
   String token = myService.getToken();
-  List<Cart> cart = myService.getCart();
-  for (int i = 0; i < cart.length; i++) {
-    if (cart[i].item == name) {
-      updateQuantity(name, cart[i].quantity + 1);
-      return;
-    }
-  }
   Client client = Client();
   print("Add to cart called");
   final response = await client.post(addCartItem, headers: {

@@ -5,14 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/cart.dart';
 import '../../models/menu.dart';
 
-
 class menuItem extends StatefulWidget {
   final Menu menuitem;
-  // final String name;
-  // final int price;
-  // final int rating;
-  // final String image;
-  // final int count;
 
   const menuItem({
     Key? key,
@@ -39,7 +33,6 @@ class _menuItemState extends State<menuItem> {
       if (cartItems[i].item == widget.menuitem.item) {
         setState(() {
           isAddedToCart = true;
-
         });
         break;
       }
@@ -50,7 +43,7 @@ class _menuItemState extends State<menuItem> {
   void initState() {
     super.initState();
     checkIfItemAddedToCart();
-    isAvailable = widget.menuitem.availability=='A';
+    isAvailable = widget.menuitem.availability == 'A';
   }
 
   @override
@@ -58,7 +51,6 @@ class _menuItemState extends State<menuItem> {
     return Container(
       margin: EdgeInsetsDirectional.only(start: 15, top: 5, end: 15, bottom: 5),
       decoration: BoxDecoration(
-
         border: Border.all(
           color: Colors.orange,
           width: 2.0,
@@ -122,32 +114,6 @@ class _menuItemState extends State<menuItem> {
                         : Text("Add to Cart"),
                   )),
             ),
-            // child: IconButton(
-            //     icon: Icon(Icons.add_shopping_cart, color: Colors.green),
-            //     onPressed: () => addToCart(widget.name))),
-            // child: Row(
-            //   children: [
-            //     GestureDetector(
-            //       onTap: () {
-            //         setState(() {
-            //           itemCount--;
-            //         });
-            //       },
-            //       child: Icon(Icons.remove, size: 20),
-            //     ),
-            //     SizedBox(width: 8),
-            //     Text(itemCount.toString(), style: TextStyle(fontSize: 16)),
-            //     SizedBox(width: 8),
-            //     GestureDetector(
-            //       onTap: () {
-            //         setState(() {
-            //           itemCount++;
-            //         });
-            //       },
-            //       child: Icon(Icons.add, size: 20),
-            //     ),
-            //   ],
-            // ),
           ],
         ),
       ),

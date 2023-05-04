@@ -68,21 +68,17 @@ List<Menu> searchMenu(List<Menu> menu, String searchText) {
   List<Menu> searchResults = [];
   menu.forEach((menuItem) {
     if (menuItem.item.toLowerCase().contains(searchText.toLowerCase())) {
-      print(menuItem.item);
       searchResults.add(menuItem);
     }
   });
-  print(searchResults);
   return searchResults;
 }
 
 List<Menu> filterMenuBasedOnCategory(List<Menu> menu, String category) {
-  print("filterMenuBasedOnCategory called");
   List<Menu> filteredMenu = [];
   menu.forEach((menuItem) {
     if (menuItem.category.toLowerCase() == category.toLowerCase()) {
       filteredMenu.add(menuItem);
-      print(menuItem.item);
     }
   });
 

@@ -37,6 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    MyService myService = MyService();
+    myService.initialize();
     super.initState();
     fetchMenuItems();
   }
@@ -58,17 +60,17 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
-          IconButton(
-            icon: Icon(Icons.favorite),
-            onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => menuPageOwner(),
-              //   ),
-              //);
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.favorite),
+          //   onPressed: () {
+          //     // Navigator.push(
+          //     //   context,
+          //     //   MaterialPageRoute(
+          //     //     builder: (context) => menuPageOwner(),
+          //     //   ),
+          //     //);
+          //   },
+          // ),
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
@@ -130,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             top: 45.0,
                           ),
                           child: Image.asset(
-                            'assets/images/real/fruit.jpg',
+                            'assets/images/virtual/offer.png',
                             fit: BoxFit.cover,
                           ),
                           // Image.network(
@@ -145,14 +147,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'First text field',
-                              style: TextStyle(fontSize: 20.0),
+                              'Today\'s Special',
+                              style: TextStyle(fontSize: 23.0),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              'Second text fieldjsiuaye78fhodif90weif0wrofiljah',
+                              'Maharaja Thali',
                               style: TextStyle(fontSize: 16.0),
                               maxLines: 5,
                               overflow: TextOverflow.ellipsis,
@@ -184,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             top: 45.0,
                           ),
                           child: Image.asset(
-                            'assets/images/real/fruit.jpg',
+                            'assets/images/virtual/clock.png',
                             fit: BoxFit.cover,
                           ),
                           // Image.network(
@@ -201,14 +203,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'First text field',
-                              style: TextStyle(fontSize: 20.0),
+                              'Timimgs',
+                              style: TextStyle(fontSize: 23.0),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              'Second text fieldjsiuaye78fhodif90weif0wrofiljah',
+                              '11 AM -11 PM',
                               style: TextStyle(fontSize: 16.0),
                               maxLines: 5,
                               overflow: TextOverflow.ellipsis,
@@ -226,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: GridView.builder(
               itemCount: categoriesList.length,
               itemBuilder: (context, index) => _buildClickableContainer(context,
-                  categoriesList[index], 'assets/images/real/fruit.jpg', menu),
+                  categoriesList[index],  menu),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 1,
@@ -259,15 +261,21 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 Widget _buildClickableContainer(
-    BuildContext context, String title, String imageUrl, List<Menu> menu) {
+    BuildContext context, String title, List<Menu> menu) {
+  List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
+  String imageUrl=filteredMenu[0].image;
   return GestureDetector(
     onTap: () {
       List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
+
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => CategoryMenuPage(
                   category: filteredMenu,
+                  searchValue: "",
+                  original: filteredMenu,
+                  categoryTitle: filteredMenu[0].category,
                 )),
       );
     },
@@ -291,9 +299,9 @@ Widget _buildClickableContainer(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            //imageUrl,
-            'assets/images/real/fruit.jpg',
+          Image.network(
+            imageUrl,
+
             width: 80.0,
             height: 80.0,
             fit: BoxFit.cover,

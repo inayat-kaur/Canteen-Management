@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:frontend/views/customer/home_screen.dart';
+
 import '../../models/Order.dart';
 import '../../models/cart.dart';
 import '../../models/menu.dart';
@@ -43,7 +46,7 @@ int getTotal(List<Product> products) {
 }
 
 Future<void> orderCartItems(
-    List<Product> foodProducts, List<String> orderOptions) async {
+    List<Product> foodProducts, List<String> orderOptions, context) async {
   MyService myService = MyService();
   String token = myService.getToken();
   String OrderID = generateOrderId(token);
@@ -54,7 +57,7 @@ Future<void> orderCartItems(
       item: "",
       quantity: 0,
       price: 0,
-      orderStatus: "N",
+      orderStatus: "U",
       paymentStatus: "N",
       time: DateTime.now());
   Client client = Client();
@@ -86,6 +89,9 @@ Future<void> orderCartItems(
       myService.removeCart(item);
     }
     print('Cart emptied');
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false);
   } else {
     throw Exception('Failed to empty cart');
   }

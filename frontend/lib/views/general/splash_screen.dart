@@ -35,12 +35,12 @@ class _SplashScreenState extends State<SplashScreen> {
                   fit: BoxFit.fill,
                 ),
               ),
-              Align(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  Helper.getAssetName("MealMonkeyLogo.png", "virtual"),
-                ),
-              )
+              // Align(
+              //   alignment: Alignment.center,
+              //   child: Image.asset(
+              //     Helper.getAssetName("MealMonkeyLogo.png", "virtual"),
+              //   ),
+              // )
             ],
           )),
     );

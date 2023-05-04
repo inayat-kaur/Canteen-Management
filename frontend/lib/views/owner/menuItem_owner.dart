@@ -65,7 +65,7 @@ class _menuItemState extends State<menuItem> {
         contentPadding:
             EdgeInsetsDirectional.only(start: 15, top: 10, end: 15, bottom: 10),
         horizontalTitleGap: 20,
-        leading: Image.asset(widget.image),
+        leading: Image.network(widget.image),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

@@ -18,7 +18,7 @@ class _AddMenuItemState extends State<AddMenuItem> {
       item: "",
       price: 0,
       availability: "U",
-      rating: 0,
+      rating: 2,
       category: "",
       type: 0,
       image: '');
@@ -45,6 +45,18 @@ class _AddMenuItemState extends State<AddMenuItem> {
               onChanged: (value) {
                 setState(() {
                   menu.item = value;
+                });
+              },
+            ),
+            const SizedBox(height: 10),
+            TextFormField(
+              decoration: const InputDecoration(labelText: "Item Image Link"),
+              validator: (value) {
+                AddMenuItemController().validateItemName(value);
+              },
+              onChanged: (value) {
+                setState(() {
+                  menu.image = value;
                 });
               },
             ),

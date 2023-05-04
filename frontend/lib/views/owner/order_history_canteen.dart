@@ -1,3 +1,4 @@
+import 'package:frontend/my_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'dart:collection';
@@ -10,7 +11,7 @@ import 'package:intl/intl.dart';
 
 class orderHistoryCanteen extends StatefulWidget {
   const orderHistoryCanteen({super.key});
-  static const routeName = "/orderHistoryCanteen";
+
   @override
   State<orderHistoryCanteen> createState() => _orderHistoryCanteenState();
 }
@@ -32,10 +33,8 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
       isLoading = true;
     });
     Client client = Client();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? id = await prefs.getString('username');
-    id ??= '';
-    String? token = await prefs.getString('token');
+    MyService myService = MyService();
+    String token = myService.getToken();
     final response = await client.get(
       getOrders,
       headers: {
@@ -54,8 +53,9 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
       throw Exception('Error fetching profile');
     }
     List<Order> collectedOrders = orders
-        .where(
-            (order) => order.orderStatus == "C" && order.paymentStatus == "Y")
+        .where((order) =>
+            order.orderStatus == "C" && order.paymentStatus == "Y" ||
+            order.orderStatus == "N")
         .toList();
 
     collectedOrders.sort((a, b) => b.time.compareTo(a.time));
@@ -67,6 +67,9 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
       // Set isLoading to false after loading data
       isLoading = false;
     });
+
+    print(groupedOrders.length);
+    print(orders.length);
   }
 
   @override

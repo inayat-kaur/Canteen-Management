@@ -13,8 +13,8 @@ class MyService {
 
   late User _profile;
   late String _token = '';
-  late List<Cart> _cart;
-  late List<Menu> _menu;
+  late List<Cart> _cart = [];
+  late List<Menu> _menu = [];
 
   MyService._internal() {
     _profile = User(username: '', role: 0, name: '', phone: '', password: '');
@@ -60,6 +60,9 @@ class MyService {
       }
       client.close();
     }
+  }
+
+  void printtest() {
     print("####################################");
     print(_cart.length);
     print(_menu.length);

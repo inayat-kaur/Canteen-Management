@@ -48,10 +48,6 @@ class _ProfileState extends State<Profile> {
                       vertical: 30,
                     ),
                     child: Column(children: [
-                      Text(
-                        "Profile",
-                        style: Helper.getTheme(context).titleLarge,
-                      ),
                       Expanded(
                         child: ListView(padding: EdgeInsets.all(20), children: [
                           SizedBox(height: 20),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/general/profile_page.dart';
 import 'package:frontend/views/owner/category_menu_owner.dart';
+import 'package:frontend/views/owner/current_orders_canteen.dart';
 import '../../controllers/owner/menu_page_controller.dart';
 import '../../models/menu.dart';
 import '../../my_services.dart';
@@ -52,6 +53,13 @@ class _menuPageStateOwner extends State<menuPageOwner> {
         title: Text("Your Menu"),
         actions: [
           IconButton(
+            icon: Icon(Icons.cloud),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => currentOrderCanteen()));
+            },
+          ),
+          IconButton(
             icon: Icon(Icons.history),
             onPressed: () {
               Navigator.of(context).push(
@@ -70,18 +78,18 @@ class _menuPageStateOwner extends State<menuPageOwner> {
       body: Column(
         children: [
           SizedBox(height: 5.0),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Search",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: TextField(
+          //     decoration: InputDecoration(
+          //       hintText: "Search",
+          //       prefixIcon: Icon(Icons.search),
+          //       border: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(20.0),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 10.0),
             height: 200.0,
@@ -109,7 +117,7 @@ class _menuPageStateOwner extends State<menuPageOwner> {
                             top: 45.0,
                           ),
                           child: Image.asset(
-                            'assets/images/real/fruit.jpg',
+                            'assets/images/virtual/offer.png',
                             fit: BoxFit.cover,
                           ),
                           // Image.network(
@@ -172,7 +180,7 @@ class _menuPageStateOwner extends State<menuPageOwner> {
                             top: 45.0,
                           ),
                           child: Image.asset(
-                            'assets/images/real/fruit.jpg',
+                            'assets/images/virtual/clock.png',
                             fit: BoxFit.cover,
                           ),
                           // Image.network(
@@ -221,7 +229,7 @@ class _menuPageStateOwner extends State<menuPageOwner> {
             child: GridView.builder(
               itemCount: categoriesList.length,
               itemBuilder: (context, index) => _buildClickableContainer(context,
-                  categoriesList[index], 'assets/images/real/fruit.jpg', menu),
+                  categoriesList[index], menu),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 1,
@@ -252,7 +260,8 @@ class _menuPageStateOwner extends State<menuPageOwner> {
 }
 
 Widget _buildClickableContainer(
-    BuildContext context, String title, String imageUrl, List<Menu> menu) {
+    BuildContext context, String title,  List<Menu> menu) {
+
   if (title == "Add new Category") {
     return GestureDetector(
       onTap: () async {
@@ -282,20 +291,23 @@ Widget _buildClickableContainer(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AddNewCategoryItem()));
-                },
-                icon: Icon(
-                  Icons.add,
-                  size: 50.0,
-                  color: Colors.black,
-                )),
+            Center(
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AddNewCategoryItem()));
+                  },
+                  icon: Icon(
+                    Icons.add,
+                    size: 50.0,
+                    color: Colors.black,
+                  )),
+            ),
             SizedBox(height: 10.0),
             Text(
               title,
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
             SizedBox(height: 5.0),
           ],
@@ -303,6 +315,8 @@ Widget _buildClickableContainer(
       ),
     );
   }
+  List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
+  String imageUrl=filteredMenu[0].image;
   return GestureDetector(
     onTap: () {
       List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
@@ -310,8 +324,11 @@ Widget _buildClickableContainer(
         context,
         MaterialPageRoute(
             builder: (context) => CategoryMenuPage(
-                  category: filteredMenu,
-                )),
+              category: filteredMenu,
+              searchValue: "",
+              categoryTitle: filteredMenu[0].category,
+              original: filteredMenu,
+            )),
       );
     },
     child: Container(
@@ -334,9 +351,9 @@ Widget _buildClickableContainer(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            //imageUrl,
-            'assets/images/real/fruit.jpg',
+          Image.network(
+            imageUrl,
+
             width: 80.0,
             height: 80.0,
             fit: BoxFit.cover,

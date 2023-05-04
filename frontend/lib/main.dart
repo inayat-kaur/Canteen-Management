@@ -1,24 +1,22 @@
-// @dart=2.9
 import 'package:flutter/material.dart';
-import 'package:frontend/views/general/sign_up_screen.dart';
-import 'package:frontend/views/customer/home_screen.dart';
-import 'package:frontend/views/general/landing_screen.dart';
-import 'package:frontend/views/owner/edit_menu_item_screen.dart';
 import 'views/general/splash_screen.dart';
-import 'views/owner/order_history_canteen.dart';
-import 'views/general/login_screen.dart';
 import 'package:frontend/views/utils/colors.dart';
-import 'package:frontend/views/owner/add_menu_item_screen.dart';
+import 'my_services.dart';
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  MyService myService = MyService();
+  myService.initialize();
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'zeroWait',
+      title: 'Canteen Management App',
       theme: ThemeData(
         fontFamily: "Metropolis",
         primarySwatch: Colors.red,
@@ -28,7 +26,7 @@ class MyApp extends StatelessWidget {
             AppColor.orange,
           ),
           shape: MaterialStateProperty.all(
-            StadiumBorder(),
+            const StadiumBorder(),
           ),
           elevation: MaterialStateProperty.all(0),
         )),
@@ -40,14 +38,6 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: SplashScreen(),
-      //home: HomeScreen(),
-      //home: AddMenuItem(category: "Snacks"),
-      routes: {
-        LandingScreen.routeName: (context) => LandingScreen(),
-        LoginScreen.routeName: (context) => LoginScreen(),
-        SignUpScreen.routeName: (context) => SignUpScreen(),
-        OrderHistoryCanteen.routeName: (context) => OrderHistoryCanteen(),
-      },
       debugShowCheckedModeBanner: false,
     );
   }

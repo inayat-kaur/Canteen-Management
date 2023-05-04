@@ -23,7 +23,11 @@ void signUpUser(context, String name, String username, String password,
         content: Text("Sign Up Successful"),
       ),
     );
-    Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => LoginScreen(),
+      ),
+    );
   } else {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

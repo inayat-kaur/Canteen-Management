@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../urls.dart';
+import '../../my_services.dart';
 
 Future<void> resetPass1(context, String password) async {
   Client client = Client();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? token = await prefs.getString('token');
+  MyService myService = MyService();
+  String token = myService.getToken();
   final response = await client.post(
     resetPassword1,
     headers: {

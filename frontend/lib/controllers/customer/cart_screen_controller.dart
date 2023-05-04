@@ -1,35 +1,21 @@
-import 'package:frontend/controllers/general/profile_page_controller.dart';
 import 'package:frontend/models/order.dart';
 import 'package:frontend/models/cart.dart';
 import 'package:frontend/models/menu.dart';
 import 'package:frontend/urls.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
-
-class Product {
-  String image;
-  String title;
-  int price;
-  int quantity;
-  String availability;
-  int rating;
-  String category;
-  int type;
-
-  Product(
-      {required this.image,
-      required this.title,
-      required this.price,
-      required this.quantity,
-      required this.availability,
-      required this.rating,
-      required this.category,
-      required this.type});
-}
+import '../../my_services.dart';
 
 Future<void> addToCart(String name) async {
-  String token = await getToken();
+  MyService myService = MyService();
+  String token = myService.getToken();
+  List<Cart> cart = myService.getCart();
+  for (int i = 0; i < cart.length; i++) {
+    if (cart[i].item == name) {
+      updateQuantity(name, cart[i].quantity + 1);
+      return;
+    }
+  }
   Client client = Client();
   print("Add to cart called");
   final response = await client.post(addCartItem, headers: {
@@ -40,6 +26,8 @@ Future<void> addToCart(String name) async {
   });
   client.close();
   if (response.statusCode == 201) {
+    myService.addCart(Cart(
+        item: name, username: myService.getProfile().username, quantity: 1));
     print('Added to cart');
   } else {
     throw Exception('Failed to add to cart');
@@ -47,8 +35,12 @@ Future<void> addToCart(String name) async {
 }
 
 Future<List<Menu>> fetchMenu() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token')!;
+  MyService myService = MyService();
+  if (myService.getMyMenu().isNotEmpty) {
+    return myService.getMyMenu();
+  }
+
+  String token = myService.getToken();
   Client client = Client();
   final response = await client.get(getMenu, headers: {
     'Authorization': 'Bearer $token',
@@ -67,8 +59,12 @@ Future<List<Menu>> fetchMenu() async {
 }
 
 Future<List<Cart>> fetchCart() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token')!;
+  MyService myService = MyService();
+  if (myService.getCart().isNotEmpty) {
+    return myService.getCart();
+  }
+
+  String token = myService.getToken();
   Client client = Client();
   final response = await client.get(getMyCart, headers: {
     'Authorization': 'Bearer $token',
@@ -110,8 +106,8 @@ Future<List<Product>> getProducts() async {
 }
 
 void updateQuantity(String item, int quantity) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token')!;
+  MyService myService = MyService();
+  String token = myService.getToken();
   Client client = Client();
   final response = await client.put(updateCartItemQuantity(item), headers: {
     'Authorization': 'Bearer $token',
@@ -120,6 +116,7 @@ void updateQuantity(String item, int quantity) async {
   });
   client.close();
   if (response.statusCode == 200) {
+    myService.incrementInCart(item, quantity);
     print('Quantity updated');
   } else {
     throw Exception('Failed to update quantity');
@@ -127,13 +124,21 @@ void updateQuantity(String item, int quantity) async {
 }
 
 void deleteItem(String item) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token')!;
+  MyService myService = MyService();
+  String token = myService.getToken();
   Client client = Client();
   final response = await client.delete(deleteCartItem(item),
       headers: {'Authorization': 'Bearer $token'});
   client.close();
   if (response.statusCode == 200) {
+    Cart cartItem = Cart(item: '', quantity: 0, username: '');
+    for (int i = 0; i < myService.getCart().length; i++) {
+      if (myService.getCart()[i].item == item) {
+        cartItem = myService.getCart()[i];
+        break;
+      }
+    }
+    myService.removeCart(cartItem);
     print('Item deleted');
   } else {
     throw Exception('Failed to delete item');
@@ -150,17 +155,17 @@ int getTotal(List<Product> products) {
 
 Future<void> orderCartItems(
     List<Product> foodProducts, List<String> orderOptions) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String token = prefs.getString('token')!;
+  MyService myService = MyService();
+  String token = myService.getToken();
   String OrderID = '';
   String temp = token.split('.')[1];
-  OrderID += temp.substring(2, 4);
-  OrderID += DateTime.now().hour.toString();
+  OrderID += DateTime.now().minute.toString();
   OrderID += temp.substring(0, 2);
+  OrderID += DateTime.now().hour.toString();
+  OrderID += temp.substring(2, 4);
   OrderID += DateTime.now().day.toString();
   OrderID += DateTime.now().second.toString();
   OrderID += temp.substring(6, 8);
-  OrderID += DateTime.now().minute.toString();
   OrderID += DateTime.now().year.toString();
   OrderID += temp.substring(8, 12);
   OrderID += DateTime.now().month.toString();
@@ -198,6 +203,12 @@ Future<void> orderCartItems(
   final response = await client
       .delete(emptyCart, headers: {'Authorization': 'Bearer $token'});
   if (response.statusCode == 200) {
+    MyService myService = MyService();
+    List<Cart> cart = myService.getCart();
+    Cart item;
+    for (item in cart) {
+      myService.removeCart(item);
+    }
     print('Cart emptied');
   } else {
     throw Exception('Failed to empty cart');

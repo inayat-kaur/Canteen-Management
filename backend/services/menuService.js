@@ -4,8 +4,8 @@ async function addItem(menuItem) {
   if (!menuItem || !menuItem.item || !menuItem.price || !menuItem.availability || !menuItem.rating) {
     throw new Error('Missing or invalid menu item');
   }
-  const queryStmt = `INSERT INTO menu (item, price, availability, rating) VALUES (?, ?, ?, ?)`;
-  const values = [menuItem.item, menuItem.price, menuItem.availability, menuItem.rating];
+  const queryStmt = `INSERT INTO menu (item, price, availability, rating, category, type, image) VALUES (?, ?, ?, ?,?,?,?)`;
+  const values = [menuItem.item, menuItem.price, menuItem.availability, menuItem.rating, menuItem.category, menuItem.type, menuItem.image];
   const result = await db.query(queryStmt, values);
 
   let message = 'Error in inserting an item in menu';
@@ -14,7 +14,7 @@ async function addItem(menuItem) {
     message = `${menuItem.item} added to menu`;
   }
 
-  return {message};
+  return { message };
 }
 
 async function deleteItem(item) {
@@ -26,7 +26,7 @@ async function deleteItem(item) {
     message = `${item} deleted from menu`;
   }
 
-  return {message};
+  return { message };
 }
 
 async function updatePrice(item, price) {
@@ -37,7 +37,7 @@ async function updatePrice(item, price) {
     message = `price updated to ${price} for ${item}`;
   }
 
-  return {message};
+  return { message };
 }
 
 async function updateAvailability(item, availability) {
@@ -48,7 +48,7 @@ async function updateAvailability(item, availability) {
     message = `availability updated to ${availability} for ${item}`;
   }
 
-  return {message};
+  return { message };
 }
 
 async function updateRating(item, rating) {
@@ -60,7 +60,7 @@ async function updateRating(item, rating) {
     message = `rating updated to ${rating} for ${item}`;
   }
 
-  return {message};
+  return { message };
 }
 
 async function getMenu() {
@@ -70,7 +70,7 @@ async function getMenu() {
   return rows;
 }
 
-async function getCategories(){
+async function getCategories() {
   const rows = await db.query('SELECT DISTINCT category FROM menu');
   return rows;
 }

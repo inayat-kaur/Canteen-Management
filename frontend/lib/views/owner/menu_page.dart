@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/views/customer/menuItem.dart';
-import 'package:frontend/views/owner/category_menu_page.dart';
+import 'package:frontend/views/general/profile_page.dart';
+import 'package:frontend/views/owner/category_menu_owner.dart';
+import '../../controllers/owner/menu_page_controller.dart';
+import '../../models/menu.dart';
+import '../../my_services.dart';
+import 'order_history_canteen.dart';
+import 'add_new_category_item.dart';
 
 class menuPageOwner extends StatefulWidget {
   @override
@@ -14,6 +19,32 @@ class _menuPageStateOwner extends State<menuPageOwner> {
   String _savedText1 = '';
   String _savedText2 = '';
 
+  late List<Menu> menu = [];
+  late List<String> categoriesList = [];
+
+  Future<void> fetchMenuItems() async {
+    MyService myService = MyService();
+    String token = myService.getToken();
+    List<Menu> menu2 = await fetchMenu();
+    setState(() {
+      menu = menu2;
+    });
+    print("====================================");
+    print(menu);
+    List<String> categoriesList2 = await fetchCategories(token);
+    setState(() {
+      categoriesList = categoriesList2;
+    });
+    print(categoriesList);
+    categoriesList.add("Add new Category");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchMenuItems();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,17 +52,17 @@ class _menuPageStateOwner extends State<menuPageOwner> {
         title: Text("Your Menu"),
         actions: [
           IconButton(
-            icon: Icon(Icons.shopping_cart),
+            icon: Icon(Icons.history),
             onPressed: () {
-              // Navigate to cart page
-
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => orderHistoryCanteen()));
             },
           ),
-
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
-              // Navigate to profile page
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => Profile()));
             },
           ),
         ],
@@ -77,7 +108,10 @@ class _menuPageStateOwner extends State<menuPageOwner> {
                             left: 30.0,
                             top: 45.0,
                           ),
-                          child: Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
+                          child: Image.asset(
+                            'assets/images/real/fruit.jpg',
+                            fit: BoxFit.cover,
+                          ),
                           // Image.network(
                           //   'frontend/assets/real/fruit.jpg',
                           //   fit: BoxFit.cover,
@@ -111,8 +145,6 @@ class _menuPageStateOwner extends State<menuPageOwner> {
                               },
                               child: Text('Save'),
                             ),
-
-
                           ],
                         ),
                       ),
@@ -139,7 +171,10 @@ class _menuPageStateOwner extends State<menuPageOwner> {
                             left: 30.0,
                             top: 45.0,
                           ),
-                          child: Image.asset('assets/images/real/fruit.jpg',fit: BoxFit.cover,),
+                          child: Image.asset(
+                            'assets/images/real/fruit.jpg',
+                            fit: BoxFit.cover,
+                          ),
                           // Image.network(
                           //   'frontend/assets/real/fruit.jpg',
                           //   fit: BoxFit.cover,
@@ -173,8 +208,6 @@ class _menuPageStateOwner extends State<menuPageOwner> {
                               },
                               child: Text('Save'),
                             ),
-
-
                           ],
                         ),
                       ),
@@ -184,35 +217,14 @@ class _menuPageStateOwner extends State<menuPageOwner> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.all(10.0),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildClickableContainer(context, 'Image 1', 'Text 1',
-                          'frontend/assets/real/fruit.jpg'),
-                      _buildClickableContainer(context, 'Image 2', 'Text 2',
-                          'frontend/assets/real/fruit.jpg'),
-                      _buildClickableContainer(context, 'Image 3', 'Text 3',
-                          'frontend/assets/real/fruit.jpg'),
-                    ],
-                  ),
-                  SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildClickableContainer(context, 'Image 4', 'Text 4',
-                          'https://example.com/image4.jpg'),
-                      _buildClickableContainer(context, 'Image 5', 'Text 5',
-                          'https://example.com/image5.jpg'),
-                      _buildClickableContainer(context, 'Image 6', 'Text 6',
-                          'https://example.com/image6.jpg'),
-                    ],
-                  ),
-                ],
+          Expanded(
+            child: GridView.builder(
+              itemCount: categoriesList.length,
+              itemBuilder: (context, index) => _buildClickableContainer(context,
+                  categoriesList[index], 'assets/images/real/fruit.jpg', menu),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 1,
               ),
             ),
           )
@@ -240,19 +252,70 @@ class _menuPageStateOwner extends State<menuPageOwner> {
 }
 
 Widget _buildClickableContainer(
-    BuildContext context, String title, String subtitle, String imageUrl) {
+    BuildContext context, String title, String imageUrl, List<Menu> menu) {
+  if (title == "Add new Category") {
+    return GestureDetector(
+      onTap: () async {
+        List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AddNewCategoryItem()),
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
+        width: MediaQuery.of(context).size.width / 3 - 20.0,
+        height: 150.0,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => AddNewCategoryItem()));
+                },
+                icon: Icon(
+                  Icons.add,
+                  size: 50.0,
+                  color: Colors.black,
+                )),
+            SizedBox(height: 10.0),
+            Text(
+              title,
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 5.0),
+          ],
+        ),
+      ),
+    );
+  }
   return GestureDetector(
     onTap: () {
-      // Do something when the container is clicked
+      List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => CategoryMenuPageOwner(
-              category: title,
-            )),
+            builder: (context) => CategoryMenuPage(
+                  category: filteredMenu,
+                )),
       );
     },
     child: Container(
+      margin: EdgeInsets.only(left: 5, right: 5, top: 5, bottom: 5),
       width: MediaQuery.of(context).size.width / 3 - 20.0,
       height: 150.0,
       decoration: BoxDecoration(
@@ -271,7 +334,6 @@ Widget _buildClickableContainer(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
           Image.asset(
             //imageUrl,
             'assets/images/real/fruit.jpg',
@@ -285,10 +347,6 @@ Widget _buildClickableContainer(
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 5.0),
-          Text(
-            subtitle,
-            style: TextStyle(fontSize: 14.0, color: Colors.grey),
-          ),
         ],
       ),
     ),

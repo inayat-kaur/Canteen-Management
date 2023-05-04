@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/controllers/general/profile_page_controller.dart';
+import 'package:frontend/views/customer/order_history_user.dart';
 import 'package:frontend/views/general/forget_password.dart';
 import 'package:frontend/views/general/landing_screen.dart';
 import '../../models/user.dart';
 import '../utils/colors.dart';
 import '../utils/helper.dart';
-
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -22,9 +22,9 @@ class _ProfileState extends State<Profile> {
   TextEditingController _phoneController = TextEditingController();
 
   void initialize() async {
-    Map<String, dynamic> message = await getProfile();
+    User user1 = await getProfile();
     setState(() {
-      user.fromJson(message);
+      user = user1;
     });
   }
 
@@ -37,6 +37,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(title: Text("Profile"), centerTitle: true),
         body: Container(
             width: Helper.getScreenWidth(context),
             height: Helper.getScreenHeight(context),
@@ -119,7 +120,7 @@ class _ProfileState extends State<Profile> {
                                 ? IconButton(
                                     icon: Icon(Icons.save),
                                     onPressed: () async {
-                                      String newPhone = await updateName(
+                                      String newPhone = await updatePhone(
                                           _phoneController.text.trim());
                                       setState(() {
                                         user.name = newPhone;
@@ -146,13 +147,28 @@ class _ProfileState extends State<Profile> {
                             },
                           ),
                           SizedBox(height: 20),
+                          (user.role == 1)
+                              ? Text("")
+                              : ListTile(
+                                  leading: Icon(Icons.history),
+                                  title: Text("Check Order History"),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (_) =>
+                                                orderHistoryUser()));
+                                  },
+                                ),
+                          SizedBox(height: 20),
                           ListTile(
                             leading: Icon(Icons.logout),
                             title: Text("Logout"),
                             onTap: () async {
                               logout();
-                              Navigator.of(context).pushReplacementNamed(
-                                  LandingScreen.routeName);
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (_) => LandingScreen()),
+                                  (route) => false);
                             },
                           )
                         ]),

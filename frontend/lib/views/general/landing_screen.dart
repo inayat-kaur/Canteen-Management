@@ -6,8 +6,9 @@ import 'package:clip_shadow/clip_shadow.dart';
 import 'login_screen.dart';
 
 class LandingScreen extends StatelessWidget {
-  // const LoginScreen({super.key});
   static const routeName = "/landingScreen";
+
+  const LandingScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +22,7 @@ class LandingScreen extends StatelessWidget {
             child: ClipShadow(
               clipper: CustomClipperAppBar(),
               boxShadow: [
-                BoxShadow(
+                const BoxShadow(
                   color: AppColor.placeholder,
                   offset: Offset(0, 15),
                   blurRadius: 10,
@@ -71,8 +72,9 @@ class LandingScreen extends StatelessWidget {
                       child: ElevatedButton(
                           onPressed: () {
                             //navigate to login page
-                            Navigator.of(context)
-                                .pushReplacementNamed(LoginScreen.routeName);
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (_) => LoginScreen()));
                           },
                           child: Text("Login"))),
                   SizedBox(
@@ -96,8 +98,9 @@ class LandingScreen extends StatelessWidget {
                           ),
                           onPressed: () {
                             //navigate to create user page
-                            Navigator.of(context)
-                                .pushReplacementNamed(SignUpScreen.routeName);
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (_) => SignUpScreen()));
                           },
                           child: Text("Create An Account"))),
                 ],

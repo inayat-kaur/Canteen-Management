@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/views/general/login_screen.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../urls.dart';
+import '../../my_services.dart';
 
 Future<void> resetPass1(context, String password) async {
   Client client = Client();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? token = await prefs.getString('token');
+  MyService myService = MyService();
+  String token = myService.getToken();
   final response = await client.post(
     resetPassword1,
     headers: {
@@ -49,6 +50,8 @@ Future<bool> resetPass2(
         content: Text("Password reset successfully"),
       ),
     );
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => LoginScreen()), (route) => false);
   } else if (response.statusCode == 401) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

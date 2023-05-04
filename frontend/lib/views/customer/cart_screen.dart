@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/views/customer/payment_screen.dart';
 import 'package:frontend/views/utils/colors.dart';
 import 'package:frontend/controllers/customer/cart_screen_controller.dart';
+import 'package:frontend/models/cart.dart';
 import 'order_options_dialog.dart';
+
+//TODO
+//Ordering deleted Items
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
-  static const routeName = "/ViewCart";
+
   @override
   _CartScreenState createState() => _CartScreenState();
 }
@@ -67,14 +72,16 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ),
                       onPressed: () async {
-                        List<String> orderOptions = [];
+                        // List<String> orderOptions = [];
                         // orderOptions = await showDialog(
                         //   context: context,
                         //   builder: (BuildContext context) {
                         //     return ServiceDialog();
                         //   },
                         // );
-                        orderCartItems(foodProducts, orderOptions);
+                        // orderCartItems(foodProducts, orderOptions);
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (_) => Payment()));
                       },
                     ),
                   ],
@@ -153,7 +160,7 @@ class _FavouriteCardState extends State<FavouriteCard> {
                                       size: 30,
                                     )
                                   : Icon(
-                                      Icons.circle,
+                                      Icons.center_focus_strong_sharp,
                                       color: Colors.red,
                                       size: 30,
                                     ),

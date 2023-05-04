@@ -1,26 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/views/customer/category_menu_page.dart';
-import 'package:frontend/views/customer/home_screen.dart';
-import 'package:frontend/views/general/order_history_canteen.dart';
-import 'package:frontend/views/general/order_user.dart';
-import 'package:frontend/views/general/profile_page.dart';
-import 'package:frontend/views/general/current_orders_canteen.dart';
 import 'package:frontend/views/utils/helper.dart';
 import 'package:http/http.dart';
 import '../../controllers/general/login_screen_controller.dart';
-import '../../models/menu.dart';
-import '../../urls.dart';
-import '../customer/menuItem.dart';
 import '../utils/colors.dart';
 import 'sign_up_screen.dart';
 import 'forget_password.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:frontend/views/customer/order_history_user.dart';
-import 'cart_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const routeName = "/loginScreen";
-
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -56,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 flex: 1,
               ),
               TextField(
+                keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   hintText: "Your Email",
                   border: OutlineInputBorder(
@@ -70,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 10),
               TextField(
+                keyboardType: TextInputType.visiblePassword,
                 decoration: InputDecoration(
                   hintText: "Password",
                   border: OutlineInputBorder(
@@ -92,35 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () async {
                     String username = _usernameController.text.trim();
                     String password = _passwordController.text.trim();
-
-                    bool credentialsValidated =
-                        await loginUser(username, password);
-                    if (credentialsValidated) {
-                      int role = await getRole(username);
-                      if (role == 0) {
-                        // Navigator.of(context).pushReplacement(
-                        //     MaterialPageRoute(builder: (_) => HomeScreen()));
-                        Menu maggi = Menu(
-                            item: "Maggi",
-                            price: 20,
-                            availability: "A",
-                            rating: 4,
-                            category: "Snacks",
-                            type: 0);
-                        List<Menu> menu = [maggi];
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (_) => CategoryMenuPage(category: menu)));
-                      } else {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (_) => const currentOrderCanteen()));
-                      }
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Login Failed"),
-                        ),
-                      );
-                    }
+                    await loginUser(username, password, context);
                   },
                   child: const Text("Login"),
                 ),
@@ -133,15 +93,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => ForgetPassword()));
                 },
-                child: const Text("Forget your password?"),
+                child: const Text("Forgot your password?"),
               ),
               const Spacer(
                 flex: 4,
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context)
-                      .pushReplacementNamed(SignUpScreen.routeName);
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (_) => SignUpScreen()));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

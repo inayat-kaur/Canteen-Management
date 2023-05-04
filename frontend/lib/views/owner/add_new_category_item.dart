@@ -2,19 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/menu.dart';
 import 'package:frontend/controllers/owner/add_menu_item_controller.dart';
 
-class AddMenuItem extends StatefulWidget {
-  final String category;
-
-  const AddMenuItem({Key? key, required this.category}) : super(key: key);
+class AddNewCategoryItem extends StatefulWidget {
+  const AddNewCategoryItem({Key? key}) : super(key: key);
 
   @override
-  State<AddMenuItem> createState() => _AddMenuItemState();
+  State<AddNewCategoryItem> createState() => _AddNewCategoryItemState();
 }
 
-class _AddMenuItemState extends State<AddMenuItem> {
+class _AddNewCategoryItemState extends State<AddNewCategoryItem> {
   final _formKey = GlobalKey<FormState>();
-
-  final Menu menu = Menu(
+  Menu menu = Menu(
       item: "",
       price: 0,
       availability: "U",
@@ -25,9 +22,6 @@ class _AddMenuItemState extends State<AddMenuItem> {
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      menu.category = widget.category;
-    });
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Menu Item'),
@@ -37,6 +31,15 @@ class _AddMenuItemState extends State<AddMenuItem> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            TextFormField(
+              decoration: const InputDecoration(labelText: "Category Name"),
+              onChanged: (value) {
+                setState(() {
+                  menu.category = value;
+                });
+              },
+            ),
+            const SizedBox(height: 10),
             TextFormField(
               decoration: const InputDecoration(labelText: "Item Name"),
               validator: (value) {
@@ -83,7 +86,7 @@ class _AddMenuItemState extends State<AddMenuItem> {
                       child: Text(value == 'A' ? "Available" : "Unavailable"),
                     );
                   }).toList(),
-                )
+                ),
               ],
             ),
             const SizedBox(height: 10),

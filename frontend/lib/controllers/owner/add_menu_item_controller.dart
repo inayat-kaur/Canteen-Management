@@ -1,8 +1,27 @@
+import 'package:flutter/material.dart';
 import 'package:frontend/models/menu.dart';
-import 'package:frontend/views/owner/add_menu_item_screen.dart';
+import 'package:frontend/my_services.dart';
+import 'package:frontend/urls.dart';
+import 'package:frontend/views/owner/menu_page.dart';
+import 'package:http/http.dart';
 
 class AddMenuItemController {
-  void addMenuItem(Menu menu) {}
+  void addNewMenuItem(Menu menu, context) async {
+    MyService myService = MyService();
+    String token = myService.getToken();
+    Client client = Client();
+    final response = await client.post(addMenuItem,
+        headers: {'Authorization': 'Bearer $token'}, body: menu.toJson());
+    client.close();
+    if (response.statusCode == 201) {
+      print(response.body);
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => menuPageOwner()), (route) => false);
+    } else {
+      print(response.body);
+      throw Exception('Failed to add menu item');
+    }
+  }
 
   String? validateItemName(String? value) {
     if (value == null || value.isEmpty) {

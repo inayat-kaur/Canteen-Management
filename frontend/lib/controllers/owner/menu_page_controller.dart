@@ -1,29 +1,23 @@
-import 'package:frontend/my_services.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:frontend/my_services.dart';
+import 'package:http/http.dart';
 import '../../models/menu.dart';
 import '../../urls.dart';
 
-Future<List<Menu>> fetchMenu(String token) async {
+Future<List<Menu>> fetchMenu() async {
   MyService myService = MyService();
-  if (myService.getMyMenu().isNotEmpty) {
-    return myService.getMyMenu();
-  }
-  final response = await http.get(
-    getMenu,
-    headers: {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json',
-    },
-  );
-  print("getMenu called");
+  String token = myService.getToken();
+  Client client = Client();
+  final response = await client.get(getMenu, headers: {
+    'Authorization': 'Bearer $token',
+  });
+  client.close();
   if (response.statusCode == 200) {
     final List<dynamic> menuJson = json.decode(response.body);
     List<Menu> menu = [];
-    menuJson.forEach((item) {
-      menu.add(Menu.fromJson(item));
-    });
-    print(menu);
+    for (int i = 0; i < menuJson.length; i++) {
+      menu.add(Menu.fromJson(menuJson[i]));
+    }
     return menu;
   } else {
     throw Exception('Failed to fetch menu');
@@ -31,24 +25,15 @@ Future<List<Menu>> fetchMenu(String token) async {
 }
 
 Future<List<String>> fetchCategories(String token) async {
-  MyService myService = MyService();
-  if (myService.getMyMenu().isNotEmpty) {
-    List<String> categories = [];
-    List<Menu> mymenu = myService.getMyMenu();
-    for (var item in mymenu) {
-      if (!categories.contains(item.category)) {
-        categories.add(item.category);
-      }
-    }
-    return categories;
-  }
-  final response = await http.get(
+  Client client = Client();
+  final response = await client.get(
     getCategories,
     headers: {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
     },
   );
+  client.close();
   print("getCategories called");
   print(response);
   if (response.statusCode == 200) {

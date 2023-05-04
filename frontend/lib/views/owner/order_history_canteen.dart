@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 
 class orderHistoryCanteen extends StatefulWidget {
   const orderHistoryCanteen({super.key});
-  static const routeName = "/orderHistoryCanteen";
+
   @override
   State<orderHistoryCanteen> createState() => _orderHistoryCanteenState();
 }

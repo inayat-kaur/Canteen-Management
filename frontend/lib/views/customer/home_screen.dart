@@ -270,6 +270,9 @@ Widget _buildClickableContainer(
         MaterialPageRoute(
             builder: (context) => CategoryMenuPage(
                   category: filteredMenu,
+                  searchValue: "",
+                  original: filteredMenu,
+                  categoryTitle: filteredMenu[0].category,
                 )),
       );
     },

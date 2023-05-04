@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/general/profile_page.dart';
 import 'package:frontend/views/owner/category_menu_owner.dart';
+import 'package:frontend/views/owner/current_orders_canteen.dart';
 import '../../controllers/owner/menu_page_controller.dart';
 import '../../models/menu.dart';
 import '../../my_services.dart';
@@ -52,6 +53,13 @@ class _menuPageStateOwner extends State<menuPageOwner> {
         title: Text("Your Menu"),
         actions: [
           IconButton(
+            icon: Icon(Icons.cloud),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => currentOrderCanteen()));
+            },
+          ),
+          IconButton(
             icon: Icon(Icons.history),
             onPressed: () {
               Navigator.of(context).push(
@@ -70,18 +78,18 @@ class _menuPageStateOwner extends State<menuPageOwner> {
       body: Column(
         children: [
           SizedBox(height: 5.0),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Search",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: TextField(
+          //     decoration: InputDecoration(
+          //       hintText: "Search",
+          //       prefixIcon: Icon(Icons.search),
+          //       border: OutlineInputBorder(
+          //         borderRadius: BorderRadius.circular(20.0),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 10.0),
             height: 200.0,
@@ -283,20 +291,19 @@ Widget _buildClickableContainer(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
-              child:IconButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AddNewCategoryItem()));
-                },
-                icon: Icon(
-                  Icons.add,
-                  size: 50.0,
-                  color: Colors.black,
-
-                )),),
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AddNewCategoryItem()));
+                  },
+                  icon: Icon(
+                    Icons.add,
+                    size: 50.0,
+                    color: Colors.black,
+                  )),
+            ),
             SizedBox(height: 10.0),
             Text(
-
               title,
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
@@ -315,6 +322,9 @@ Widget _buildClickableContainer(
         MaterialPageRoute(
             builder: (context) => CategoryMenuPage(
                   category: filteredMenu,
+                  searchValue: "",
+                  categoryTitle: filteredMenu[0].category,
+                  original: filteredMenu,
                 )),
       );
     },

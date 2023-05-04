@@ -18,7 +18,7 @@ class _AddMenuItemState extends State<AddMenuItem> {
       item: "",
       price: 0,
       availability: "U",
-      rating: 0,
+      rating: 2,
       category: "",
       type: 0,
       image: '');

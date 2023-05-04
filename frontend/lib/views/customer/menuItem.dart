@@ -85,32 +85,38 @@ class _menuItemState extends State<menuItem> {
               ' \u{20B9}${widget.price.toStringAsFixed(2)}',
               overflow: TextOverflow.ellipsis,
             ),
-            Container(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.orange),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                // child: GestureDetector(
-                //   onTap: () {
-                //     print("tap detected");
-                //     if (!isAddedToCart) {
-                //       print("add to cart case");
-                //       setState(() {
-                //         isAddedToCart = true;
-                //       });
-                //       addToCart(widget.name);
-                //     } else {
-                //       print("remove from cart case");
-                //       setState(() {
-                //         isAddedToCart = false;
-                //       });
-                //       deleteItem(widget.name);
-                //     }
-                //   },
-                child: IconButton(
-                    icon: Icon(Icons.add_shopping_cart, color: Colors.green),
-                    onPressed: () => addToCart(widget.name))),
+            SizedBox(
+              child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.orange),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: GestureDetector(
+                    onTap: () {
+                      print("tap detected");
+                      if (!isAddedToCart) {
+                        print("add to cart case");
+                        setState(() {
+                          isAddedToCart = true;
+                        });
+                        addToCart(widget.name);
+                      } else {
+                        print("remove from cart case");
+                        setState(() {
+                          isAddedToCart = false;
+                        });
+                        deleteItem(widget.name);
+                      }
+                    },
+                    child: isAddedToCart
+                        ? Text("Remove from Cart")
+                        : Text("Add to Cart"),
+                  )),
+            ),
+            // child: IconButton(
+            //     icon: Icon(Icons.add_shopping_cart, color: Colors.green),
+            //     onPressed: () => addToCart(widget.name))),
             // child: Row(
             //   children: [
             //     GestureDetector(

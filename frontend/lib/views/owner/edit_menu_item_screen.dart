@@ -34,7 +34,7 @@ class _EditMenuItemState extends State<EditMenuItem> {
             child: SafeArea(
                 child: Container(
               padding: const EdgeInsets.symmetric(
-                horizontal: 40,
+                horizontal: 10,
                 vertical: 30,
               ),
               child: Column(children: [
@@ -98,6 +98,7 @@ class _EditMenuItemState extends State<EditMenuItem> {
                                   onChanged: (String? newValue) {
                                     setState(() {
                                       _availability = newValue!;
+                                      widget.menu.availability = newValue;
                                     });
                                   },
                                   items: <String>['A', 'U']
@@ -105,27 +106,24 @@ class _EditMenuItemState extends State<EditMenuItem> {
                                           (String value) {
                                     return DropdownMenuItem<String>(
                                       value: value,
-                                      child: Text(value == 'A'
-                                          ? "Available"
-                                          : "Unavailable"),
+                                      child: Text(value == 'A' ? "A" : "U"),
                                     );
                                   }).toList(),
                                 ),
                               ],
                             )
-                          : Text(widget.menu.availability == 'A'
-                              ? "Available"
-                              : "Unavailable"),
+                          : Text(widget.menu.availability == 'A' ? "A" : "U"),
                       trailing: editAvailability
                           ? IconButton(
                               icon: Icon(Icons.save),
                               onPressed: () async {
                                 String newAvailability =
-                                    await editMenuItemController.updatePrice(
-                                        _availability, widget.menu.item);
+                                    await editMenuItemController
+                                        .updateAvailability(
+                                            _availability, widget.menu.item);
                                 setState(() {
                                   widget.menu.availability = newAvailability;
-                                  editPrice = false;
+                                  editAvailability = false;
                                 });
                               },
                             )

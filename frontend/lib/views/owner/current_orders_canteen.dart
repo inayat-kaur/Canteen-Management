@@ -89,6 +89,8 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
     Client client = Client();
     MyService myService = MyService();
     String token = myService.getToken();
+    print("***************************");
+    print(orderid + " " + item + " " + status);
     final response =
         await client.put(updatePaymentStatus(orderid, item), headers: {
       'Authorization': 'Bearer $token',
@@ -108,8 +110,10 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
     Client client = Client();
     MyService myService = MyService();
     String token = myService.getToken();
+    print("***************************");
+    print(orderid + " " + item + " " + status);
     final response =
-        await client.put(updatePaymentStatus(orderid, item), headers: {
+        await client.put(updateOrderStatus(orderid, item), headers: {
       'Authorization': 'Bearer $token',
     }, body: {
       'orderStatus': status,
@@ -217,7 +221,7 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0.0, 8.0),
-                      child: Row(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
@@ -464,7 +468,7 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0.0, 8.0),
-                      child: Row(
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(

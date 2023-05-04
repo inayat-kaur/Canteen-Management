@@ -40,12 +40,12 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
       appBar: AppBar(
         title: Text(widget.categoryTitle),
         actions: [
-          IconButton(
-            icon: Icon(Icons.favorite),
-            onPressed: () {
-              // Navigate to wishlist page
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.favorite),
+          //   onPressed: () {
+          //     // Navigate to wishlist page
+          //   },
+          // ),
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
@@ -100,11 +100,9 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
                       );
                     },
                   )
-                : Text("Item not found"),
+                : Text("No items found"),
           ),
-
-               Container(
-
+          Container(
             child: IconButton(
               icon: Icon(Icons.add),
               iconSize: 45,

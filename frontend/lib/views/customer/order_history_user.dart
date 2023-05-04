@@ -85,7 +85,7 @@ class _orderHistoryUserState extends State<orderHistoryUser> {
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: ListTile(
-                  title: Row(
+                  title: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(

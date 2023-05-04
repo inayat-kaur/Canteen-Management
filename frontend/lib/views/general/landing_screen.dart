@@ -6,8 +6,6 @@ import 'package:clip_shadow/clip_shadow.dart';
 import 'login_screen.dart';
 
 class LandingScreen extends StatelessWidget {
-  static const routeName = "/landingScreen";
-
   const LandingScreen({super.key});
   @override
   Widget build(BuildContext context) {
@@ -54,8 +52,7 @@ class LandingScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Flexible(
-                    child: Text(
-                        "zeroWait",
+                    child: Text("zeroWait",
                         style: TextStyle(
                           fontSize: 35,
                           color: Colors.deepOrangeAccent,
@@ -69,7 +66,6 @@ class LandingScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-
                         textAlign: TextAlign.center),
                   ),
                   Spacer(

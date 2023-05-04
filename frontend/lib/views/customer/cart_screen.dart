@@ -18,7 +18,6 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   List<Product> foodProducts = [];
-  int total = 0;
 
   Future<void> initialize() async {
     List<Product> products = await getProducts();
@@ -37,7 +36,6 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
         title: const Text(
           "Shopping Cart",
           style: TextStyle(

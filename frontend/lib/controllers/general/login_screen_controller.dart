@@ -11,18 +11,19 @@ Future<void> loginUser(String username, String password, context) async {
   Client client = Client();
   Response response = await client
       .post(login, body: {"username": username, "password": password});
+  print(response.body);
   if (response.statusCode == 201) {
     String token = response.body.substring(1, response.body.length - 1);
     MyService myService = MyService();
     myService.updateToken(token);
-    response =
-        await client.get(getUserProfile, headers: {"Authorization": token});
+    response = await client.get(getUserProfile, headers: {
+      'Authorization': 'Bearer $token',
+    });
     if (response.statusCode == 200) {
-      Map<String, dynamic> body = jsonDecode(response.body);
+      Map<String, dynamic> body = json.decode(response.body);
       User user =
           User(name: "", phone: "", username: "", role: 0, password: "");
-      user.fromJson(body);
-      user.password = "";
+      user.fromJson(body['message'][0]);
       MyService myService = MyService();
       myService.updateProfile(user);
       if (user.role == 0) {

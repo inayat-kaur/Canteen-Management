@@ -7,11 +7,12 @@ Future<void> getNextPage(BuildContext context) async {
   MyService myService = MyService();
   String token = myService.getToken();
 
-  if (token != null && token != "") {
+  if (token != "") {
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (_) => LoginScreen()));
     // Navigator.of(context).pushReplacementNamed(LandingScreen.routeName);
   } else {
-    Navigator.of(context).pushReplacementNamed(LandingScreen.routeName);
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (_) => LandingScreen()));
   }
 }

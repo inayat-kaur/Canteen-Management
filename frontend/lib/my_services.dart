@@ -16,7 +16,7 @@ class MyService {
   Future<void> initialize() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
-    if (token != null) {
+    if (token != null && token != '') {
       _token = token;
       List<String>? profileString = prefs.getStringList('profile');
       if (profileString != null) {

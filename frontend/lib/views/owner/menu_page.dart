@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/customer/menuItem.dart';
+import 'package:frontend/views/general/profile_page.dart';
 import 'package:frontend/views/owner/category_menu_page.dart';
 
 import 'order_history_canteen.dart';
@@ -32,7 +33,8 @@ class _menuPageStateOwner extends State<menuPageOwner> {
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
-              // Navigate to profile page
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => Profile()));
             },
           ),
         ],

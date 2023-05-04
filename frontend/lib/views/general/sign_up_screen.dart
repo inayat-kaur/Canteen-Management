@@ -173,7 +173,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (_) => SignUpScreen()));
+                          MaterialPageRoute(builder: (_) => LoginScreen()));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

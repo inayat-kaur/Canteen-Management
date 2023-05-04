@@ -83,9 +83,14 @@ Future<List<Cart>> fetchCart() async {
 }
 
 Future<List<Product>> getProducts() async {
-  List<Product> foodProducts = [];
   List<Menu> menu = await fetchMenu();
   List<Cart> cart = await fetchCart();
+  List<Product> foodProducts = getProductsHelper(menu, cart);
+  return foodProducts;
+}
+
+List<Product> getProductsHelper(List<Menu> menu, List<Cart> cart) {
+  List<Product> foodProducts = [];
   for (int i = 0; i < cart.length; i++) {
     for (int j = 0; j < menu.length; j++) {
       if (cart[i].item == menu[j].item) {

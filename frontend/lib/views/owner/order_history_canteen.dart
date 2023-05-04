@@ -137,23 +137,23 @@ class _orderHistoryCanteenState extends State<orderHistoryCanteen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 0.0, 8.0),
-                        child: Row(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               "#${userOrders[0].orderId}",
                               style: const TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 18.0,
-                              ),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18.0,
+                                  overflow: TextOverflow.ellipsis),
                             ),
                             Text(
                               DateFormat('MMMM d, h:mm a')
                                   .format(userOrders[0].time),
                               style: const TextStyle(
-                                fontWeight: FontWeight.w100,
-                                fontSize: 15.0,
-                              ),
+                                  fontWeight: FontWeight.w100,
+                                  fontSize: 15.0,
+                                  overflow: TextOverflow.ellipsis),
                             ),
                           ],
                         ),

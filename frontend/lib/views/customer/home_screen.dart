@@ -227,8 +227,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: GridView.builder(
               itemCount: categoriesList.length,
-              itemBuilder: (context, index) => _buildClickableContainer(context,
-                  categoriesList[index],  menu),
+              itemBuilder: (context, index) => _buildClickableContainer(
+                  context, categoriesList[index], menu),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 1,
@@ -263,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
 Widget _buildClickableContainer(
     BuildContext context, String title, List<Menu> menu) {
   List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
-  String imageUrl=filteredMenu[0].image;
+  String imageUrl = filteredMenu[0].image;
   return GestureDetector(
     onTap: () {
       List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
@@ -301,9 +301,8 @@ Widget _buildClickableContainer(
         children: [
           Image.network(
             imageUrl,
-
-            width: 80.0,
-            height: 80.0,
+            width: 70.0,
+            height: 70.0,
             fit: BoxFit.cover,
           ),
           SizedBox(height: 10.0),

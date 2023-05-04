@@ -4,6 +4,7 @@ import '../../controllers/customer/payment_screen_controller.dart';
 import '../../models/cart.dart';
 import '../utils/helper.dart';
 
+//widget to show total billing of the order
 class Payment extends StatefulWidget {
   const Payment({super.key});
 

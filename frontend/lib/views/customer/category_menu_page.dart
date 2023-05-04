@@ -4,6 +4,7 @@ import '../../models/menu.dart';
 import '../general/profile_page.dart';
 import 'cart_screen.dart';
 
+//widget to display list of items in the selected category
 class CategoryMenuPage extends StatefulWidget {
   final List<Menu> category;
   final String searchValue;

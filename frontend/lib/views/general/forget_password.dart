@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/colors.dart';
 import '../utils/helper.dart';
 
+//widget to handle the case when user forgets the password
 class ForgetPassword extends StatefulWidget {
   @override
   State<ForgetPassword> createState() => _ForgetPasswordState();

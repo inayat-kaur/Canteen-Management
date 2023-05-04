@@ -57,13 +57,7 @@ class _CartScreenState extends State<CartScreen> {
                 return menuItemCart(
                   product: foodProducts[index],
                 );
-                // return menuItemCart(
-                //   name: foodProducts[index].title,
-                //   price: foodProducts[index].price,
-                //   rating: foodProducts[index].rating,
-                //   image: "assets/images/real/pizza.jpg",
-                //   count: 1,
-                // );
+
               },
             ),
           ),
@@ -82,14 +76,7 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
                   onPressed: () async {
-                    // List<String> orderOptions = [];
-                    // orderOptions = await showDialog(
-                    //   context: context,
-                    //   builder: (BuildContext context) {
-                    //     return ServiceDialog();
-                    //   },
-                    // );
-                    // orderCartItems(foodProducts, orderOptions);
+
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (_) => Payment()));
                   },

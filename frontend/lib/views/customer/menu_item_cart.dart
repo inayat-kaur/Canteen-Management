@@ -4,22 +4,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/cart.dart';
 
+// widget to display menu on cart screen
 class menuItemCart extends StatefulWidget {
   final Product product;
-  // final String name;
-  // final int price;
-  // final int rating;
-  // final String image;
-  // final int count;
+
 
   const menuItemCart({
     Key? key,
     required this.product,
-    // required this.name,
-    // required this.price,
-    // required this.rating,
-    // required this.image,
-    // required this.count,
   }) : super(key: key);
 
   @override
@@ -65,7 +57,6 @@ class _menuItemStateCart extends State<menuItemCart> {
         contentPadding:
             EdgeInsetsDirectional.only(start: 15, top: 10, end: 15, bottom: 10),
         horizontalTitleGap: 20,
-        //leading: Image.asset(widget.product.image),
         leading: Image.network(widget.product.image),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,31 +87,7 @@ class _menuItemStateCart extends State<menuItemCart> {
                 border: Border.all(color: Colors.orange),
                 borderRadius: BorderRadius.circular(4),
               ),
-              // child: GestureDetector(
-              //   onTap: () {
-              //     print("tap detected");
-              //     if (!isAddedToCart) {
-              //       print("add to cart case");
-              //       setState(() {
-              //         isAddedToCart = true;
-              //       });
-              //       addToCart(widget.name);
-              //     } else {
-              //       print("remove from cart case");
-              //       setState(() {
-              //         isAddedToCart = false;
-              //       });
-              //       deleteItem(widget.name);
-              //     }
-              //   },
-              //   child: Text(
-              //     isAddedToCart ? 'Added to Cart' : 'Add Item',
-              //     style: TextStyle(
-              //         color: isAddedToCart ? Colors.green : Colors.orange,
-              //         fontSize: 12,
-              //         fontWeight: FontWeight.bold),
-              //   ),
-              // ),
+
               child: Row(
                 children: [
                   GestureDetector(

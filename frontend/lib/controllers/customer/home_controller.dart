@@ -4,6 +4,7 @@ import 'dart:convert';
 import '../../models/menu.dart';
 import '../../urls.dart';
 
+// fetches the complete menu from the database
 Future<List<Menu>> fetchMenu(String token) async {
   MyService myService = MyService();
   if (myService.getMyMenu().isNotEmpty) {
@@ -30,6 +31,7 @@ Future<List<Menu>> fetchMenu(String token) async {
   }
 }
 
+// fetch all the categories from the database like snacks, beverages, etc.
 Future<List<String>> fetchCategories(String token) async {
   MyService myService = MyService();
   if (myService.getMyMenu().isNotEmpty) {
@@ -64,6 +66,7 @@ Future<List<String>> fetchCategories(String token) async {
   }
 }
 
+// the menu is searched based on the given input item name. If the item name contains the searched text, it return sthose list of items
 List<Menu> searchMenu(List<Menu> menu, String searchText) {
   List<Menu> searchResults = [];
   menu.forEach((menuItem) {
@@ -76,6 +79,7 @@ List<Menu> searchMenu(List<Menu> menu, String searchText) {
   return searchResults;
 }
 
+// the menu is filtered based on the category
 List<Menu> filterMenuBasedOnCategory(List<Menu> menu, String category) {
   print("filterMenuBasedOnCategory called");
   List<Menu> filteredMenu = [];
@@ -89,6 +93,7 @@ List<Menu> filterMenuBasedOnCategory(List<Menu> menu, String category) {
   return filteredMenu;
 }
 
+// the menu is filtered based on the type - veg/non-veg
 List<Menu> filterMenuBasedOnType(List<Menu> menu, int type) {
   List<Menu> filteredMenu = [];
   menu.forEach((menuItem) {

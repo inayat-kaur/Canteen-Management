@@ -5,6 +5,7 @@ import 'dart:collection';
 import 'package:intl/intl.dart';
 import '../../../controllers/customer/order_history_controller.dart';
 
+// widget to display order history of user
 class orderHistoryUser extends StatefulWidget {
   const orderHistoryUser({super.key});
 

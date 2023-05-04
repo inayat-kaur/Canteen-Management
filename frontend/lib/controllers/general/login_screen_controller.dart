@@ -18,6 +18,8 @@ Future<void> loginUser(String username, String password, context) async {
     response = await client.get(getUserProfile, headers: {
       'Authorization': 'Bearer $token',
     });
+    print("###########################");
+    print(token);
     if (response.statusCode == 200) {
       Map<String, dynamic> body = json.decode(response.body);
       User user =

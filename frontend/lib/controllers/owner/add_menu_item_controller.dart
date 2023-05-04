@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/models/menu.dart';
 import 'package:frontend/my_services.dart';
 import 'package:frontend/urls.dart';
+import 'package:frontend/views/owner/menu_page.dart';
 import 'package:http/http.dart';
 
 class AddMenuItemController {
@@ -14,7 +15,8 @@ class AddMenuItemController {
     client.close();
     if (response.statusCode == 201) {
       print(response.body);
-      Navigator.of(context).pop(menu);
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (_) => menuPageOwner()), (route) => false);
     } else {
       print(response.body);
       throw Exception('Failed to add menu item');

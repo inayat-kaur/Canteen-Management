@@ -5,19 +5,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/cart.dart';
 
 class menuItemCart extends StatefulWidget {
-  final String name;
-  final int price;
-  final int rating;
-  final String image;
-  final int count;
+  final Product product;
+  // final String name;
+  // final int price;
+  // final int rating;
+  // final String image;
+  // final int count;
 
   const menuItemCart({
     Key? key,
-    required this.name,
-    required this.price,
-    required this.rating,
-    required this.image,
-    required this.count,
+    required this.product,
+    // required this.name,
+    // required this.price,
+    // required this.rating,
+    // required this.image,
+    // required this.count,
   }) : super(key: key);
 
   @override
@@ -32,7 +34,7 @@ class _menuItemStateCart extends State<menuItemCart> {
     print("checkIfItemAddedToCart");
     List<Cart> cartItems = await fetchCart();
     for (int i = 0; i < cartItems.length; i++) {
-      if (cartItems[i].item == widget.name) {
+      if (cartItems[i].item == widget.product.title) {
         setState(() {
           isAddedToCart = true;
         });
@@ -62,19 +64,20 @@ class _menuItemStateCart extends State<menuItemCart> {
         contentPadding:
         EdgeInsetsDirectional.only(start: 15, top: 10, end: 15, bottom: 10),
         horizontalTitleGap: 20,
-        leading: Image.asset(widget.image),
+        //leading: Image.asset(widget.product.image),
+        leading: Image.asset("assets/images/real/pizza2.jpg"),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              widget.name,
+              widget.product.title,
               overflow: TextOverflow.ellipsis,
             ),
             Row(
               children: [
                 Icon(Icons.star, color: Colors.amber, size: 16),
                 SizedBox(width: 4),
-                Text(widget.rating.toString()),
+                Text(widget.product.rating.toString()),
               ],
             ),
           ],
@@ -83,7 +86,7 @@ class _menuItemStateCart extends State<menuItemCart> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              ' \u{20B9}${widget.price.toStringAsFixed(2)}',
+              ' \u{20B9}${widget.product.price.toStringAsFixed(2)}',
               overflow: TextOverflow.ellipsis,
             ),
             Container(
@@ -121,7 +124,7 @@ class _menuItemStateCart extends State<menuItemCart> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      setState(() {
+                      setState(() { if(itemCount>0)
                         itemCount--;
                       });
                     },
@@ -139,11 +142,12 @@ class _menuItemStateCart extends State<menuItemCart> {
                     child: Icon(Icons.add, size: 20),
 
                   ),
+                  SizedBox(width: 8),
               GestureDetector(
                onTap: () {
          //save
                  },
-                 child: Icon(Icons.save, size: 20),),
+                 child: Icon(Icons.check, size: 22,color: Colors.orange,),),
                 ],
               ),
             ),

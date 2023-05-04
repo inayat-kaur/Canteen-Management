@@ -27,7 +27,7 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Welcome"),
+        title:  Text(widget.category[0].category),
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
@@ -38,12 +38,12 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
               );
             },
           ),
-          IconButton(
-            icon: Icon(Icons.favorite),
-            onPressed: () {
-              // Navigate to wishlist page
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.favorite),
+          //   onPressed: () {
+          //     // Navigate to wishlist page
+          //   },
+          // ),
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {

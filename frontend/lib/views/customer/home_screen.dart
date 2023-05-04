@@ -17,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Menu> menu = [];
-  List<String> categoriesList = ['ygftydf','rdtygu','htf6','gvy'];
+  List<String> categoriesList = [];
 
   Future<void> fetchMenuItems() async {
     MyService myService = MyService();
@@ -58,17 +58,17 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
-          IconButton(
-            icon: Icon(Icons.favorite),
-            onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => menuPageOwner(),
-              //   ),
-              //);
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.favorite),
+          //   onPressed: () {
+          //     // Navigator.push(
+          //     //   context,
+          //     //   MaterialPageRoute(
+          //     //     builder: (context) => menuPageOwner(),
+          //     //   ),
+          //     //);
+          //   },
+          // ),
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             top: 45.0,
                           ),
                           child: Image.asset(
-                            'assets/images/real/fruit.jpg',
+                            'assets/images/virtual/offer.png',
                             fit: BoxFit.cover,
                           ),
                           // Image.network(
@@ -145,14 +145,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'First text field',
-                              style: TextStyle(fontSize: 20.0),
+                              'Today\'s Special',
+                              style: TextStyle(fontSize: 23.0),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              'Second text fieldjsiuaye78fhodif90weif0wrofiljah',
+                              'Maharaja Thali',
                               style: TextStyle(fontSize: 16.0),
                               maxLines: 5,
                               overflow: TextOverflow.ellipsis,
@@ -184,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             top: 45.0,
                           ),
                           child: Image.asset(
-                            'assets/images/real/fruit.jpg',
+                            'assets/images/virtual/clock.png',
                             fit: BoxFit.cover,
                           ),
                           // Image.network(
@@ -201,14 +201,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'First text field',
-                              style: TextStyle(fontSize: 20.0),
+                              'Timimgs',
+                              style: TextStyle(fontSize: 23.0),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              'Second text fieldjsiuaye78fhodif90weif0wrofiljah',
+                              '11 AM -11 PM',
                               style: TextStyle(fontSize: 16.0),
                               maxLines: 5,
                               overflow: TextOverflow.ellipsis,

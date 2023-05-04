@@ -44,23 +44,32 @@ class LandingScreen extends StatelessWidget {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.center,
-            child: Image.asset(
-              Helper.getAssetName("MealMonkeyLogo.png", "virtual"),
-            ),
-          ),
+          //
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
               width: double.infinity,
-              height: Helper.getScreenHeight(context) * 0.3,
+              height: Helper.getScreenHeight(context) * 0.5,
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Column(
                 children: [
                   Flexible(
                     child: Text(
-                        "Maintaining Canteen Food System in a better and efficient Manner",
+                        "zeroWait",
+                        style: TextStyle(
+                          fontSize: 35,
+                          color: Colors.deepOrangeAccent,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                          shadows: [
+                            Shadow(
+                              offset: Offset(2, 2),
+                              color: Colors.grey.shade500,
+                              blurRadius: 2,
+                            ),
+                          ],
+                        ),
+
                         textAlign: TextAlign.center),
                   ),
                   Spacer(

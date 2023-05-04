@@ -63,6 +63,13 @@ class _PaymentState extends State<Payment> {
                             Text("Total"),
                             Text(getTotal(foodProducts).toString())
                           ]),
+                      Divider(),
+                      ElevatedButton(
+                          onPressed: () {
+                            List<String> orderOptions = [];
+                            orderCartItems(foodProducts, orderOptions);
+                          },
+                          child: Text("Pay"))
                     ])))));
   }
 }

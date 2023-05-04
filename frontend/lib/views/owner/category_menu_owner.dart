@@ -1,25 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/owner/menuItem_owner.dart';
+import '../../controllers/owner/menu_page_controller.dart';
 import '../../models/menu.dart';
 import '../general/profile_page.dart';
 import 'add_menu_item_screen.dart';
 
 class CategoryMenuPage extends StatefulWidget {
   final List<Menu> category;
+  final String searchValue;
+  final List<Menu> original;
+  final String categoryTitle;
 
-  CategoryMenuPage({Key? key, required this.category}) : super(key: key);
+  CategoryMenuPage(
+      {Key? key,
+      required this.category,
+      required this.searchValue,
+      required this.original,
+      required this.categoryTitle})
+      : super(key: key);
 
   @override
   _CategoryMenuPageState createState() => _CategoryMenuPageState();
 }
 
 class _CategoryMenuPageState extends State<CategoryMenuPage> {
-  final _searchController = TextEditingController();
+  TextEditingController _searchController = TextEditingController();
 
   @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
+  void initState() {
+    setState(() {
+      _searchController.text = widget.searchValue;
+    });
+    super.initState();
   }
 
   @override
@@ -47,16 +59,31 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
         children: [
           SizedBox(height: 5.0),
           Padding(
-            padding: EdgeInsets.all(10.0),
-            child: TextField(
+              padding: EdgeInsets.all(10.0),
+              child: TextField(
+                autofocus: true,
+                controller: _searchController,
                 decoration: InputDecoration(
-              hintText: "Search",
-              prefixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-            )),
-          ),
+                  hintText: "Search",
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+                onChanged: (value) {
+                  List<Menu> filteredMenu = searchMenu(widget.original, value);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CategoryMenuPage(
+                              category: filteredMenu,
+                              searchValue: _searchController.text,
+                              original: widget.original,
+                              categoryTitle: widget.categoryTitle,
+                            )),
+                  );
+                },
+              )),
           SizedBox(height: 5.0),
           Expanded(
             child: ListView.builder(

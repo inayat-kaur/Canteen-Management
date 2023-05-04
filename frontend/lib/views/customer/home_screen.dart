@@ -37,6 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    MyService myService = MyService();
+    myService.initialize();
     super.initState();
     fetchMenuItems();
   }

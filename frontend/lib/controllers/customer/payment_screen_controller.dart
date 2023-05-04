@@ -6,13 +6,15 @@ import '../../urls.dart';
 import 'package:http/http.dart';
 
 List<Product> getProducts() {
-  List<Product> foodProducts = [];
   MyService myService = MyService();
   List<Menu> menu = myService.getMyMenu();
   List<Cart> cart = myService.getCart();
-  print("###################################");
-  print(menu.length);
-  print(cart.length);
+  List<Product> foodProducts = getProductsHelper(menu, cart);
+  return foodProducts;
+}
+
+List<Product> getProductsHelper(List<Menu> menu, List<Cart> cart) {
+  List<Product> foodProducts = [];
   for (int i = 0; i < cart.length; i++) {
     for (int j = 0; j < menu.length; j++) {
       if (cart[i].item == menu[j].item) {
@@ -44,20 +46,7 @@ Future<void> orderCartItems(
     List<Product> foodProducts, List<String> orderOptions) async {
   MyService myService = MyService();
   String token = myService.getToken();
-  String OrderID = '';
-  String temp = token.split('.')[1];
-  OrderID += DateTime.now().minute.toString();
-  OrderID += temp.substring(0, 2);
-  OrderID += DateTime.now().hour.toString();
-  OrderID += temp.substring(2, 4);
-  OrderID += DateTime.now().day.toString();
-  OrderID += DateTime.now().second.toString();
-  OrderID += temp.substring(6, 8);
-  OrderID += DateTime.now().year.toString();
-  OrderID += temp.substring(8, 12);
-  OrderID += DateTime.now().month.toString();
-  OrderID += DateTime.now().millisecond.toString();
-  print(OrderID);
+  String OrderID = generateOrderId(token);
   Order order = Order(
       orderId: OrderID,
       username: "",
@@ -101,4 +90,21 @@ Future<void> orderCartItems(
     throw Exception('Failed to empty cart');
   }
   client.close();
+}
+
+String generateOrderId(String token) {
+  String OrderID = '';
+  String temp = token.split('.')[1];
+  OrderID += DateTime.now().minute.toString();
+  OrderID += temp.substring(0, 2);
+  OrderID += DateTime.now().hour.toString();
+  OrderID += temp.substring(2, 4);
+  OrderID += DateTime.now().day.toString();
+  OrderID += DateTime.now().second.toString();
+  OrderID += temp.substring(6, 8);
+  OrderID += DateTime.now().year.toString();
+  OrderID += temp.substring(8, 12);
+  OrderID += DateTime.now().month.toString();
+  OrderID += DateTime.now().millisecond.toString();
+  return OrderID;
 }

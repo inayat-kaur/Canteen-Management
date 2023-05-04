@@ -13,7 +13,8 @@ class AddMenuItemController {
         headers: {'Authorization': 'Bearer $token'}, body: menu.toJson());
     client.close();
     if (response.statusCode == 201) {
-      Navigator.of(context).pop();
+      print(response.body);
+      Navigator.of(context).pop(menu);
     } else {
       print(response.body);
       throw Exception('Failed to add menu item');

@@ -12,13 +12,13 @@ class AddNewCategoryItem extends StatefulWidget {
 class _AddNewCategoryItemState extends State<AddNewCategoryItem> {
   final _formKey = GlobalKey<FormState>();
   Menu menu = Menu(
-    item: "",
-    price: 0,
-    availability: "U",
-    rating: 0,
-    category: "",
-    type: 0,
-  );
+      item: "",
+      price: 0,
+      availability: "U",
+      rating: 0,
+      category: "",
+      type: 0,
+      image: '');
 
   @override
   Widget build(BuildContext context) {

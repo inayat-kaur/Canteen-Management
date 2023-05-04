@@ -14,17 +14,20 @@ class AddMenuItem extends StatefulWidget {
 class _AddMenuItemState extends State<AddMenuItem> {
   final _formKey = GlobalKey<FormState>();
 
-  @override
-  Widget build(BuildContext context) {
-    final menu = Menu(
+  final Menu menu = Menu(
       item: "",
       price: 0,
       availability: "U",
       rating: 0,
-      category: widget.category,
+      category: "",
       type: 0,
-    );
+      image: '');
 
+  @override
+  Widget build(BuildContext context) {
+    setState(() {
+      menu.category = widget.category;
+    });
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Menu Item'),
@@ -40,7 +43,9 @@ class _AddMenuItemState extends State<AddMenuItem> {
                 AddMenuItemController().validateItemName(value);
               },
               onChanged: (value) {
-                menu.item = value;
+                setState(() {
+                  menu.item = value;
+                });
               },
             ),
             const SizedBox(height: 10),
@@ -54,7 +59,9 @@ class _AddMenuItemState extends State<AddMenuItem> {
                 AddMenuItemController().validatePrice(value);
               },
               onChanged: (value) {
-                menu.price = int.parse(value);
+                setState(() {
+                  menu.price = int.parse(value);
+                });
               },
             ),
             const SizedBox(height: 10),

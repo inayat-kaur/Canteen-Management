@@ -5,6 +5,7 @@ class Menu {
   int rating = 0;
   String category = ""; // TODO: decide categories
   int type = 0; // 0: veg, 1: non-veg
+  String image = "";
 
   Menu({
     required this.item,
@@ -13,6 +14,7 @@ class Menu {
     required this.rating,
     required this.category,
     required this.type,
+    required this.image,
   });
 
   Menu.fromJson(Map<String, dynamic> json) {
@@ -22,6 +24,7 @@ class Menu {
     rating = json['rating'];
     category = json['category'];
     type = json['type'];
+    image = json['image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -32,6 +35,7 @@ class Menu {
     data['rating'] = this.rating.toString();
     data['category'] = this.category;
     data['type'] = this.type.toString();
+    data['image'] = this.image;
     return data;
   }
 }

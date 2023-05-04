@@ -80,11 +80,16 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
             horizontalTitleGap: 20,
             title: IconButton(
               icon: Icon(Icons.add),
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
+              onPressed: () async {
+                Menu menu3 = await Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => AddMenuItem(
                           category: widget.category[0].category,
                         )));
+                if (menu3 != null) {
+                  setState(() {
+                    widget.category.add(menu3);
+                  });
+                }
               },
             ),
           ))

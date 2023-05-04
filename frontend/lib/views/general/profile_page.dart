@@ -120,7 +120,7 @@ class _ProfileState extends State<Profile> {
                                 ? IconButton(
                                     icon: Icon(Icons.save),
                                     onPressed: () async {
-                                      String newPhone = await updateName(
+                                      String newPhone = await updatePhone(
                                           _phoneController.text.trim());
                                       setState(() {
                                         user.name = newPhone;

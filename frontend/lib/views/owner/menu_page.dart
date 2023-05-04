@@ -255,14 +255,11 @@ Widget _buildClickableContainer(
     BuildContext context, String title, String imageUrl, List<Menu> menu) {
   if (title == "Add new Category") {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
         Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (context) => CategoryMenuPage(
-                    category: filteredMenu,
-                  )),
+          MaterialPageRoute(builder: (context) => AddNewCategoryItem()),
         );
       },
       child: Container(

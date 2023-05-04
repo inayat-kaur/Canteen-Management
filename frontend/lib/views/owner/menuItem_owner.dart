@@ -114,9 +114,14 @@ class _menuItemState extends State<menuItem> {
                 //   },
                 child: IconButton(
                     icon: Icon(Icons.edit, color: Colors.green),
-                    onPressed: () => EditMenuItem(
-                          menu: widget.mymenu,
-                        ))),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => EditMenuItem(
+                                    menu: widget.mymenu,
+                                  )));
+                    })),
             // child: Row(
             //   children: [
             //     GestureDetector(

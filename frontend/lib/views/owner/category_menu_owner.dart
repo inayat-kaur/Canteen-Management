@@ -102,7 +102,9 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
                   )
                 : Text("Item not found"),
           ),
-          Container(
+
+               Container(
+
             child: IconButton(
               icon: Icon(Icons.add),
               iconSize: 45,

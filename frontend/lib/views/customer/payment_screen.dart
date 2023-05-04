@@ -42,7 +42,18 @@ class _PaymentState extends State<Payment> {
                           child:
                               ListView(padding: EdgeInsets.all(20), children: [
                         ListView.builder(
-                          itemBuilder: (context, index) => ListTile(
+                          itemBuilder: (context, index) => Container(
+                            margin: EdgeInsetsDirectional.only(bottom :5),
+            decoration: BoxDecoration(
+            border: Border.all(
+
+              color: Colors.grey,
+              width: 1.0,
+            ),
+          borderRadius: BorderRadius.circular(13.0),
+        ),
+      child:  ListTile(
+
                             title: Text(foodProducts[index].title),
                             subtitle: Text(
                                 foodProducts[index].quantity.toString() +
@@ -51,19 +62,22 @@ class _PaymentState extends State<Payment> {
                             trailing: Text((foodProducts[index].quantity *
                                     foodProducts[index].price)
                                 .toString()),
-                          ),
+                          ),),
                           itemCount: foodProducts.length,
                           shrinkWrap: true,
                         )
-                      ])),
-                      Divider(),
+                      ]
+    )),
+                      Divider(color: Colors.orangeAccent,),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text("Total"),
                             Text(getTotal(foodProducts).toString())
                           ]),
-                      Divider(),
+                      Divider(
+                        color: Colors.orangeAccent,
+                      ),
                       ElevatedButton(
                           onPressed: () {
                             List<String> orderOptions = [];

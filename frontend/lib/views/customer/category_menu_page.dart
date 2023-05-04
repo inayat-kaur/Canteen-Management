@@ -94,20 +94,8 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
                   // count: 0,
                 );
               },
-            ),
-            child: (widget.category.isNotEmpty)
-                ? ListView.builder(
-                    itemCount: widget.category.length,
-                    itemBuilder: (context, index) {
-                      return menuItem(
-                        name: widget.category[index].item,
-                        price: widget.category[index].price,
-                        rating: widget.category[index].rating,
-                        image: 'assets/images/real/apple_pie.jpg',
-                        count: 0,
-                      );
-                    },
-                  )
+            )
+
                 : Text("No items found"),
           ),
         ],

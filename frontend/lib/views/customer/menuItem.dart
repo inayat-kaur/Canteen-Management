@@ -108,13 +108,13 @@ class _menuItemState extends State<menuItem> {
                         setState(() {
                           isAddedToCart = true;
                         });
-                        addToCart(widget.name);
+                        addToCart(widget.menuitem.item);
                       } else {
                         print("remove from cart case");
                         setState(() {
                           isAddedToCart = false;
                         });
-                        deleteItem(widget.name);
+                        deleteItem(widget.menuitem.item);
                       }
                     },
                     child: isAddedToCart

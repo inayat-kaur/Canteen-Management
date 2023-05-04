@@ -65,7 +65,7 @@ Future<void> orderCartItems(
       item: "",
       quantity: 0,
       price: 0,
-      orderStatus: "N",
+      orderStatus: "U",
       paymentStatus: "N",
       time: DateTime.now());
   Client client = Client();

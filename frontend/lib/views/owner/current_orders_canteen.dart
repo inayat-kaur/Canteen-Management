@@ -1,3 +1,4 @@
+import 'package:frontend/my_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'dart:collection';
@@ -45,11 +46,8 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
     });
 
     Client client = Client();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? id = await prefs.getString('username');
-    id ??= '';
-    String? token = await prefs.getString('token');
-
+    MyService myService = MyService();
+    String token = myService.getToken();
     final response = await client.get(
       getOrders,
       headers: {
@@ -88,8 +86,26 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
 
   Future<void> _updatePaymentStatus(String orderid, String item) async {
     Client client = Client();
+    MyService myService = MyService();
+    String token = myService.getToken();
+    final response = await client.put(
+      updatePaymentStatus(orderid, item),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print("Connected");
+    } else {
+      throw Exception('Error fetching Server');
+    }
+  }
+
+  Future<void> _updateOrderStatus(String orderid, String item) async {
+    Client client = Client();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = await prefs.getString('token');
+    String? token = prefs.getString('token');
     final response = await client.put(
       updatePaymentStatus(orderid, item),
       headers: {
@@ -302,13 +318,12 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
                                                 });
                                                 Navigator.pop(context);
 
-                                                // for (Order order
-                                                //     in userOrders) {
-                                                //   _updatePaymentStatus(
-                                                //       order.orderId,
-                                                //       order.item);
-                                                // }
-                                                // TO DO
+                                                for (Order order
+                                                    in userOrders) {
+                                                  _updatePaymentStatus(
+                                                      order.orderId,
+                                                      order.item);
+                                                }
                                               },
                                               child: const Text("Confirm"),
                                             ),
@@ -360,13 +375,10 @@ class _currentOrderCanteenState extends State<currentOrderCanteen> {
 
                                           Navigator.pop(context);
 
-                                          // for (Order order
-                                          //     in userOrders) {
-                                          //   _updateOrderStatus(
-                                          //       order.orderId,
-                                          //       order.item);
-                                          // }
-                                          // TO DO
+                                          for (Order order in userOrders) {
+                                            _updateOrderStatus(
+                                                order.orderId, order.item);
+                                          }
                                         },
                                         child: const Text("Confirm"),
                                       ),

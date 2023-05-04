@@ -26,7 +26,7 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Welcome"),
+        title:  Text(widget.category[0].category),
         actions: [
           IconButton(
             icon: Icon(Icons.favorite),
@@ -66,7 +66,7 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
                   name: widget.category[index].item,
                   price: widget.category[index].price,
                   rating: widget.category[index].rating,
-                  image: 'assets/images/real/fruit.jpg',
+                  image: widget.category[index].image,
                   count: 0,
                   mymenu: widget.category[index],
                 );

@@ -73,11 +73,12 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
               itemCount: widget.category.length,
               itemBuilder: (context, index) {
                 return menuItem(
-                  name: widget.category[index].item,
-                  price: widget.category[index].price,
-                  rating: widget.category[index].rating,
-                  image: 'assets/images/real/apple_pie.jpg',
-                  count: 0,
+                  menuitem: widget.category[index],
+                  // name: widget.category[index].item,
+                  // price: widget.category[index].price,
+                  // rating: widget.category[index].rating,
+                  // image: widget.category[index].image,
+                  // count: 0,
                 );
               },
             ),

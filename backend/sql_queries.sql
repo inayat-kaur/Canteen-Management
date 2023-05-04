@@ -32,10 +32,15 @@ CREATE TABLE orders (
     item VARCHAR(50),
     quantity INT,
     price INT,
-    order_status VARCHAR(1),
-    payment_status VARCHAR(1), 
+    order_status VARCHAR(2),
+    payment_status VARCHAR(2), 
     delivery_time TIMESTAMP,
     PRIMARY KEY (orderID,item),
     FOREIGN KEY (username) REFERENCES user(username),
     FOREIGN KEY (item) REFERENCES menu(item)
+);
+
+CREATE TABLE offers(
+    offer VARCHAR(20) PRIMARY KEY,
+    details VARCHAR(100)
 );

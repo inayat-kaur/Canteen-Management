@@ -1,5 +1,4 @@
 const db = require('./db');
-//const { v4: uuidv4 } = require('uuid');
 
 async function addOrder(order, username) {
     if(!order || !order.orderId || !order.item || !username || !order.orderType || !order.quantity){
@@ -34,8 +33,10 @@ async function deleteOrder(orderId, item) {
 }
 
 async function updateOrderStatus(orderId, orderStatus, item) {
-    const result = await db.query('UPDATE orders SET order_status = ? WHERE orderId = ? and item = ?', [orderStatus, orderId, item]);
-
+    const queryStmt = `UPDATE orders SET order_status = ? WHERE orderId = ? and item = ?`;
+    const values = [orderStatus, orderId, item];
+    const result = await db.query(queryStmt, values);
+    
     let message = 'Error in updating order status';
 
     if(result.affectedRows){
@@ -46,8 +47,10 @@ async function updateOrderStatus(orderId, orderStatus, item) {
 }
 
 async function updatePaymentStatus(orderId, paymentStatus, item) {
-    const result = await db.query('UPDATE orders SET payment_status = ? WHERE orderId = ? and item = ?', [paymentStatus, orderId, item]);
-
+    const queryStmt = `UPDATE orders SET payment_status = ? WHERE orderId = ? and item = ?`;
+    const values = [paymentStatus, orderId, item];
+    const result = await db.query(queryStmt, values);
+    
     let message = 'Error in updating payment status';
 
     if(result.affectedRows){

@@ -12,10 +12,10 @@ class CategoryMenuPage extends StatefulWidget {
 
   CategoryMenuPage(
       {Key? key,
-      required this.category,
-      required this.searchValue,
-      required this.original,
-      required this.categoryTitle})
+        required this.category,
+        required this.searchValue,
+        required this.original,
+        required this.categoryTitle})
       : super(key: key);
 
   @override
@@ -70,22 +70,22 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
             padding: EdgeInsets.all(10.0),
             child: TextField(
                 decoration: InputDecoration(
-              hintText: "Search",
-              prefixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-            )),
+                  hintText: "Search",
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                )),
           ),
           SizedBox(height: 5.0),
           Expanded(
             child: (widget.category.isNotEmpty)
                 ? ListView.builder(
-                    itemCount: widget.category.length,
-                    itemBuilder: (context, index) {
-                      return menuItem(menuitem: widget.category[index]);
-                    },
-                  )
+              itemCount: widget.category.length,
+              itemBuilder: (context, index) {
+                return menuItem(menuitem: widget.category[index]);
+              },
+            )
                 : Text("No items found"),
           ),
         ],

@@ -49,6 +49,7 @@ class _menuItemState extends State<menuItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 100,
       margin: EdgeInsetsDirectional.only(start: 15, top: 5, end: 15, bottom: 5),
       decoration: BoxDecoration(
         border: Border.all(

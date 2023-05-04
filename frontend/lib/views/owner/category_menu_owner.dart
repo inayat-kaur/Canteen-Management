@@ -102,13 +102,13 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
                   )
                 : Text("Item not found"),
           ),
-          Expanded(
-              child: ListTile(
-            contentPadding: EdgeInsetsDirectional.only(
-                start: 15, top: 10, end: 15, bottom: 10),
-            horizontalTitleGap: 20,
-            title: IconButton(
+
+               Container(
+
+            child: IconButton(
               icon: Icon(Icons.add),
+              iconSize: 45,
+              color: Colors.deepOrange,
               onPressed: () async {
                 Menu menu3 = await Navigator.of(context).push(MaterialPageRoute(
                     builder: (_) => AddMenuItem(
@@ -121,7 +121,7 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
                 }
               },
             ),
-          ))
+          )
         ],
       ),
     );

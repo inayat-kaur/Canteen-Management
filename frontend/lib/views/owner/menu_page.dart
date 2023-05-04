@@ -229,7 +229,7 @@ class _menuPageStateOwner extends State<menuPageOwner> {
             child: GridView.builder(
               itemCount: categoriesList.length,
               itemBuilder: (context, index) => _buildClickableContainer(context,
-                  categoriesList[index],  menu),
+                  categoriesList[index], menu),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 1,
@@ -260,9 +260,8 @@ class _menuPageStateOwner extends State<menuPageOwner> {
 }
 
 Widget _buildClickableContainer(
-    BuildContext context, String title, List<Menu> menu) {
-  List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
-  String imageUrl=filteredMenu[0].image;
+    BuildContext context, String title,  List<Menu> menu) {
+
   if (title == "Add new Category") {
     return GestureDetector(
       onTap: () async {
@@ -316,20 +315,20 @@ Widget _buildClickableContainer(
       ),
     );
   }
+  List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
+  String imageUrl=filteredMenu[0].image;
   return GestureDetector(
-
     onTap: () {
       List<Menu> filteredMenu = filterMenuBasedOnCategory(menu, title);
-
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => CategoryMenuPage(
-                  category: filteredMenu,
-                  searchValue: "",
-                  categoryTitle: filteredMenu[0].category,
-                  original: filteredMenu,
-                )),
+              category: filteredMenu,
+              searchValue: "",
+              categoryTitle: filteredMenu[0].category,
+              original: filteredMenu,
+            )),
       );
     },
     child: Container(
@@ -354,6 +353,7 @@ Widget _buildClickableContainer(
         children: [
           Image.network(
             imageUrl,
+
             width: 80.0,
             height: 80.0,
             fit: BoxFit.cover,

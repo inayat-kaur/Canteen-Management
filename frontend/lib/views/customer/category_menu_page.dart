@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/views/customer/menuItem.dart';
-
-import '../../controllers/customer/home_controller.dart';
 import '../../models/menu.dart';
 import '../general/profile_page.dart';
 import 'cart_screen.dart';
@@ -82,30 +80,10 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
           SizedBox(height: 5.0),
           Expanded(
             child: (widget.category.isNotEmpty)
-            ? ListView.builder(
-              itemCount: widget.category.length,
-              itemBuilder: (context, index) {
-                return menuItem(
-                  menuitem: widget.category[index],
-                  // name: widget.category[index].item,
-                  // price: widget.category[index].price,
-                  // rating: widget.category[index].rating,
-                  // image: widget.category[index].image,
-                  // count: 0,
-                );
-              },
-            ),
-            child: (widget.category.isNotEmpty)
                 ? ListView.builder(
                     itemCount: widget.category.length,
                     itemBuilder: (context, index) {
-                      return menuItem(
-                        name: widget.category[index].item,
-                        price: widget.category[index].price,
-                        rating: widget.category[index].rating,
-                        image: 'assets/images/real/apple_pie.jpg',
-                        count: 0,
-                      );
+                      return menuItem(menuitem: widget.category[index]);
                     },
                   )
                 : Text("No items found"),

@@ -38,7 +38,7 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(widget.category[0].category),
+        title: Text(widget.categoryTitle),
         actions: [
           IconButton(
             icon: Icon(Icons.favorite),
@@ -86,19 +86,21 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
               )),
           SizedBox(height: 5.0),
           Expanded(
-            child: ListView.builder(
-              itemCount: widget.category.length,
-              itemBuilder: (context, index) {
-                return menuItem(
-                  name: widget.category[index].item,
-                  price: widget.category[index].price,
-                  rating: widget.category[index].rating,
-                  image: widget.category[index].image,
-                  count: 0,
-                  mymenu: widget.category[index],
-                );
-              },
-            ),
+            child: (widget.category.isNotEmpty)
+                ? ListView.builder(
+                    itemCount: widget.category.length,
+                    itemBuilder: (context, index) {
+                      return menuItem(
+                        name: widget.category[index].item,
+                        price: widget.category[index].price,
+                        rating: widget.category[index].rating,
+                        image: widget.category[index].image,
+                        count: 0,
+                        mymenu: widget.category[index],
+                      );
+                    },
+                  )
+                : Text("Item not found"),
           ),
           Expanded(
               child: ListTile(

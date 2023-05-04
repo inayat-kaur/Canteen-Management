@@ -67,9 +67,9 @@ class _PaymentState extends State<Payment> {
                       ElevatedButton(
                           onPressed: () {
                             List<String> orderOptions = [];
-                            orderCartItems(foodProducts, orderOptions);
+                            orderCartItems(foodProducts, orderOptions, context);
                           },
-                          child: Text("Pay"))
+                          child: Text("Order Now"))
                     ])))));
   }
 }

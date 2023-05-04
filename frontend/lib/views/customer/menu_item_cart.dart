@@ -28,7 +28,7 @@ class menuItemCart extends StatefulWidget {
 
 class _menuItemStateCart extends State<menuItemCart> {
   bool isAddedToCart = false;
-  int itemCount=0;
+  int itemCount = 0;
 
   Future<void> checkIfItemAddedToCart() async {
     print("checkIfItemAddedToCart");
@@ -36,6 +36,7 @@ class _menuItemStateCart extends State<menuItemCart> {
     for (int i = 0; i < cartItems.length; i++) {
       if (cartItems[i].item == widget.product.title) {
         setState(() {
+          itemCount = cartItems[i].quantity;
           isAddedToCart = true;
         });
         break;
@@ -62,7 +63,7 @@ class _menuItemStateCart extends State<menuItemCart> {
       ),
       child: ListTile(
         contentPadding:
-        EdgeInsetsDirectional.only(start: 15, top: 10, end: 15, bottom: 10),
+            EdgeInsetsDirectional.only(start: 15, top: 10, end: 15, bottom: 10),
         horizontalTitleGap: 20,
         //leading: Image.asset(widget.product.image),
         leading: Image.network(widget.product.image),
@@ -124,8 +125,8 @@ class _menuItemStateCart extends State<menuItemCart> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      setState(() { if(itemCount>0)
-                        itemCount--;
+                      setState(() {
+                        if (itemCount > 0) itemCount--;
                       });
                     },
                     child: Icon(Icons.remove, size: 20),
@@ -140,14 +141,23 @@ class _menuItemStateCart extends State<menuItemCart> {
                       });
                     },
                     child: Icon(Icons.add, size: 20),
-
                   ),
                   SizedBox(width: 8),
-              GestureDetector(
-               onTap: () {
-         //save
-                 },
-                 child: Icon(Icons.check, size: 22,color: Colors.orange,),),
+                  GestureDetector(
+                    onTap: () {
+                      updateQuantity(widget.product.title, itemCount);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Quantity Updated"),
+                        ),
+                      );
+                    },
+                    child: Icon(
+                      Icons.check,
+                      size: 22,
+                      color: Colors.orange,
+                    ),
+                  ),
                 ],
               ),
             ),

@@ -23,6 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+          key: ValueKey("splashScreenContainer"),
           width: Helper.getScreenWidth(context),
           height: Helper.getScreenHeight(context),
           child: Stack(

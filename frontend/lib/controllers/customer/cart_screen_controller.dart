@@ -1,4 +1,3 @@
-import 'package:frontend/models/order.dart';
 import 'package:frontend/models/cart.dart';
 import 'package:frontend/models/menu.dart';
 import 'package:frontend/urls.dart';

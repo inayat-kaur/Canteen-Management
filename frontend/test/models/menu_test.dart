@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:frontend/models/menu.dart';
+import 'package:frontend/models/Menu.dart';
 
 void main() {
   test('Menu instance can be created', () {

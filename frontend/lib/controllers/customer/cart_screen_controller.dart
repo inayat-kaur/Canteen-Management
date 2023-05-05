@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'dart:convert';
 import '../../my_services.dart';
 
+// add a menu item to the cart. It returns 201 on successful addition
 Future<void> addToCart(String name) async {
   MyService myService = MyService();
   String token = myService.getToken();
@@ -26,6 +27,7 @@ Future<void> addToCart(String name) async {
   }
 }
 
+// fetches the complete menu from the database
 Future<List<Menu>> fetchMenu() async {
   MyService myService = MyService();
   if (myService.getMyMenu().isNotEmpty) {
@@ -50,6 +52,7 @@ Future<List<Menu>> fetchMenu() async {
   }
 }
 
+// fetches the complete cart for a given user/customer
 Future<List<Cart>> fetchCart() async {
   MyService myService = MyService();
   if (myService.getCart().isNotEmpty) {
@@ -74,6 +77,7 @@ Future<List<Cart>> fetchCart() async {
   }
 }
 
+// get the common products in cart and menu
 Future<List<Product>> getProducts() async {
   List<Menu> menu = await fetchMenu();
   List<Cart> cart = await fetchCart();
@@ -102,6 +106,7 @@ List<Product> getProductsHelper(List<Menu> menu, List<Cart> cart) {
   return foodProducts;
 }
 
+// update the quantity of a given food item in the menu
 void updateQuantity(String item, int quantity) async {
   MyService myService = MyService();
   String token = myService.getToken();
@@ -120,6 +125,7 @@ void updateQuantity(String item, int quantity) async {
   }
 }
 
+// delete the item from the cart
 void deleteItem(String item) async {
   MyService myService = MyService();
   String token = myService.getToken();

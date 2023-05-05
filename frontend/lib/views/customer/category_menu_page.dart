@@ -5,6 +5,7 @@ import '../../models/menu.dart';
 import '../general/profile_page.dart';
 import 'cart_screen.dart';
 
+//widget to display list of items in the selected category
 class CategoryMenuPage extends StatefulWidget {
   final List<Menu> category;
   final String searchValue;
@@ -49,12 +50,6 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
               );
             },
           ),
-          // IconButton(
-          //   icon: Icon(Icons.favorite),
-          //   onPressed: () {
-          //     // Navigate to wishlist page
-          //   },
-          // ),
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
@@ -107,23 +102,5 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
         ],
       ),
     );
-    // body:menuItem(
-    //   imagePath: 'assets/images/real/fruit.jpg',
-    //   name: 'Item Name',
-    //   price: 10,
-    //   rating: 4,
-    //   itemCount: 0,
-    // )
-
-    // ListView.builder(
-    //   itemCount: menuItems.length,
-    //   itemBuilder: (BuildContext context, int index) {
-    //     return ListTile(
-    //       title: Text(menuItems[index]),
-    //       // Add any other menu item information, such as price, here
-    //     );
-    //   },
-    // ),
-    // );
   }
 }

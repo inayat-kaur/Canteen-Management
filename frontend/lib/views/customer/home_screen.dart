@@ -9,7 +9,7 @@ import 'package:frontend/views/owner/menu_page.dart';
 import '../../models/menu.dart';
 import '../../my_services.dart';
 import 'cart_screen.dart';
-
+//building widget tree to show home screen of customer
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -18,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<Menu> menu = [];
   List<String> categoriesList = [];
-
+// fetching menu from database
   Future<void> fetchMenuItems() async {
     MyService myService = MyService();
     String token = myService.getToken();
@@ -60,20 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             },
           ),
-          // IconButton(
-          //   icon: Icon(Icons.favorite),
-          //   onPressed: () {
-          //     // Navigator.push(
-          //     //   context,
-          //     //   MaterialPageRoute(
-          //     //     builder: (context) => menuPageOwner(),
-          //     //   ),
-          //     //);
-          //   },
-          // ),
+
           IconButton(
             icon: Icon(Icons.person),
             onPressed: () {
+              //Naviagte to profile page
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (_) => Profile()));
             },
@@ -83,28 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         children: [
           SizedBox(height: 5.0),
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: TextField(
-          //     decoration: InputDecoration(
-          //       hintText: "Search",
-          //       prefixIcon: Icon(Icons.search),
-          //       border: OutlineInputBorder(
-          //         borderRadius: BorderRadius.circular(20.0),
-          //       ),
-          //     ),
-          //     // onChanged: (value) {
-          //     //   List<Menu> filteredMenu = searchMenu(menu, value);
-          //     //   Navigator.push(
-          //     //     context,
-          //     //     MaterialPageRoute(
-          //     //         builder: (context) => CategoryMenuPage(
-          //     //               category: filteredMenu,
-          //     //             )),
-          //     //   );
-          //     // },
-          //   ),
-          // ),
+         //Container holding two horizontal slidable widgets
           Container(
             margin: EdgeInsets.symmetric(vertical: 10.0),
             height: 200.0,
@@ -135,10 +105,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             'assets/images/virtual/offer.png',
                             fit: BoxFit.cover,
                           ),
-                          // Image.network(
-                          //   'frontend/assets/real/fruit.jpg',
-                          //   fit: BoxFit.cover,
-                          // ),
                         ),
                       ),
                       Expanded(
@@ -189,12 +155,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             'assets/images/virtual/clock.png',
                             fit: BoxFit.cover,
                           ),
-                          // Image.network(
-                          //
-                          //
-                          //   'assets/images/real/fruit.jpg',
-                          //   fit: BoxFit.cover,
-                          // ),
                         ),
                       ),
                       Expanded(
@@ -235,25 +195,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           )
-
-          //
-
-          // Expanded(
-          //   child: ListView.builder(
-          //     itemCount: _items.length,
-          //     itemBuilder: (BuildContext context, int index) {
-          //       return ListTile(
-          //         leading: Image.network(_items[index]["image"]),
-          //         title: Text(_items[index]["name"]),
-          //         subtitle: Text(_items[index]["description"]),
-          //         trailing: Text("\$${_items[index]["price"]}"),
-          //         onTap: () {
-          //           // Navigate to item detail page
-          //         },
-          //       );
-          //     },
-          //   ),
-          // ),
         ],
       ),
     );
